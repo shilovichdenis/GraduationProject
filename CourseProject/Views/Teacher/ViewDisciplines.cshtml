@@ -1,0 +1,81 @@
+﻿@model IEnumerable<CourseProject.Models.Discipline>
+@{
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    ViewBag.Title = "Дисциплины";
+}
+<style>
+    .modal-dialog {
+        width: 800px;
+    }
+
+    .last-th {
+        width: 100px !important;
+    }
+
+</style>
+@Styles.Render("~/Teacher/View")
+<div class="panel" id="view-form-discipline">
+    <div class="panel-heading header-icon-box">
+        Дисциплины
+        @Html.ActionLink(" ", "CreateDiscipline", "Teacher", null, new { @class = "btn icon-plus btn-icon create-item" })
+    </div>
+    <div class="panel-body">
+        <div id="create-form" class="modal fade">
+            <div id="create-dialog" class="modal-dialog"></div>
+        </div>
+        <div id="rate-form" class="modal fade">
+            <div id="rate-dialog" class="modal-dialog"></div>
+        </div>
+        <div id="edit-form" class="modal fade">
+            <div id="edit-dialog" class="modal-dialog"></div>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Название</th>
+                    <th>Группа</th>
+                    <th>Расположение</th>
+                    <th>Дата</th>
+                    <th>Кол-во часов</th>
+                    <th>Тип</th>
+                    <th>Статус</th>
+                    <th class="last-th"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() != 0)
+                {
+                    foreach (var (index, discipline) in Model.Select((v, i) => (i, v)))
+                    {
+                        <tr>
+                            <td>@(index + 1)</td>
+                            <td>@discipline.Name</td>
+                            <td>@discipline.Group.Name</td>
+                            <td>к. @discipline.Building, ауд. @discipline.Audience</td>
+                            <td>@discipline.DateTime.ToShortDateString()</td>
+                            <td>@discipline.СountHours</td>
+                            <td>@discipline.Type</td>
+                            <td>@discipline.Status</td>
+                            <td class="last-td">
+                                @Html.ActionLink(" ", "SetRatings", "Teacher", new { id = discipline.Id }, new { @class = "btn icon-list-ol btn-icon rate-item" })
+                                @Html.ActionLink(" ", "EditDiscipline", "Teacher", new { id = discipline.Id }, new { @class = "btn icon-pencil btn-icon edit-item" })
+
+                                @using (Html.BeginForm("DeleteDiscipline", "Teacher", new { id = discipline.Id }))
+                                {
+                                    <button class="btn btn-icon icon-remove" type="submit"></button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="9">Нет ни одной дисциплины</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

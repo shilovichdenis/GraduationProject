@@ -1,0 +1,119 @@
+﻿@using CourseProject.Models
+@model NeuralNetwork
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "ViewNeuralGroups";
+}
+@Styles.Render("~/Admin/View")
+<div class="panel">
+    @using (Ajax.BeginForm("ViewNeuralGroups", new AjaxOptions { UpdateTargetId = "displaygroups" }))
+    {
+        <div class="panel-heading">
+            Сеть
+        </div>
+        <div class="panel-body form-neural-params">
+
+            <span>
+                <label class="control-label">Количество классов</label>
+                <input class="form-control" type="number" maxlength="2" name="k" />
+            </span>
+            <span>
+                <label class="control-label">Группа студентов</label>
+                @Html.DropDownList("groupId", ViewBag.Groups as SelectList, "", htmlAttributes: new { @class = "form-control", id = "inputGroup" })
+            </span>
+            <span>
+                <input type="submit" class="btn btn-default" />
+            </span>
+        </div>
+    }
+    <div class="panel-heading">
+        Результаты предыдущих значений кластеризации
+    </div>
+    <div class="panel-body" style="margin-bottom: 20px; height: 150px; overflow-y: scroll;">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Группа</th>
+                    <th>Количество классов</th>
+                    <th>F1</th>
+                    <th>F2</th>
+                </tr>
+            </thead>
+            @{
+                List<NeuralNetworkResult> results = ViewBag.Results;
+            }
+            <tbody>
+                @foreach (var (index, result) in results.Select((i, r) => (r, i)))
+                {
+                    <tr>
+                        <td>@(index + 1)</td>
+                        <td>@result.Group.Name</td>
+                        <td>@result.K</td>
+                        <td>@(result.F1 == 0 ? "Не удалось посчитать" : result.F1.ToString())</td>
+                        <td>@(result.F2 == 0 ? "Не удалось посчитать" : result.F2.ToString())</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-heading info-f1-f2">
+        @if (Model != null)
+        {
+
+            <span> Группа - @Model.Group.Name</span>
+            <span> F1: @(Model.F1 == 0 ? "Не удалось посчитать" : Model.F1.ToString()) F2: @(Model.F2 == 0 ? "Не удалось посчитать" : Model.F2.ToString())</span>
+
+        }
+        else
+        {
+            @:Выберите группу
+        }
+    </div>
+    <div class="panel-body" style="padding: 20px;" id="displaygroups">
+        @if (Model != null)
+        {
+            foreach (var (indexgroup, group) in Model.GroupOfStudents.Select((i, g) => (g, i)))
+            {
+                <div class="panel-heading" style="text-align: left;">
+                    Группа @(indexgroup + 1)
+                </div>
+                <div class="panel-body" style="height: 200px;">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Фамилия</th>
+                                <th>Пол</th>
+                                <th>Зачеты</th>
+                                <th>Форма образования</th>
+                                @foreach (var exam in ViewBag.Disciplines)
+                                {
+                                    <th>@exam.Discipline.Name</th>
+                                }
+                            </tr>
+                        </thead>
+                        @foreach (var (indexstudent, student) in group.Select((i, s) => (s, i)))
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@student.Student.Surname</td>
+                                    <td>@student.Student.Gender</td>
+                                    <td>@(student.GetAllTests? "Сданы" : "Не сданы")</td>
+                                    <td>@student.Student.OtherInfo</td>
+                                    @foreach (var exam in student.RecordBook.Exams)
+                                    {
+                                        <td>@exam.Rating</td>
+                                    }
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                </div>
+            }
+        }
+        else
+        {
+            <p>В группе нет людей</p>
+        }
+    </div>
+</div>

@@ -1,0 +1,177 @@
+﻿table {
+    margin-bottom: 5px !important;
+}
+
+    table th {
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    table td a {
+        text-decoration: unset;
+        color: #333333;
+    }
+
+        table td a:hover {
+            text-decoration: unset;
+            color: black;
+        }
+
+
+
+.last-td {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: unset !important;
+}
+
+    .last-td button {
+        width: 25px;
+        height: 20px;
+        margin-left: 5px;
+    }
+
+    .last-td a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 25px;
+        height: 20px;
+        margin-left: 5px;
+    }
+
+.info-panel {
+    padding: 10px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.info-block {
+    padding: 10px;
+    width: 100%;
+    height: 45%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.photo {
+    width: 30%;
+    height: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.info {
+    width: 68%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    font-size: 15px;
+    text-align: left;
+}
+
+.info-body {
+    width: 100%;
+    height: calc(100% - 60px);
+    display: flex;
+    flex-direction: row;
+}
+
+.left-side {
+    margin: 10px;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.right-side {
+    margin: 10px;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-heading {
+    font-size: 19px;
+    text-align: center;
+    width: 100%;
+    padding: 5px;
+}
+
+.recordbook-block {
+    padding: 10px;
+    width: 100%;
+    height: 50%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.recordbook {
+    font-size: 15px;
+}
+
+.table-info {
+    margin-bottom: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+    .table-info td:first-child {
+        background-color: #eee;
+    }
+
+.slick-slider {
+    margin-bottom: 0 !important;
+}
+
+.btn-icon {
+    display: flex;
+    width: 25px;
+    height: 22px;
+    margin: 0 0 0 2.5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-box {
+    display: flex;
+    align-content: center;
+    justify-content: left;
+    margin: 10px;
+}
+
+    .btn-box input {
+        margin-right: 10px;
+    }
+
+.slick-next::before, .slick-prev::before {
+    color: #222 !important;
+}
+
+.slick-next::before {
+    content: "\2192" !important;
+}
+
+.slick-prev::before {
+    content: "\2190" !important;
+}
+.recordbook{
+    height: 300px !important;
+    overflow-y: scroll !important;
+}
+
+#info-form-group .last-th{
+    width: 10px;
+}

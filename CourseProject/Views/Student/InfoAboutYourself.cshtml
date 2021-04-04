@@ -1,0 +1,228 @@
+﻿@model CourseProject.Models.Student
+@{
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    ViewBag.Title = "Личный кабинет";
+}
+<style>
+    .panel-info {
+        display: flex;
+        flex-direction: row;
+        padding: 15px;
+        height: 500px;
+    }
+
+    .left-div {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 33%;
+        padding: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .right-div {
+        height: 100%;
+        width: 67%;
+        padding: 10px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .main-info {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        height: 100%;
+    }
+
+    .sections {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        height: auto;
+        margin-bottom: 0;
+        margin-top: auto;
+    }
+
+    .label-in-section {
+        text-align: left;
+        width: 100%;
+        border-radius: 0;
+    }
+
+        .label-in-section:hover, .label-in-section:focus, .label-in-section:target {
+            color: #9D9D9D !important;
+            background-color: #222222 !important;
+        }
+
+    .radio-in-section {
+        display: none;
+    }
+
+        .radio-in-section:checked + .label-in-section {
+            color: #9D9D9D !important;
+            background-color: #222222 !important;
+            border-color: #222222;
+        }
+
+    .personaldata, .exams, .tests, .courseprojects {
+        display: none;
+        height: 100%;
+        width: 100%;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .personaldata {
+        display: block;
+    }
+
+    .info-heading {
+        text-align: left;
+        font-size: 14px;
+    }
+
+    table th {
+        vertical-align: middle !important;
+    }
+</style>
+@Styles.Render("~/Student/View")
+@Styles.Render("~/Content/slick")
+<div class="panel" id="info-form-student">
+    <div class="panel-heading">
+        <text>
+            Имя пользователя - @Model.User.UserName
+        </text>
+    </div>
+    <div class="panel-body panel-info">
+        <div class="left-div">
+            <div class="main-info"></div>
+            <div class="sections">
+                <span>
+                    <input checked class="radio-in-section" type="radio" name="sections" id="radio-personaldata" />
+                    <label class="btn btn-default label-in-section" for="radio-personaldata">Личная информация</label>
+                </span>
+                <span>
+                    <input class="radio-in-section" type="radio" name="sections" id="radio-exams" />
+                    <label class="btn btn-default label-in-section" for="radio-exams">Экзамены</label>
+                </span>
+                <span>
+                    <input class="radio-in-section" type="radio" name="sections" id="radio-tests" />
+                    <label class="btn btn-default label-in-section" for="radio-tests">Зачеты</label>
+                </span>
+                <span>
+                    <input class="radio-in-section" type="radio" name="sections" id="radio-courseprojects" />
+                    <label class="btn btn-default label-in-section" for="radio-courseprojects">Курсовые работы</label>
+                </span>
+            </div>
+        </div>
+        <div class="right-div">
+            <div id="personaldata" class="personaldata">
+                <div class="panel-heading info-heading">Личные данные</div>
+            </div>
+            <div id="exams" class="exams">
+                <div class="panel-heading info-heading">Экзамены</div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Название</th>
+                            <th>Количество <br />часов</th>
+                            <th>Оценка</th>
+                            <th>Дача сдачи</th>
+                            <th>Преподаватель</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RecordBook.Exams.Count != 0)
+                        {
+                            foreach (var (index, exam) in Model.RecordBook.Exams.Select((v, i) => (i, v)))
+                            {
+                                <tr>
+                                    <td>@(index + 1)</td>
+                                    <td>@exam.Discipline.Name</td>
+                                    <td>@exam.Discipline.СountHours</td>
+                                    <td>@exam.Rating</td>
+                                    <td>@exam.Discipline.DateTime.ToShortDateString()</td>
+                                    <td>@exam.Discipline.Teacher.User.DisplayName</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6">Нет экзаменов</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div id="tests" class="tests">
+                <div class="panel-heading info-heading">Зачеты</div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Название</th>
+                            <th>Количество <br />часов</th>
+                            <th>Оценка</th>
+                            <th>Дача сдачи</th>
+                            <th>Преподаватель</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RecordBook.Tests.Count != 0)
+                        {
+                            foreach (var (index, test) in Model.RecordBook.Tests.Select((v, i) => (i, v)))
+                            {
+                                <tr>
+                                    <td>@(index + 1)</td>
+                                    <td>@test.Discipline.Name</td>
+                                    <td>@test.Discipline.СountHours</td>
+                                    <td>@test.Rating</td>
+                                    <td>@test.Discipline.DateTime.ToShortDateString()</td>
+                                    <td>@test.Discipline.Teacher.User.DisplayName</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6">Нет зачетов</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div id="courseprojects" class="courseprojects">
+                <div class="panel-heading info-heading">Курсовые работы</div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Название</th>
+                            <th>Оценка</th>
+                            <th>Преподаватель</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RecordBook.CourseProjects.Count != 0)
+                        {
+                            foreach (var (index, cp) in Model.RecordBook.CourseProjects.Select((v, i) => (i, v)))
+                            {
+                                <tr>
+                                    <td>@(index + 1)</td>
+                                    <td>@cp.Name</td>
+                                    <td>@cp.Rating</td>
+                                    <td>@cp.Teacher.User.DisplayName</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4">Нет курсовых работ</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

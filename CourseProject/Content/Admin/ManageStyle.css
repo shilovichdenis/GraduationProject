@@ -1,0 +1,58 @@
+﻿.form-group {
+    height: 35px;
+}
+
+    .form-group .control-label {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        justify-content: left;
+    }
+
+    .form-group input {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+        margin-right: 10px;
+    }
+
+.radio-box {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+}
+
+    .radio-box label {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        margin: 0;
+        font-weight: normal;
+    }
+
+    .radio-box span {
+        display: flex;
+        flex-direction: row;
+        margin-left: 10px;
+        align-items: center;
+    }
+
+        .radio-box span input[type="radio"] {
+            margin: 0 0 0 10px;
+        }
+
+.btn-box {
+    display: flex;
+    flex-direction: row;
+}
+
+#rate-form .last-th {
+    width: 10px;
+}
+
+table {
+    margin-bottom: 10px !important;
+}

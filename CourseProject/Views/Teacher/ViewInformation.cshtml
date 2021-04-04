@@ -1,0 +1,94 @@
+﻿@using CourseProject.Models
+@model IEnumerable<Information>
+@{
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    ViewBag.Title = "Информация";
+}
+<style>
+    #view-form-info .last-th {
+        width: 70px !important;
+    }
+</style>
+@Styles.Render("~/Teacher/View")
+<div class="panel" id="view-form-info">
+    <div class="panel-heading header-icon-box">
+        Главная страница
+        @Html.ActionLink(" ", "CreateInformation", "Teacher", null, new { @class = "btn btn-icon icon-plus create-item" })
+    </div>
+    <div class="panel-body">
+        <div id="edit-form" class="modal fade">
+            <div id="edit-dialog" class="modal-dialog"></div>
+        </div>
+        <div id="create-form" class="modal fade">
+            <div id="create-dialog" class="modal-dialog"></div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Информация</th>
+                    <th>Кому</th>
+                    <th>Дата отправки</th>
+                    <th class="last-th"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() != 0)
+                {
+                    foreach (var (index, info) in Model.Select((v, i) => (i, v)))
+                    {
+                        <tr>
+                            <td>@(index + 1)</td>
+                            <td>@info.Info</td>
+                            <td>@info.Reciever.Name</td>
+                            <td>@info.DateTime.ToShortDateString()</td>
+                            <td class="last-td">
+                                @Html.ActionLink(" ", "EditInformation", "Teacher", new { id = info.Id }, new { @class = "btn icon-pencil btn-icon edit-item" })
+
+                                @using (Html.BeginForm("DeleteInformation", "Teacher", new { id = info.Id }))
+                                {
+                                    <button class="btn icon-remove btn-icon" type="submit"></button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">Нет данных</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".create-item").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#create-dialog').html(data);
+                    $('#create-form').modal('show');
+                });
+            });
+        })
+
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".edit-item").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#edit-dialog').html(data);
+                    $('#edit-form').modal('show');
+                });
+            });
+        })
+    </script>
+}

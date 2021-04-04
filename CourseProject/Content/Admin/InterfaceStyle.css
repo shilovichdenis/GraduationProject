@@ -1,0 +1,97 @@
+﻿.panel {
+    padding: 20px;
+    margin-top: 20px !important;
+    border: 1.5px solid #222;
+}
+
+.panel-heading {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    color: #9d9d9d;
+    border-radius: unset;
+    background-color: #222222;
+    font-size: 17px;
+}
+
+.panel-body {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    width: 100%;
+    min-height: 480px;
+    max-height: 480px;
+    text-align: center;
+}
+
+#create-form .panel-body, #edit-form .panel-body {
+    min-height: unset !important;
+}
+
+.header-icon-box {
+    display: flex;
+    flex-direction: row;
+}
+
+    .header-icon-box a {
+        color: #9D9D9D;
+        display: flex;
+        margin-left: auto;
+        margin-right: 0;
+        height: 24px;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .header-icon-box a:hover, .header-icon-box a:target, .header-icon-box a:focus, .header-icon-box a:active {
+            color: white !important;
+            text-decoration: none;
+        }
+
+#create-form .header-icon-box a, #edit-form .header-icon-box a, #rate-form .header-icon-box a, #info-form .header-icon-box a {
+    font-size: 24px;
+}
+
+.btn-icon {
+    background-color: transparent;
+    color: #808080;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    outline: 0;
+    border: 0;
+    box-shadow: unset;
+    width: 25px;
+    height: 20px;
+    margin: 0 2.5px;
+}
+
+
+
+    .btn-icon:active, .btn-icon:target, .btn-icon:hover, .btn-icon:focus {
+        outline: 0;
+        border: 0;
+        box-shadow: unset;
+        color: black;
+        outline-style: none;
+        outline-width: 0px !important;
+        outline-color: none !important;
+    }
+
+.modal-content {
+    border: none;
+}
+
+.icon-remove:hover {
+    color: darkred;
+}
+
+.icon-pencil:hover {
+    color: darkgreen;
+}
+
+.icon-list-ol:hover {
+    color: darkgoldenrod;
+}
+
+.icon-info:hover {
+    color: darkcyan
+}

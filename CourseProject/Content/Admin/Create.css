@@ -1,0 +1,19 @@
+﻿
+.box-create {
+    display: flex;
+    flex-direction: row;
+}
+
+    .box-create a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 24px;
+        margin-left: auto;
+        margin-right: 0;
+    }
+
+.btn-box {
+    display: flex;
+    flex-direction: row;
+}

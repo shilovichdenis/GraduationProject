@@ -1,0 +1,57 @@
+﻿@model CourseProject.Models.Information
+@Styles.Render("~/Teacher/Manage")
+<style>
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+        background-clip: unset;
+        border: none;
+    }
+
+        .modal-content .panel-heading {
+            border: none;
+            top: 0;
+        }
+</style>
+<div class="modal-content" id="edit-form-info">
+    <div class="panel-heading header-icon-box">
+        Редактирование информации
+        <a href="#" data-dismiss="modal">&times;</a>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("EditInformation", "Teacher", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Info, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.EditorFor(model => model.Info, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.Info, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.RecieverId, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    @Html.DropDownListFor(model => model.RecieverId, ViewBag.Groups as SelectList, htmlAttributes: new { @class = "form-control" })
+                    <input type="text" name="senderId" value="@ViewBag.Teacher.Id" class="hidden" />
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.SenderId, htmlAttributes: new { @class = "control-label col-md-3" })
+                <div class="col-md-9">
+                    <input type="text" disabled value="@Model.Sender.User.DisplayName" class="form-control" />
+                    <input type="text" name="SenderId" value="@Model.Sender.Id" class="hidden" />
+                    @Html.ValidationMessageFor(model => model.SenderId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9 btn-box">
+                    <input type="submit" value="Сохранить" class="btn btn-default" />
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Отмена" area-hidden="true" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

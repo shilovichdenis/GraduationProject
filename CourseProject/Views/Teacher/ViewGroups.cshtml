@@ -1,0 +1,88 @@
+﻿@using CourseProject.Models
+@model IEnumerable<StudyGroups>
+@{
+    ViewBag.Title = "ViewGroups";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+<style>
+</style>
+@Styles.Render("~/Teacher/View")
+<div class="panel" id="view-form-group">
+    <div class="panel-heading header-icon-box">
+        Группы
+        @Html.ActionLink(" ", "AddGroup", "Teacher", null, new { @class = "btn icon-plus btn-icon create-item" })
+    </div>
+    <div class="panel-body">
+        <div id="info-form" class="modal fade">
+            <div id="info-dialog" class="modal-dialog"></div>
+        </div>
+        <div id="create-form" class="modal fade">
+            <div id="create-dialog" class="modal-dialog"></div>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Название</th>
+                    <th>Факультет</th>
+                    <th>Форма</th>
+                    <th class="last-th"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() != 0)
+                {
+                    foreach (var (index, tg) in Model.Select((v, i) => (i, v)))
+                    {
+                        <tr>
+                            <td>@(index + 1)</td>
+                            <td>@tg.Group.Name</td>
+                            <td>@tg.Group.Faculty</td>
+                            <td>@tg.Group.FormOfEducation</td>
+                            <td class="last-td">
+                                @Html.ActionLink(" ", "InfoAboutGroup", "Teacher", new { id = tg.Group.Id }, new { @class = "btn icon-info btn-icon info-item" })
+                                @using (Html.BeginForm("RemoveGroup", "Teacher", new { id = tg.Group.Id }))
+                                {
+                                    <button class="btn icon-remove btn-icon" type="submit"></button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">Нет групп</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".create-item").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#create-dialog').html(data);
+                    $('#create-form').modal('show');
+                });
+            });
+        })
+        $(function () {
+            $.ajaxSetup({ cache: false });
+            $(".info-item").click(function (e) {
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#info-dialog').html(data);
+                    $('#info-form').modal('show');
+                });
+            });
+        })
+    </script>
+}

@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Discipline>
+@using CourseProject.Models
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Дисциплины";
+}
+@Styles.Render("~/Admin/View")
+<div class="panel" id="view-form-discipline">
+    <div class="panel-heading header-icon-box">
+        Дисциплины
+        @Html.ActionLink(" ", "CreateDiscipline", "Admin", null, new { @class = "btn btn-icon icon-plus create-item" })
+    </div>
+    <div class="panel-body">
+        <div class="modal fade" id="edit-form">
+            <div class="modal-dialog" id="edit-dialog">
+            </div>
+        </div>
+        <div class="modal fade" id="create-form">
+            <div class="modal-dialog" id="create-dialog">
+            </div>
+        </div>
+        <div class="modal fade" id="rate-form">
+            <div class="modal-dialog" id="rate-dialog">
+            </div>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Название</th>
+                    <th>Преподаватель</th>
+                    <th>Группа</th>
+                    <th>Расположение</th>
+                    <th>Дата</th>
+                    <th>Кол-во часов</th>
+                    <th>Тип</th>
+                    <th>Статус</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() != 0)
+                {
+                    foreach (var (index, discipline) in Model.Select((v, i) => (i, v)))
+                    {
+                        <tr>
+                            <td>@(index + 1)</td>
+                            <td>@discipline.Name</td>
+                            <td>
+                                @Html.ActionLink(discipline.Teacher.User.DisplayName, "InfoAboutUser", new { id = discipline.Teacher.User.Id }, new { @class = "teacher-link" })
+                            </td>
+                            <td>@discipline.Group.Name</td>
+                            <td>к. @discipline.Building, ауд. @discipline.Audience</td>
+                            <td>@discipline.DateTime.ToShortDateString()</td>
+                            <td>@discipline.СountHours</td>
+                            <td>@(discipline.IsExam ? "Экзамен" : "Зачет")</td>
+                            <td>@(discipline.IsPassed ? "Сдана" : "Не сдана")</td>
+                            <td class="last-td">
+                                @Html.ActionLink(" ", "SetRatings", "Admin", new { id = discipline.Id }, new { @class = "btn icon-list-ol btn-icon rate-item" })
+                                @Html.ActionLink(" ", "EditDiscipline", "Admin", new { id = discipline.Id }, new { @class = "btn icon-pencil btn-icon edit-item" })
+                                @using (Html.BeginForm("DeleteDiscipline", "Admin", new { id = discipline.Id }))
+                                {
+                                    <button class="btn icon-remove btn-icon" type="submit"></button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="10">Нет ни одной дисциплины</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+﻿@model CourseProject.Models.Discipline
+@Styles.Render("~/Admin/Manage")
+<style>
+    .control-label {
+        text-align: left !important;
+    }
+
+    .last-th {
+        width: 100px !important;
+    }
+</style>
+<div class="modal-content" id="create-form-discipline">
+    <div class="panel-heading header-icon-box">
+        Добавление дисциплины
+        <a href="#" data-dismiss="modal">&times</a>
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("CreateDiscipline", "Teacher", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DateTime, new { htmlAttributes = new { @class = "form-control", autocomplete = "off", placeholder = "00.00.0000 0:00" } })
+                    @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Building, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Building, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.Building, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Audience, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Audience, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.Audience, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.СountHours, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.СountHours, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.СountHours, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Teacher, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" disabled value="@ViewBag.Teacher.User.DisplayName" class="form-control" />
+                    <input type="text" name="TeacherId" value="@ViewBag.Teacher.Id" class="hidden" />
+                    @Html.ValidationMessageFor(model => model.Teacher.User.Surname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Group, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.GroupId, ViewBag.Groups as SelectList, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GroupId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.IsExam, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10 radio-box">
+                    <span>
+                        <label class="control-label">Экзамен @Html.RadioButtonFor(model => model.IsExam, true, new { autocomplete = "off", id = "radioExam" })</label>
+                    </span>
+                    <span>
+                        <label class="control-label">Зачет @Html.RadioButtonFor(model => model.IsExam, false, new { autocomplete = "off", id = "radioTest" })</label>
+                    </span>
+                    @Html.ValidationMessageFor(model => model.IsExam, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 btn-box">
+                    <input type="submit" value="Создать" class="btn btn-default" />
+                    @Html.ActionLink("Отмена", "ViewDisciplines", "Teacher", null, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

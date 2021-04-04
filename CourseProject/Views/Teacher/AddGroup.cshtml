@@ -1,0 +1,25 @@
+﻿@using CourseProject.Models
+@model StudyGroups
+@Styles.Render("~/Teacher/Manage")
+@using (Html.BeginForm("AddGroup", "Teacher", FormMethod.Post))
+{
+    <div class="modal-content" id="create-form-group">
+        <div class="panel-heading header-icon-box">
+            Добавить группу
+            <a href="#" data-dismiss="modal">&times;</a>
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <input type="text" name="TeacherId" value="@ViewBag.TeacherId" class="hidden" />
+                @Html.DropDownListFor(model => model.GroupId, ViewBag.Groups as SelectList, "", htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <div class="btn-box">
+                    <input type="submit" value="Добавить" class="btn btn-default" />
+                    @Html.ActionLink("Отмена", "ViewGroups", "Teacher", null, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

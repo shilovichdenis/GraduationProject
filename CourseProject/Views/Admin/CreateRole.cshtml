@@ -1,0 +1,30 @@
+﻿@model string
+@Styles.Render("~/Admin/Manage")
+@using (Html.BeginForm("CreateRole", "Admin", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="modal-content">
+        <div class="panel-heading header-icon-box">
+            Создание роли
+            <a href="#" data-dismiss="modal">&times;</a>
+        </div>
+        <div class="panel-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <label class="control-label col-md-2">Название</label>
+                <div class="col-md-10">
+                    <input name="name" value="@Model" class="form-control" , autocomplete="off" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 btn-box">
+                    <input type="submit" value="Создать" class="btn btn-default" />
+                    @Html.ActionLink("Отмена", "ViewRoles", null, new { @class = "btn btn-default" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

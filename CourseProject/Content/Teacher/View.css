@@ -1,0 +1,23 @@
+﻿table {
+    margin-bottom: 5px !important;
+}
+
+    table th {
+        text-align: center;
+        white-space: nowrap;
+    }
+
+.last-td {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-bottom: unset !important;
+}
+
+#view-form-group #info-dialog{
+    width: 1000px;
+}
+#view-form-group .last-th{
+    width: 10px;
+}

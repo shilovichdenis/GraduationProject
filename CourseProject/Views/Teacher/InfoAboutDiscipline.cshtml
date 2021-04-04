@@ -1,0 +1,104 @@
+﻿@model CourseProject.Models.Discipline
+@{
+    Layout = null;
+}
+@Styles.Render("~/Teacher/Manage")
+<style>
+    #info-form .control-label {
+        text-align: left !important;
+    }
+
+    #info-form .btn-box input, #info-form .btn-box a {
+        margin: 0 5px;
+    }
+</style>
+
+<div class="modal-content" id="info-form">
+    <div class="panel-heading add-box">
+        Дисциплина - @Model.Name
+        <a class="btn btn-default" style="font-size: 22px;" data-dismiss="modal">&times;</a>
+    </div>
+    <div class="panel-body">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" value="@Model.Name" disabled class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DateTime, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" value="@Model.DateTime" disabled class="form-control" />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Building, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" value="@Model.Building" disabled class="form-control" />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Audience, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" value="@Model.Audience" disabled class="form-control" />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Teacher.User, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" value="@Model.Teacher.User.DisplayName" disabled class="form-control" />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Group, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" value="@Model.Group.Name" disabled class="form-control" />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.СountHours, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" value="@Model.СountHours" disabled class="form-control" />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsPassed, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" value="@Model.IsPassed.ToString()" disabled class="form-control" />
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsExam, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" value="@Model.IsExam.ToString()" disabled class="form-control" />
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 btn-box">
+                @Html.ActionLink("Редактировать", "EditDiscipline", "Teacher", new { id = Model.Id }, new { @class = "btn btn-default edit-item" })
+                @Html.ActionLink("Рейтинг", "SetRatings", new { id = Model.Id }, new { @class = "btn btn-default rate-item" })
+                @using (Html.BeginForm("DeleteDiscipline", "Teacher", new { id = Model.Id }))
+                {
+                    <button class="btn btn-default" type="submit">Удалить</button>
+                }
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Назад" />
+            </div>
+        </div>
+    </div>
+</div>

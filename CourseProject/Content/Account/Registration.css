@@ -1,0 +1,128 @@
+﻿.panel {
+    padding: 20px;
+    margin-top: 20px !important;
+    border: 1.5px solid #222;
+}
+
+.panel-heading {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    color: #9d9d9d;
+    border-radius: unset;
+    background-color: #222222;
+    font-size: 17px;
+}
+
+.panel-body {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 20px;
+}
+
+.form-group {
+    height: 35px;
+}
+
+    .form-group .control-label {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-group input {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+    }
+
+.radio-box {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+}
+
+    .radio-box label {
+        display: flex;
+        flex-direction: row;
+        align-content: center;
+        margin: 0;
+        font-weight: normal;
+        border-radius: 5px;
+        padding: 5px;
+        text-align: center;
+    }
+
+        .radio-box label:hover {
+            background-color: #f2e18a;
+            color: #877103;
+        }
+
+    .radio-box span {
+        display: flex;
+        flex-direction: row;
+        margin-left: 10px;
+        align-items: center;
+    }
+
+        .radio-box span:first-child {
+            margin-left: 0;
+        }
+
+        .radio-box span input[type="radio"] {
+            position: absolute;
+            visibility: hidden;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+.moveForm {
+    height: auto;
+}
+
+.control-label-active {
+    background-color: #f2e18a;
+    color: #877103;
+}
+
+.control-label-nonactive {
+    background-color: unset;
+    color: unset;
+}
+
+.btn-submit:hover {
+    border-color: #877103;
+    background-color: #f2e18a;
+    color: #877103;
+}
+
+.form-formofeducation-on {
+}
+
+.form-formofeducation-off {
+    height: 0;
+    width: 100%;
+    position: absolute;
+    visibility: hidden;
+}
+
+.input-cathedra-off {
+    width: 100%;
+    height: 0;
+    visibility: hidden;
+    position: absolute;
+}
+
+.input-cathedra-on {
+}
+
+.input-group-off {
+    width: 100%;
+    position: absolute;
+    height: 0;
+    visibility: hidden;
+}
+
+.input-group-on {
+}

@@ -1,0 +1,77 @@
+﻿@using CourseProject.Models
+@model IEnumerable<Information>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+@Styles.Render("~/Admin/View")
+<div class="panel">
+    <div class="panel-heading">
+        Главная страница
+    </div>
+    <div class="panel-body info-table">
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Информация</th>
+                    <th>Получатель</th>
+                    <th>Отправитель</th>
+                    <th>Дата отправки</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() != 0)
+                {
+                    foreach (var (index, info) in Model.Select((v, i) => (i, v)))
+                    {
+                        <tr>
+                            <td>@(index + 1)</td>
+                            <td>@info.Info</td>
+                            <td>@info.Reciever.Name</td>
+                            <td>@info.Sender.User.DisplayName</td>
+                            <td>@info.DateTime.ToShortDateString()</td>
+                            <td>
+                                @using (Html.BeginForm("DeleteInformation", "Admin", new { id = info.Id }))
+                                {
+                                    <button class="btn btn-danger btn-xs icon-ban-circle btn-icon" type="submit"></button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6">Нет данных</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="panel-heading">
+        Создать
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("ViewInformation", "Admin", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.Label("Информация", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" name="info" autocomplete="off" class="form-control" />
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Получатель", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("receiverId", ViewBag.Groups as MultiSelectList, "", htmlAttributes: new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Создать" class="btn btn-default" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

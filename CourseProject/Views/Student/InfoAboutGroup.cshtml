@@ -1,0 +1,51 @@
+﻿@model CourseProject.Models.Group
+@{
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+    ViewBag.Title = "Информация о группе";
+}
+@Styles.Render("~/Student/View")
+<div class="panel" id="info-form-group">
+    <div class="panel-heading">
+        Группа - @Model.Name
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Пол</th>
+                    <th>Форма образования</th>
+                    <th>Номер телефона</th>
+                    <th>Почта</th>
+                    <th class="last-th">Средний балл</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Students.Count() != 0)
+                {
+                    foreach (var (index, student) in Model.Students.Select((v, i) => (i, v)))
+                    {
+                        <tr>
+                            <td>@(index + 1)</td>
+                            <td>@student.User.Surname</td>
+                            <td>@student.User.Name</td>
+                            <td>@student.User.Gender</td>
+                            <td>@student.FormOfEducation</td>
+                            <td>@(student.User.PhoneNumber == @String.Empty ? "-Не указано-" : student.User.PhoneNumber)</td>
+                            <td>@student.User.Email</td>
+                            <td>@student.AverageRating</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8">Нет ни одного студента</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

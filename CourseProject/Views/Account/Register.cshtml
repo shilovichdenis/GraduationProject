@@ -1,0 +1,132 @@
+﻿@model CourseProject.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Регистрация";
+}
+@Styles.Render("~/Account/Registration")
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="panel">
+        <div class="panel-heading">
+            Создание новой учетной записи
+        </div>
+        <div class="panel-body">
+            <div class="form-group">
+                <div class="radio-box" style="justify-content: center;">
+                    <span>
+                        <label id="label-student" class="control-label control-label-active">Студент @Html.RadioButtonFor(model => model.Role, "Студент", new { autocomplete = "off", id = "radio-student", @checked = true })</label>
+                    </span>
+                    <span>
+                        <label id="label-teacher" class="control-label control-label-nonactive">Преподаватель  @Html.RadioButtonFor(model => model.Role, "Преподаватель", new { autocomplete = "off", id = "radio-teacher" })</label>
+                    </span>
+                    @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Surname, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Surname, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Patronymic, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Patronymic, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Patronymic, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group form-formofeducation-on" id="input-formofeducation">
+                @Html.LabelFor(model => model.FormOfEduaction, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10 radio-box">
+                    <span>
+                        <label id="label-paid" class="control-label control-label-active">Платная @Html.RadioButtonFor(model => model.FormOfEduaction, "Платная", new { autocomplete = "off", id = "radio-paid", @checked = true })</label>
+                    </span>
+                    <span>
+                        <label id="label-budgetary" class="control-label control-label-nonactive">Бюджетная  @Html.RadioButtonFor(model => model.FormOfEduaction, "Бюджетная", new { autocomplete = "off", id = "radio-budgetary" })</label>
+                    </span>
+                    @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group input-cathedra-off" id="form-cathedra">
+                <label class="col-md-2 control-label">Кафедра</label>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.SpecializationId, ViewBag.Cathedras as SelectList, htmlAttributes: new { @class = "form-control", id = "inputCathedra" })
+                </div>
+                @Html.ValidationMessageFor(model => model.SpecializationId, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group input-group-on" id="form-group">
+                <label class="col-md-2 control-label">Группа</label>
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.SpecializationId, ViewBag.Groups as SelectList, htmlAttributes: new { @class = "form-control", id = "inputGroup" })
+                </div>
+                @Html.ValidationMessageFor(model => model.SpecializationId, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Gender, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10 radio-box">
+                    <span>
+                        <label id="label-male" class="control-label control-label-active">Мужской @Html.RadioButtonFor(model => model.Gender, "Мужской", new { autocomplete = "off", id = "radio-male", @checked = true })</label>
+                    </span>
+                    <span>
+                        <label id="label-female" class="control-label control-label-nonactive">Женский @Html.RadioButtonFor(model => model.Gender, "Женский", new { autocomplete = "off", id = "radio-female" })</label>
+                    </span>
+                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PhoneNumber, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.PhoneNumber, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control", autocomplete = "off" })
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default btn-submit" value="Регистрация" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

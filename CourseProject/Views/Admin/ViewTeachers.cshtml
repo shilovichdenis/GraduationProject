@@ -1,0 +1,65 @@
+﻿@model IEnumerable<CourseProject.Models.Teacher>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Преподаватели";
+}
+@Styles.Render("~/Admin/View")
+@Styles.Render("~/Content/slick")
+<div class="panel">
+    @*@using (Ajax.BeginForm("ViewStudents", new AjaxOptions { UpdateTargetId = "sortByRole" }))
+        {
+            <div class="panel-heading" style="display: flex; flex-direction: row;">
+                <label for="search" class="labelOff">Поиск</label>
+            </div>
+            <div class="panel-body searchBody" style="margin-bottom: 10px;">
+                <div class="searchBox">
+                    <input class="btn btn-default searchTextBox" type="text" id="search" name="search" autocomplete="off" />
+                    <button type="submit" value="" class="btn btn-default btn-xs icon-search"></button>
+                    @Html.ActionLink(" ", "ViewStudents", "Admin", null, new { @class = "btn-xs btn btn-default icon-refresh" })
+                </div>
+            </div>
+        }*@     
+    <div>
+        <div class="panel-heading">Преподаватели</div>
+        <div class="panel-body" id="sortByRole">
+            <table class="text-center table-bordered table table-striped">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>ФИО</th>
+                        <th>Почта</th>
+                        <th>Кафедра</th>
+                        <th class="last-th"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count() != 0)
+                    {
+                        foreach (var (index, teacher) in Model.Select((v, i) => (i, v)))
+                        {
+                            <tr>
+                                <td>@(index + 1)</td>
+                                <td>@teacher.User.DisplayName</td>
+                                <td>@teacher.User.Email</td>
+                                <td>@teacher.Cathedra.Name</td>
+                                <td class="last-td">
+                                    @Html.ActionLink(" ", "InfoAboutUser", "Account", new { id = teacher.User.Id }, new { @class = "btn icon-info btn-icon info-item" })
+                                    @using (Html.BeginForm("DeleteUser", "Admin", new { id = teacher.User.Id }))
+                                    {
+                                        <button class="btn icon-remove btn-icon" type="submit"></button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5">Нет ни одного пользователя</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
