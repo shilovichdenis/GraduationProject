@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CourseProject.Models.Cathedra>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Кафедры";
+}
+<style>
+    .last-th{
+        width: 110px;
+    }
+</style>
+@Styles.Render("~/Admin/View")
+<div class="panel" id="view-form-cathedra">
+    <div class="panel-heading header-icon-box">
+        Кафедры
+        @Html.ActionLink(" ", "CreateCathedra", "Admin", null, new { @class = "btn icon-plus btn-icon create-item" })
+    </div>
+    <div class="panel-body">
+        <div id="info-form" class="modal fade">
+            <div id="info-dialog" class="modal-dialog"></div>
+        </div>
+        <div id="edit-form" class="modal fade">
+            <div id="edit-dialog" class="modal-dialog"></div>
+        </div>
+        <div id="create-form" class="modal fade">
+            <div id="create-dialog" class="modal-dialog"></div>
+        </div>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Название</th>
+                    <th>Кабинет</th>
+                    <th>Корпус</th>
+                    <th>Кол-во преподавателей</th>
+                    <th class="last-th"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() != 0)
+                {
+                    foreach (var (cathedra, index) in Model.Select((v, i) => (v, i)))
+                    {
+                        <tr>
+                            <td>@(index + 1)</td>
+                            <td>@cathedra.Name</td>
+                            <td>@cathedra.DepartmentOffice</td>
+                            <td>@cathedra.Building</td>
+                            <td>@cathedra.Teachers.Count()</td>
+                            <td class="last-td">
+                                @Html.ActionLink(" ", "InfoAboutCathedra", "Admin", new { id = cathedra.Id }, new { @class = "btn icon-info btn-icon info-item" })
+                                @Html.ActionLink(" ", "EditCathedra", "Admin", new { id = cathedra.Id }, new { @class = "btn icon-pencil btn-icon edit-item" })
+                                @using (Html.BeginForm("DeleteCathedra", "Admin", new { id = cathedra.Id }))
+                                {
+                                    <button class="btn icon-remove btn-icon" type="submit"></button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">Нет кафедр</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -2,13 +2,26 @@
 @model IEnumerable<Information>
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Информация";
 }
 @Styles.Render("~/Admin/View")
-<div class="panel">
-    <div class="panel-heading">
+<style>
+    #view-form-info .last-th {
+        width: 70px !important;
+    }
+</style>
+<div class="panel" id="view-form-info">
+    <div class="panel-heading header-icon-box">
         Главная страница
+        @Html.ActionLink(" ", "CreateInformation", "Admin", null, new { @class = "btn btn-icon icon-plus create-item" })
     </div>
-    <div class="panel-body info-table">
+    <div class="panel-body">
+        <div id="edit-form" class="modal fade">
+            <div id="edit-dialog" class="modal-dialog"></div>
+        </div>
+        <div id="create-form" class="modal fade">
+            <div id="create-dialog" class="modal-dialog"></div>
+        </div>
         <table class="table table-bordered text-center">
             <thead>
                 <tr>
@@ -17,7 +30,7 @@
                     <th>Получатель</th>
                     <th>Отправитель</th>
                     <th>Дата отправки</th>
-                    <th></th>
+                    <th class="last-th"></th>
                 </tr>
             </thead>
             <tbody>
@@ -29,12 +42,14 @@
                             <td>@(index + 1)</td>
                             <td>@info.Info</td>
                             <td>@info.Reciever.Name</td>
-                            <td>@info.Sender.User.DisplayName</td>
+                            <td>@(info.Sender != null ? info.Sender.User.DisplayName : "Администрация")</td>
                             <td>@info.DateTime.ToShortDateString()</td>
-                            <td>
+                            <td class="last-td">
+                                @Html.ActionLink(" ", "EditInformation", "Admin", new { id = info.Id }, new { @class = "btn icon-pencil btn-icon edit-item" })
+
                                 @using (Html.BeginForm("DeleteInformation", "Admin", new { id = info.Id }))
                                 {
-                                    <button class="btn btn-danger btn-xs icon-ban-circle btn-icon" type="submit"></button>
+                                    <button class="btn icon-remove btn-icon" type="submit"></button>
                                 }
                             </td>
                         </tr>
@@ -48,30 +63,5 @@
                 }
             </tbody>
         </table>
-    </div>
-    <div class="panel-heading">
-        Создать
-    </div>
-    <div class="panel-body">
-        @using (Html.BeginForm("ViewInformation", "Admin", FormMethod.Post))
-        {
-            <div class="form-group">
-                @Html.Label("Информация", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <input type="text" name="info" autocomplete="off" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.Label("Получатель", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("receiverId", ViewBag.Groups as MultiSelectList, "", htmlAttributes: new { @class = "form-control" })
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Создать" class="btn btn-default" />
-                </div>
-            </div>
-        }
     </div>
 </div>

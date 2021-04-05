@@ -169,6 +169,7 @@ namespace CourseProject.Controllers
                         Email = model.Email,
                         Role = model.Role,
                         OtherInfo = model.FormOfEduaction,
+                        SpecializationId = model.SpecializationId,
                     };
                 }
                 else
@@ -183,6 +184,7 @@ namespace CourseProject.Controllers
                         PhoneNumber = model.PhoneNumber,
                         Email = model.Email,
                         Role = model.Role,
+                        SpecializationId = model.SpecializationId,
                     };
                 }
                 var result = await UserManager.CreateAsync(user, model.Password);

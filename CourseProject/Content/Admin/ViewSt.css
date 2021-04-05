@@ -1,8 +1,28 @@
 ﻿#edit-dialog, #create-dialog, #rate-dialog {
     width: 800px !important;
 }
-#info-dialog{
+
+#info-dialog {
     width: 1000px !important;
+}
+
+#edit-form-role, #info-form-group {
+    height: 700px !important;
+}
+
+
+
+    #edit-form-role #main-panel {
+        max-height: 655px !important;
+        overflow-y: scroll !important;
+        height: 100%;
+    }
+
+#info-form-group .panel-body{
+    max-height: unset !important;
+    min-height: unset !important;
+    height: calc(100% - 50px);
+    overflow-y: scroll;
 }
 
 .searchBox {
@@ -352,17 +372,19 @@ input::-webkit-inner-spin-button {
         justify-content: center;
         align-items: center;
     }
-    .form-neural-params span label{
-        margin-right: 10px;
-        margin-bottom: 0;
-    }
 
-.info-f1-f2{
+        .form-neural-params span label {
+            margin-right: 10px;
+            margin-bottom: 0;
+        }
+
+.info-f1-f2 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.info-f1-f2:last-child{
-    margin-right: 0;
-    margin-left: auto;
-}
+
+    .info-f1-f2:last-child {
+        margin-right: 0;
+        margin-left: auto;
+    }

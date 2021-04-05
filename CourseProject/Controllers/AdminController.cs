@@ -264,17 +264,33 @@ namespace CourseProject.Controllers
         }
         public async Task<ActionResult> EditRole(string id)
         {
-            ApplicationRole role = await RoleManager.FindByIdAsync(id);
-            string[] memberIDs = role.Users.Select(x => x.UserId).ToArray();
+            var roles = dbT.Roles.ToList();
+
+            ApplicationRole selectedRole = await RoleManager.FindByIdAsync(id);
+            roles.Remove(selectedRole);
+            string[] memberIDs = selectedRole.Users.Select(x => x.UserId).ToArray();
 
             IEnumerable<ApplicationUser> members
-                = UserManager.Users.Where(x => memberIDs.Any(y => y == x.Id)).OrderBy(a => a.UserName);
+                = UserManager.Users.Where(a => a.IsConfirmed == true).Where(x => memberIDs.Any(y => y == x.Id)).OrderBy(a => a.UserName);
 
-            IEnumerable<ApplicationUser> nonMembers = UserManager.Users.Except(members).OrderBy(a => a.UserName);
+            List<ApplicationUser> membersInOtherRole = new List<ApplicationUser>();
 
+            List<ApplicationUser> nonMembers = UserManager.Users.Where(a => a.IsConfirmed == true).Except(members).OrderBy(a => a.UserName).ToList();
+
+            foreach (var role in roles)
+            {
+                foreach (var member in nonMembers)
+                {
+                    if (UserManager.IsInRole(member.Id, role.Name))
+                    {
+                        membersInOtherRole.Add(member);
+                    }
+                }
+            }
+            nonMembers = nonMembers.Except(membersInOtherRole).ToList();
             return PartialView(new RoleEditModel
             {
-                Role = role,
+                Role = selectedRole,
                 Members = members,
                 NonMembers = nonMembers
             });
@@ -348,40 +364,73 @@ namespace CourseProject.Controllers
         }
 
 
-        [HttpGet]
         public ActionResult ViewInformation()
         {
             var information = dbT.Information.ToList();
             foreach (var info in information)
             {
-                var teacher = dbT.Teachers.Find(info.SenderId);
-                teacher.User = dbT.Users.Where(a => a.Id == teacher.UserId).FirstOrDefault();
-                info.Sender = teacher;
-                var group = dbT.Groups.Find(info.RecieverId);
-                info.Reciever = group;
+                if (info.SenderId != 0)
+                {
+                    var teacher = dbT.Teachers.Find(info.SenderId);
+                    teacher.User = dbT.Users.Find(teacher.UserId);
+                    info.Sender = teacher;
+                }
+                info.Reciever = dbT.Groups.Find(info.RecieverId);
             }
-            ViewBag.Groups = new SelectList(dbT.Groups.OrderBy(a => a.Name), "Id", "Name");
             return View(information);
         }
-        [HttpPost]
-        public ActionResult ViewInformation(string info, int id)
+
+        [HttpGet]
+        public ActionResult CreateInformation()
         {
-            if (!string.IsNullOrEmpty(info))
+            ViewBag.Groups = new SelectList(dbT.Groups.OrderBy(a => a.Name), "Id", "Name");
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult CreateInformation(Information information)
+        {
+            if (information != null)
             {
-                var group = dbT.Groups.Find(id);
-                if (group != null)
-                {
-                    return RedirectToAction("ViewInformation");
-                }
-                else
-                {
-                    return View("Error");
-                }
+                information.DateTime = DateTime.Today;
+                dbT.Information.Add(information);
+                dbT.SaveChanges();
+                dbT.Dispose();
+                return RedirectToAction("ViewInformation");
             }
             else
             {
-                return View("Error");
+                return HttpNotFound();
             }
+        }
+        [HttpGet]
+        public ActionResult EditInformation(int id)
+        {
+            var information = dbT.Information.Find(id);
+            if (information != null)
+            {
+                if (information.SenderId != 0)
+                {
+                    var teacher = dbT.Teachers.Find(information.SenderId);
+                    teacher.User = dbT.Users.Find(teacher.UserId);
+                    information.Sender = teacher;
+                }
+                information.Reciever = dbT.Groups.Find(information.RecieverId);
+                ViewBag.Groups = new SelectList(dbT.Groups.OrderBy(a => a.Name), "Id", "Name");
+                return PartialView(information);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+        [HttpPost]
+        public ActionResult EditInformation(Information information)
+        {
+            information.DateTime = DateTime.Today;
+            dbT.Entry(information).State = EntityState.Modified;
+            dbT.SaveChanges();
+            dbT.Dispose();
+            return RedirectToAction("ViewInformation");
         }
 
         public ActionResult DeleteInformation(int id)
@@ -565,6 +614,64 @@ namespace CourseProject.Controllers
 
         //}
 
+        public ActionResult ViewCathedras()
+        {
+            var cathedras = dbT.Cathedras.OrderBy(a => a.Name).ToList();
+            foreach (var cathedra in cathedras)
+            {
+                var teachers = dbT.Teachers.Where(a => a.CathedraId == cathedra.Id).ToList();
+                cathedra.Teachers = teachers;
+            }
+            return View(cathedras);
+        }
+        [HttpGet]
+        public ActionResult CreateCathedra()
+        {
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult CreateCathedra(Cathedra cathedra)
+        {
+            if (cathedra != null)
+            {
+                dbT.Cathedras.Add(cathedra);
+                dbT.SaveChanges();
+                dbT.Dispose();
+                return RedirectToAction("ViewCathedras");
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+        [HttpGet]
+        public ActionResult EditCathedra(int id)
+        {
+            var cathedra = dbT.Cathedras.Find(id);
+            if (cathedra != null)
+            {
+                return PartialView(cathedra);
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
+        [HttpPost]
+        public ActionResult EditCathedra(Cathedra cathedra)
+        {
+            if (cathedra != null)
+            {
+                dbT.Entry(cathedra).State = EntityState.Modified;
+                dbT.SaveChanges();
+                dbT.Dispose();
+                return RedirectToAction("ViewCathedras");
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+        }
 
         public ActionResult ViewGroups()
         {

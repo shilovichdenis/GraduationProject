@@ -10,10 +10,13 @@ namespace CourseProject.Models
     {
         public int Id { get; set; }
         [Required]
+        [Display(Name = "Название")]
         public string Name { get; set; }
         [Required]
-        public int DepartmentOffice { get; set; }
+        [Display(Name = "Кабинет")]
+        public string DepartmentOffice { get; set; }
         [Required]
+        [Display(Name = "Корпус")]
         public string Building { get; set; }
         public List<Teacher> Teachers { get; set; }
 

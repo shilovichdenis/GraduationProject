@@ -19,6 +19,7 @@
                     <th>Форма образования</th>
                     <th>Номер телефона</th>
                     <th>Почта</th>
+                    <th>Средний балл</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,13 +35,14 @@
                             <td>@student.FormOfEducation</td>
                             <td>@(student.User.PhoneNumber == @String.Empty ? "-Не указано-" : student.User.PhoneNumber)</td>
                             <td>@student.User.Email</td>
+                            <td>@student.AverageRating</td>
                         </tr>
                     }
                 }
                 else
                 {
                     <tr>
-                        <td colspan="8">Нет ни одного студента</td>
+                        <td colspan="9">Нет ни одного студента</td>
                     </tr>
                 }
             </tbody>

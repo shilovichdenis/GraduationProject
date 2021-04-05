@@ -17,7 +17,7 @@ namespace CourseProject.Models
     {
         public ApplicationRole Role { get; set; }
         public IEnumerable<ApplicationUser> Members { get; set; }
-        public IEnumerable<ApplicationUser> NonMembers { get; set; }
+        public List<ApplicationUser> NonMembers { get; set; }
     }
     public class RoleModificationModel
     {

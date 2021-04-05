@@ -1,0 +1,56 @@
+﻿@model CourseProject.Models.Information
+@Styles.Render("~/Admin/Manage")
+<div class="modal-content">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="panel-heading header-icon-box">
+            Редактирование информации
+            <a href="#" data-dismiss="modal">&times;</a>
+        </div>
+        <div class="panel-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Info, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Info, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Info, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RecieverId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.RecieverId, ViewBag.Groups as MultiSelectList, "", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RecieverId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SenderId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" disabled value="@(Model.Sender != null ? Model.Sender.User.DisplayName : "Администрация")" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Sender.Id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.DateTime, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" disabled value="@Model.DateTime.ToShortDateString()" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.DateTime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 btn-box">
+                    <input type="submit" value="Сохранить" class="btn btn-default" />
+                    <input type="button" value="Отмена" data-dismiss="modal" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

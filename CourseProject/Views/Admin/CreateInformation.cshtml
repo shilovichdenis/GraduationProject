@@ -1,0 +1,48 @@
+﻿@model CourseProject.Models.Information
+@Styles.Render("~/Admin/Manage")
+<div class="modal-content" id="create-form-info">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="panel-heading header-icon-box">
+            Добавление информации
+            <a href="#" data-dismiss="modal">&times;</a>
+        </div>
+
+        <div class="panel-body">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Info, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Info, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.Info, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RecieverId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.RecieverId, ViewBag.Groups as MultiSelectList, "", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RecieverId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SenderId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <input type="text" disabled value="Администрация" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.SenderId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 btn-box">
+                    <input type="submit" value="Создать" class="btn btn-default" />
+                    <input type="button" data-dismiss="modal" value="Отмена" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+

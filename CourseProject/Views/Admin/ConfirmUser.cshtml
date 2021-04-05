@@ -3,47 +3,58 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     ViewBag.Title = "Подтверждение пользователей";
 }
+<style>
+    #view-form-confirmuser .last-th{
+        width: 70px;
+    }
+</style>
 @Styles.Render("~/Admin/View")
-<div class="panel">
+<div class="panel" id="view-form-confirmuser">
     <div class="panel-heading">
         Пользователи
     </div>
     <div class="panel-body">
-
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>ФИО</th>
-                        <th>Email</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model.Count() != 0)
-                    {
-                        foreach (var (index, user) in Model.Select((v, i) => (i, v)))
-                        {
-                            <tr>
-                                <td>@(index + 1)</td>
-                                <td>@user.DisplayName</td>
-                                <td>@user.Email</td>
-                                <td class="last-td-btn">
-                                    @using (Html.BeginForm("ConfirmUser", "Admin", new { id = user.Id }))
-                                    {
-                                        <button class="btn btn-default btn-xs" type="submit"></button>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    }
-                    else
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Роль</th>
+                    <th>Email</th>
+                    <th>Телефон</th>
+                    <th class="last-th"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Count() != 0)
+                {
+                    foreach (var (index, user) in Model.Select((v, i) => (i, v)))
                     {
                         <tr>
-                            <td colspan="4">Нет неподтвержденных пользователей</td>
+                            <td>@(index + 1)</td>
+                            <td>@user.Surname</td>
+                            <td>@user.Name</td>
+                            <td>@user.Role</td>
+                            <td>@user.Email</td>
+                            <td>@user.PhoneNumber</td>
+                            <td class="last-td">
+                                @Html.ActionLink(" ", "InfoAboutUser", "Account", new { id = user.Id }, new { @class = "btn icon-info btn-icon info-item" })
+                                @using (Html.BeginForm("ConfirmUser", "Admin", new { id = user.Id }))
+                                {
+                                    <button class="btn icon-plus btn-icon" type="submit"></button>
+                                }
+                            </td>
                         </tr>
                     }
-                </tbody>
-            </table>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">Нет неподтвержденных пользователей</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
