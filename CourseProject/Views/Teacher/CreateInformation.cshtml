@@ -1,19 +1,9 @@
 ﻿@model CourseProject.Models.Information
 @Styles.Render("~/Teacher/Manage")
-<style>
-    .modal-content {
-        border: none;
-    }
-
-    .control-label {
-        text-align: left !important;
-    }
-</style>
 <div class="modal-content" id="create-form-info">
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
         <div class="panel-heading header-icon-box">
             Добавление информации
             <a href="#" data-dismiss="modal">&times;</a>

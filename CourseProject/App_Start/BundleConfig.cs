@@ -8,9 +8,32 @@ namespace CourseProject
         // Дополнительные сведения об объединении см. на странице https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new StyleBundle("~/Admin/View").Include(
+                "~/Content/Admin/ViewSt.css",
+                "~/Content/Admin/InterfaceStyle.css"));
+
+            bundles.Add(new StyleBundle("~/Admin/Manage").Include(
+                "~/Content/Admin/ManageStyle.css",
+                "~/Content/Admin/InterfaceStyle.css"));
+
+
+            bundles.Add(new StyleBundle("~/Teacher/View").Include(
+                "~/Content/Teacher/View.css",
+                "~/Content/Teacher/Interface.css"));
+
+            bundles.Add(new StyleBundle("~/Teacher/Manage").Include(
+                "~/Content/Teacher/Manage.css",
+                "~/Content/Teacher/Interface.css"));
+
+
+            bundles.Add(new StyleBundle("~/Student/View").Include(
+                "~/Content/Student/View.css",
+                "~/Content/Student/InterfaceStyle.css"));
+
+
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
-                        "~/Scripts/Slick/slick.min.js"));
+                        "~/Scripts/Slick/slick.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -44,27 +67,7 @@ namespace CourseProject
                 "~/Content/Account/Login.css"));
 
 
-            bundles.Add(new StyleBundle("~/Admin/View").Include(
-                "~/Content/Admin/ViewSt.css",
-                "~/Content/Admin/InterfaceStyle.css"));
 
-            bundles.Add(new StyleBundle("~/Admin/Manage").Include(
-                "~/Content/Admin/ManageStyle.css",
-                "~/Content/Admin/InterfaceStyle.css"));
-
-
-            bundles.Add(new StyleBundle("~/Teacher/View").Include(
-                "~/Content/Teacher/View.css",
-                "~/Content/Teacher/Interface.css"));
-
-            bundles.Add(new StyleBundle("~/Teacher/Manage").Include(
-                "~/Content/Teacher/Manage.css",
-                "~/Content/Teacher/Interface.css"));
-
-
-            bundles.Add(new StyleBundle("~/Student/View").Include(
-                "~/Content/Student/View.css",
-                "~/Content/Student/InterfaceStyle.css"));
 
 
             bundles.Add(new ScriptBundle("~/Student/Script").Include(

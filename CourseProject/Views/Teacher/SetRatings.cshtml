@@ -1,28 +1,5 @@
 ﻿@model IEnumerable<CourseProject.Models.Statement>
 @Styles.Render("~/Teacher/Manage")
-<style>
-    #td-input {
-        border-top: none;
-    }
-
-    .input-rating {
-        display: block;
-        text-align: center;
-        width: 100%;
-        font-size: 14px;
-        border: none;
-        outline: 0;
-    }
-
-        .input-rating:active, input-rating:hover, input-rating:focus {
-            outline: 0;
-            outline-offset: 0;
-        }
-
-    #rate-form .panel-body {
-        overflow-y: auto;
-    }
-</style>
 <div class="modal-content" id="rate-form-discipline">
     @if (Model.Count() != 0)
     {

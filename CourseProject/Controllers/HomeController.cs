@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace CourseProject.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
         ApplicationDbContext dbT = new ApplicationDbContext();

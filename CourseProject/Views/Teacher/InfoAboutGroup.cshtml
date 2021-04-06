@@ -1,8 +1,5 @@
 ﻿@model CourseProject.Models.Group
 @Styles.Render("~/Teacher/View")
-<style>
-
-</style>
 <div class="modal-content" id="info-form-group">
     <div class="panel-heading header-icon-box">
         Группа - @Model.Name
@@ -27,12 +24,12 @@
                 {
                     foreach (var (index, student) in Model.Students.Select((v, i) => (i, v)))
                     {
-                        <tr style="cursor: pointer" onclick="window.location.href='InfoAboutUser/@student.Id'; return false">
+                        <tr style="cursor: pointer" onclick="window.location.href='/Account/InfoAboutUser/@student.Id'; return false">
                             <td>@(index + 1)</td>
                             <td>@student.User.Surname</td>
                             <td>@student.User.Name</td>
                             <td>@student.User.Gender</td>
-                            <td>@student.FormOfEducation</td>
+                            <td>@student.FormOfPayment</td>
                             <td>@(student.User.PhoneNumber == @String.Empty ? "-Не указано-" : student.User.PhoneNumber)</td>
                             <td>@student.User.Email</td>
                             <td>@student.AverageRating</td>
@@ -49,9 +46,3 @@
         </table>
     </div>
 </div>
-@section scripts
-{
-    <script type="text/javascript">
-
-    </script>
-}

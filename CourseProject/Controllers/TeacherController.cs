@@ -12,6 +12,7 @@ using System.Web.Mvc;
 namespace CourseProject.Controllers
 {
     [Authorize(Roles = "Teacher")]
+    [RequireHttps]
     public class TeacherController : Controller
     {
         ApplicationDbContext dbT = new ApplicationDbContext();
@@ -27,7 +28,7 @@ namespace CourseProject.Controllers
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             var teacher = dbT.Teachers.Where(a => a.UserId == user.Id).FirstOrDefault();
-            if(teacher != null)
+            if (teacher != null)
             {
                 teacher.User = user;
                 teacher.Cathedra = dbT.Cathedras.Find(teacher.CathedraId);
@@ -41,14 +42,14 @@ namespace CourseProject.Controllers
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             var teacher = dbT.Teachers.Where(a => a.UserId == user.Id).FirstOrDefault();
-            if(teacher != null)
+            if (teacher != null)
             {
                 var studyGroups = dbT.StudyGroups.Where(a => a.TeacherId == teacher.Id).ToList();
                 foreach (var sg in studyGroups)
                 {
                     sg.Group = dbT.Groups.Find(sg.GroupId);
                 }
-                return View(studyGroups);
+                return View(studyGroups.OrderBy(a => a.Group.Name));
             }
             return HttpNotFound();
         }
@@ -58,7 +59,7 @@ namespace CourseProject.Controllers
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             var teacher = dbT.Teachers.Where(a => a.UserId == user.Id).FirstOrDefault();
-            if(teacher != null)
+            if (teacher != null)
             {
                 ViewBag.Groups = new SelectList(dbT.Groups.OrderBy(a => a.Name), "Id", "Name");
                 ViewBag.TeacherId = teacher.Id;
@@ -78,6 +79,7 @@ namespace CourseProject.Controllers
                 studyGroups.Teacher = teacher;
                 dbT.StudyGroups.Add(studyGroups);
                 dbT.SaveChanges();
+                dbT.Dispose();
                 return RedirectToAction("ViewGroups");
             }
             else
@@ -99,6 +101,7 @@ namespace CourseProject.Controllers
                     var studyGroup = dbT.StudyGroups.Where(a => a.TeacherId == teacher.Id).Where(a => a.GroupId == group.Id).FirstOrDefault();
                     dbT.StudyGroups.Remove(studyGroup);
                     dbT.SaveChanges();
+                    dbT.Dispose();
                     return RedirectToAction("ViewGroups");
                 }
                 return HttpNotFound();
@@ -131,21 +134,20 @@ namespace CourseProject.Controllers
                 {
                     discipline.Group = dbT.Groups.Find(discipline.GroupId);
                 }
-                return View(disciplines);
+                return View(disciplines.OrderBy(a => a.Name));
             }
             return HttpNotFound();
-
         }
 
-        [HttpGet]
-        public ActionResult InfoAboutDiscipline(int id)
-        {
-            var discipline = dbT.Disciplines.Find(id);
-            discipline.Group = dbT.Groups.Find(discipline.GroupId);
-            discipline.Teacher = dbT.Teachers.Find(discipline.TeacherId);
-            discipline.Teacher.User = dbT.Users.Find(discipline.Teacher.UserId);
-            return PartialView(discipline);
-        }
+        //[HttpGet]
+        //public ActionResult InfoAboutDiscipline(int id)
+        //{
+        //    var discipline = dbT.Disciplines.Find(id);
+        //    discipline.Group = dbT.Groups.Find(discipline.GroupId);
+        //    discipline.Teacher = dbT.Teachers.Find(discipline.TeacherId);
+        //    discipline.Teacher.User = dbT.Users.Find(discipline.Teacher.UserId);
+        //    return PartialView(discipline);
+        //}
 
         [HttpGet]
         public ActionResult CreateDiscipline()
@@ -184,6 +186,7 @@ namespace CourseProject.Controllers
                 }
                 dbT.Disciplines.Add(discipline);
                 dbT.SaveChanges();
+                dbT.Dispose();
                 return RedirectToAction("ViewDisciplines");
             }
             else
@@ -228,6 +231,7 @@ namespace CourseProject.Controllers
                 discipline.Group = group;
                 dbT.Entry(discipline).State = EntityState.Modified;
                 dbT.SaveChanges();
+                dbT.Dispose();
                 return RedirectToAction("ViewDisciplines");
             }
             else
@@ -248,6 +252,7 @@ namespace CourseProject.Controllers
                 }
                 dbT.Disciplines.Remove(discipline);
                 dbT.SaveChanges();
+                dbT.Dispose();
                 return RedirectToAction("ViewDisciplines");
             }
             else
@@ -272,7 +277,7 @@ namespace CourseProject.Controllers
                     statement.Discipline = discipline;
                 }
                 ViewBag.Discipline = discipline;
-                return PartialView(statements);
+                return PartialView(statements.OrderBy(a => a.Student.User.Surname));
             }
             else
             {
@@ -316,6 +321,7 @@ namespace CourseProject.Controllers
                     }
                 }
                 dbT.SaveChanges();
+                dbT.Dispose();
                 return RedirectToAction("ViewDisciplines");
             }
             else
@@ -324,7 +330,6 @@ namespace CourseProject.Controllers
             }
         }
 
-        [HttpGet]
         public ActionResult ViewInformation()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
@@ -343,31 +348,7 @@ namespace CourseProject.Controllers
                 info.Reciever = dbT.Groups.Find(info.RecieverId);
             }
             ViewBag.Teacher = teacher;
-            return View(information);
-        }
-        [HttpPost]
-        public ActionResult ViewInformation(string info, int receiverId, int senderId)
-        {
-            if (!string.IsNullOrEmpty(info))
-            {
-                var group = dbT.Groups.Find(receiverId);
-                if (group != null)
-                {
-                    var information = new Information(info, receiverId, senderId, DateTime.Today);
-                    dbT.Information.Add(information);
-                    dbT.SaveChanges();
-                    dbT.Dispose();
-                    return RedirectToAction("ViewInformation");
-                }
-                else
-                {
-                    return View("Error");
-                }
-            }
-            else
-            {
-                return View("Error");
-            }
+            return View(information.OrderBy(a=>a.DateTime));
         }
 
         [HttpGet]
@@ -391,11 +372,12 @@ namespace CourseProject.Controllers
         [HttpPost]
         public ActionResult CreateInformation(Information information)
         {
-            if(information != null)
+            if (information != null)
             {
                 information.DateTime = DateTime.Today;
                 dbT.Information.Add(information);
                 dbT.SaveChanges();
+                dbT.Dispose();
                 return RedirectToAction("ViewInformation");
             }
             else
@@ -459,6 +441,5 @@ namespace CourseProject.Controllers
             }
             return View();
         }
-
     }
 }

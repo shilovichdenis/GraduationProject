@@ -1,14 +1,8 @@
-﻿@using CourseProject.Models
-@model IEnumerable<Information>
+﻿@model IEnumerable<CourseProject.Models.Information>
 @{
     Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
     ViewBag.Title = "Информация";
 }
-<style>
-    #view-form-info .last-th {
-        width: 70px !important;
-    }
-</style>
 @Styles.Render("~/Teacher/View")
 <div class="panel" id="view-form-info">
     <div class="panel-heading header-icon-box">
@@ -63,32 +57,3 @@
         </table>
     </div>
 </div>
-@section scripts
-{
-    <script type="text/javascript">
-
-        $(function () {
-            $.ajaxSetup({ cache: false });
-            $(".create-item").click(function (e) {
-
-                e.preventDefault();
-                $.get(this.href, function (data) {
-                    $('#create-dialog').html(data);
-                    $('#create-form').modal('show');
-                });
-            });
-        })
-
-        $(function () {
-            $.ajaxSetup({ cache: false });
-            $(".edit-item").click(function (e) {
-
-                e.preventDefault();
-                $.get(this.href, function (data) {
-                    $('#edit-dialog').html(data);
-                    $('#edit-form').modal('show');
-                });
-            });
-        })
-    </script>
-}

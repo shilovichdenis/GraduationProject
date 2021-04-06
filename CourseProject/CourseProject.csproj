@@ -217,6 +217,10 @@
     <Compile Include="Migrations\202104051723028_SampleMigrations7.Designer.cs">
       <DependentUpon>202104051723028_SampleMigrations7.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104061601103_SampleMigrations8.cs" />
+    <Compile Include="Migrations\202104061601103_SampleMigrations8.Designer.cs">
+      <DependentUpon>202104061601103_SampleMigrations8.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DbStruct\ApplicationRole.cs" />
@@ -241,7 +245,6 @@
   <ItemGroup>
     <Content Include="Content\Account\Login.css" />
     <Content Include="Content\Account\Registration.css" />
-    <Content Include="Content\Admin\Create.css" />
     <Content Include="Content\Admin\Information.css" />
     <Content Include="Content\Admin\InterfaceStyle.css" />
     <Content Include="Content\Admin\ManageStyle.css" />
@@ -412,10 +415,19 @@
     <EmbeddedResource Include="Migrations\202104051723028_SampleMigrations7.resx">
       <DependentUpon>202104051723028_SampleMigrations7.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104061601103_SampleMigrations8.resx">
+      <DependentUpon>202104061601103_SampleMigrations8.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

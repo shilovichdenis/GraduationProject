@@ -44,6 +44,10 @@
                                 {
                                     <button class="btn icon-plus btn-icon" type="submit"></button>
                                 }
+                                @using (Html.BeginForm("DeleteUser", "Admin", new { id = user.Id }))
+                                {
+                                    <button class="btn icon-remove btn-icon" type="submit"></button>
+                                }
                             </td>
                         </tr>
                     }

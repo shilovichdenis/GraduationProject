@@ -11,6 +11,7 @@ using CourseProject.Models;
 namespace CourseProject.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

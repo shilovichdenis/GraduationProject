@@ -15,8 +15,10 @@ namespace CourseProject.Models
         public string UserId { get; set; }
         public Group Group { get; set; }
         public int GroupId { get; set; }
+        [Display(Name = "Средний балл")]
         public double AverageRating { get; set; }
-        public string FormOfEducation { get; set; }
+        [Display(Name = "Форма оплаты")]
+        public string FormOfPayment{ get; set; }
         [NonSerialized]
         public RecordBook RecordBook;
 
@@ -24,11 +26,11 @@ namespace CourseProject.Models
         {
         }
 
-        public Student(string userId, int groupId, string formOfEducation)
+        public Student(string userId, int groupId, string formOfPayment)
         {
             UserId = userId;
             GroupId = groupId;
-            FormOfEducation = formOfEducation;
+            FormOfPayment = formOfPayment;
         }
     }
 }

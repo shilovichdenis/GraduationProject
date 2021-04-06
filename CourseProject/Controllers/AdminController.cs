@@ -14,6 +14,7 @@ using System.Data.Entity;
 namespace CourseProject.Controllers
 {
     [Authorize(Roles = "Admin")]
+    [RequireHttps]
     public class AdminController : Controller
     {
         ApplicationDbContext dbT = new ApplicationDbContext();
@@ -538,7 +539,7 @@ namespace CourseProject.Controllers
                 IdentityResult result = await UserManager.DeleteAsync(user);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("ViewTeachers");
+                    return RedirectToAction("ViewUsers");
                 }
                 else
                 {

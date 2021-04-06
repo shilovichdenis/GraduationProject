@@ -1,5 +1,4 @@
 ﻿.panel {
-    padding: 20px;
     margin-top: 20px !important;
     border: 1.5px solid #222;
 }
@@ -13,11 +12,11 @@
 }
 
 .panel-body {
+    padding: 15px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     width: 100%;
     min-height: 480px;
-    max-height: 480px;
     text-align: center;
 }
 

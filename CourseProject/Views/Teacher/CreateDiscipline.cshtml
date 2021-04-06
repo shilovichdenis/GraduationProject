@@ -1,14 +1,5 @@
 ﻿@model CourseProject.Models.Discipline
-@Styles.Render("~/Admin/Manage")
-<style>
-    .control-label {
-        text-align: left !important;
-    }
-
-    .last-th {
-        width: 100px !important;
-    }
-</style>
+@Styles.Render("~/Teacher/Manage")
 <div class="modal-content" id="create-form-discipline">
     <div class="panel-heading header-icon-box">
         Добавление дисциплины
@@ -99,6 +90,3 @@
         }
     </div>
 </div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}

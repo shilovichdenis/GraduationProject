@@ -14,6 +14,7 @@ using System.Data.Entity;
 namespace CourseProject.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class AccountController : Controller
     {
         ApplicationDbContext dbT = new ApplicationDbContext();
@@ -168,8 +169,9 @@ namespace CourseProject.Controllers
                         PhoneNumber = model.PhoneNumber,
                         Email = model.Email,
                         Role = model.Role,
-                        OtherInfo = model.FormOfEduaction,
                         SpecializationId = model.SpecializationId,
+                        OtherInfo = model.FormOfEduaction
+
                     };
                 }
                 else
@@ -184,7 +186,7 @@ namespace CourseProject.Controllers
                         PhoneNumber = model.PhoneNumber,
                         Email = model.Email,
                         Role = model.Role,
-                        SpecializationId = model.SpecializationId,
+                        SpecializationId = model.SpecializationId
                     };
                 }
                 var result = await UserManager.CreateAsync(user, model.Password);

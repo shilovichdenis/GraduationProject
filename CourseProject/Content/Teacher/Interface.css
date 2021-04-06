@@ -1,5 +1,4 @@
 ﻿.panel {
-    padding: 20px;
     margin-top: 20px !important;
     border: 1.5px solid #222;
 }
@@ -17,7 +16,7 @@
     overflow-y: auto;
     width: 100%;
     text-align: center;
-    padding: 20px;
+    padding: 15px;
     min-height: 480px !important;
 }
 

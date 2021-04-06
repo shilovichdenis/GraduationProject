@@ -165,28 +165,6 @@ table {
         vertical-align: middle !important;
     }
 
-
-
-.panel {
-    padding: 20px;
-    margin-top: 20px !important;
-    border: 1.5px solid #222;
-}
-
-.panel-heading {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    color: #9d9d9d;
-    border-radius: unset;
-    background-color: #222222;
-    font-size: 17px;
-}
-
-.panel-body {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    overflow: auto;
-    width: 100%;
-}
-
     .panel-body th {
         position: sticky;
         background: #eee;

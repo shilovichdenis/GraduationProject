@@ -11,6 +11,7 @@ using System.Web.Mvc;
 namespace CourseProject.Controllers
 {
     [Authorize(Roles = "Student")]
+    [RequireHttps]
     public class StudentController : Controller
     {
         ApplicationDbContext dbT = new ApplicationDbContext();
@@ -42,7 +43,7 @@ namespace CourseProject.Controllers
                 tests.Add(new Tests(test, statement.Rating.ToString()));
             }
 
-            var dExams = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(b => b.IsExam).Where(a => a.DateTime > DateTime.Today).Where(a=>a.IsPassed == true).ToList();
+            var dExams = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(b => b.IsExam).Where(a => a.DateTime > DateTime.Today).Where(a => a.IsPassed == true).ToList();
             var exams = new List<Exams> { };
             foreach (var exam in dExams)
             {
@@ -71,7 +72,7 @@ namespace CourseProject.Controllers
                 var userStud = dbT.Users.Find(stud.UserId);
                 stud.User = userStud;
             }
-            group.Students = students;
+            group.Students = students.OrderBy(a => a.User.Surname).ToList();
             return View(group);
         }
 
