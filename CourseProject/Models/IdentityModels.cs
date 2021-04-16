@@ -3,7 +3,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using CourseProject.Models;
+using CourseProject.Models.Students;
+using CourseProject.Models.General;
+using CourseProject.Models.Teachers;
+using CourseProject.Models.NeuralNetworks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -31,6 +34,11 @@ namespace CourseProject.Models
         [Display(Name = "Др. инф-ция")]
         public string OtherInfo { get; set; }
         public bool IsConfirmed { get; set; }
+
+        [Display(Name = "Почта")]
+        public override string Email { get; set; }
+        [Display(Name = "Телефон")]
+        public override string PhoneNumber { get; set; }
 
         public string DisplayName
         {
@@ -70,8 +78,10 @@ namespace CourseProject.Models
         public DbSet<NeuralNetworkResult> Results { get; set; }
         public DbSet<Information> Information { get; set; }
 
-        public DbSet<CourseProject> CourseProjects { get; set; }
+        public DbSet<Project> Projects { get; set; }
         public DbSet<Discipline> Disciplines { get; set; }
 
+        public DbSet<Publications> Publications { get; set; }
+        public DbSet<ScientificWork> ScientificWorks { get; set; }
     }
 }

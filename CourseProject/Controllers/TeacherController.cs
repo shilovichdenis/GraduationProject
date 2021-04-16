@@ -1,4 +1,7 @@
 ﻿using CourseProject.Models;
+using CourseProject.Models.Teachers;
+using CourseProject.Models.General;
+using CourseProject.Models.Students;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -31,7 +34,7 @@ namespace CourseProject.Controllers
             if (teacher != null)
             {
                 teacher.User = user;
-                teacher.Cathedra = dbT.Cathedras.Find(teacher.CathedraId);
+                teacher.Cathedra = dbT.Cathedras.Where(a=>a.Id == teacher.CathedraId).FirstOrDefault();
                 return View(teacher);
             }
             return HttpNotFound();

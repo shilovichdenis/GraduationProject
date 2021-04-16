@@ -1,0 +1,68 @@
+﻿.panel {
+    margin-top: 20px !important;
+    border: 1.5px solid #222;
+}
+
+.panel-heading {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    color: #9d9d9d;
+    border-radius: unset;
+    background-color: #222222;
+    font-size: 17px;
+}
+
+.panel-body {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding: 0;
+    text-align: center;
+    padding: 15px;
+    height: auto;
+}
+
+.info-heading {
+    font-size: 15px;
+    text-align: left;
+    line-height: 0.8em;
+}
+
+.main-info {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.main-info, .timetable-info, .educationalmaterials-info {
+    margin-bottom: 15px;
+}
+
+.block-column {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+}
+
+    .block-column .form-group {
+        width: 100%;
+    }
+
+        .block-column .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+.form-group span {
+    text-align: left !important;
+}
+table th{
+    text-align: center;
+}
+.link, .link:hover, .link:target, .link:checked, .link:focus{
+    text-decoration: none;
+    color: black;
+}
+.photo {
+    height: 250px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}

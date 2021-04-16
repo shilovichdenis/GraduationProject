@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace CourseProject.Models
+namespace CourseProject.Models.Students
 {
     public class Student
     {

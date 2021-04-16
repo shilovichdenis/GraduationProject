@@ -221,22 +221,36 @@
     <Compile Include="Migrations\202104061601103_SampleMigrations8.Designer.cs">
       <DependentUpon>202104061601103_SampleMigrations8.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104091856399_SampleMigrations9.cs" />
+    <Compile Include="Migrations\202104091856399_SampleMigrations9.Designer.cs">
+      <DependentUpon>202104091856399_SampleMigrations9.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104141458556_SampleMigrations10.cs" />
+    <Compile Include="Migrations\202104141458556_SampleMigrations10.Designer.cs">
+      <DependentUpon>202104141458556_SampleMigrations10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104151744032_SampleMigrations11.cs" />
+    <Compile Include="Migrations\202104151744032_SampleMigrations11.Designer.cs">
+      <DependentUpon>202104151744032_SampleMigrations11.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\DbStruct\ApplicationRole.cs" />
-    <Compile Include="Models\DbStruct\Cathedra.cs" />
-    <Compile Include="Models\DbStruct\CourseProject.cs" />
-    <Compile Include="Models\DbStruct\Discipline.cs" />
-    <Compile Include="Models\DbStruct\Group.cs" />
-    <Compile Include="Models\DbStruct\Information.cs" />
-    <Compile Include="Models\DbStruct\StudyGroups.cs" />
-    <Compile Include="Models\NeuralNetwork\NeuralNetwork.cs" />
-    <Compile Include="Models\NeuralNetwork\NeuralNetworkResult.cs" />
-    <Compile Include="Models\NeuralNetwork\StudentsForNeuralNetwork.cs" />
-    <Compile Include="Models\DbStruct\RecordBook.cs" />
-    <Compile Include="Models\DbStruct\Statement.cs" />
-    <Compile Include="Models\DbStruct\Student.cs" />
-    <Compile Include="Models\DbStruct\Teacher.cs" />
+    <Compile Include="Models\ApplicationRole.cs" />
+    <Compile Include="Models\Teachers\Cathedra.cs" />
+    <Compile Include="Models\Students\CourseProject.cs" />
+    <Compile Include="Models\General\Discipline.cs" />
+    <Compile Include="Models\Students\Group.cs" />
+    <Compile Include="Models\General\Information.cs" />
+    <Compile Include="Models\Teachers\Publications.cs" />
+    <Compile Include="Models\Teachers\ScientificWork.cs" />
+    <Compile Include="Models\Teachers\StudyGroups.cs" />
+    <Compile Include="Models\NeuralNetworks\NeuralNetwork.cs" />
+    <Compile Include="Models\NeuralNetworks\NeuralNetworkResult.cs" />
+    <Compile Include="Models\NeuralNetworks\StudentsForNeuralNetwork.cs" />
+    <Compile Include="Models\Students\RecordBook.cs" />
+    <Compile Include="Models\General\Statement.cs" />
+    <Compile Include="Models\Students\Student.cs" />
+    <Compile Include="Models\Teachers\Teacher.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -259,6 +273,7 @@
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\font\fontawesome-webfont.svg" />
     <Content Include="Content\HomePage.css" />
+    <Content Include="Content\Home\View.css" />
     <Content Include="Content\Slick\ajax-loader.gif" />
     <Content Include="Content\Slick\fonts\slick.svg" />
     <Content Include="Content\Slick\slick-theme.css" />
@@ -370,7 +385,7 @@
     <Content Include="Views\Student\ViewTeachers.cshtml" />
     <Content Include="Views\Student\ViewDisciplines.cshtml" />
     <Content Include="Views\Student\InfoAboutYourself.cshtml" />
-    <Content Include="Views\Admin\ConfirmUser.cshtml" />
+    <Content Include="Views\Admin\ViewUsers.cshtml" />
     <Content Include="Views\Teacher\EditInformation.cshtml" />
     <Content Include="Views\Teacher\CreateInformation.cshtml" />
     <Content Include="Views\Teacher\InfoAboutDiscipline.cshtml" />
@@ -381,6 +396,9 @@
     <Content Include="Views\Admin\ViewCathedras.cshtml" />
     <Content Include="Views\Admin\CreateCathedra.cshtml" />
     <Content Include="Views\Admin\EditCathedra.cshtml" />
+    <Content Include="Views\Teacher\InfoAboutYourself.cshtml" />
+    <Content Include="Views\Home\InfoAboutCathedra.cshtml" />
+    <Content Include="Views\Home\InfoAboutTeacher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -417,6 +435,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104061601103_SampleMigrations8.resx">
       <DependentUpon>202104061601103_SampleMigrations8.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104091856399_SampleMigrations9.resx">
+      <DependentUpon>202104091856399_SampleMigrations9.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104141458556_SampleMigrations10.resx">
+      <DependentUpon>202104141458556_SampleMigrations10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104151744032_SampleMigrations11.resx">
+      <DependentUpon>202104151744032_SampleMigrations11.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

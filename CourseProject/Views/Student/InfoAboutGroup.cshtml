@@ -1,14 +1,49 @@
-﻿@model CourseProject.Models.Group
+﻿@model CourseProject.Models.Students.Group
 @{
     Layout = "~/Views/Shared/_LayoutStudent.cshtml";
     ViewBag.Title = "Информация о группе";
 }
+<style>
+    .main-info {
+        width: 100%;
+    }
+</style>
 @Styles.Render("~/Student/View")
 <div class="panel" id="info-form-group">
     <div class="panel-heading">
         Группа - @Model.Name
     </div>
     <div class="panel-body">
+        <div class="main-info">
+            <div class="col-md-6 block-column">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Faculty, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <span class="">@Html.DisplayFor(model => model.Faculty)</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Specialty, htmlAttributes: new { @class = "control-label col-md-3" })
+                    <div class="col-md-9">
+                        <span class="">@Html.DisplayFor(model => model.Specialty)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 block-column">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.FormOfEducation, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <span class="">@Html.DisplayFor(model => model.FormOfEducation)</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.YearOfAdmission, htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <span class="">@Html.DisplayFor(model => model.YearOfAdmission)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>

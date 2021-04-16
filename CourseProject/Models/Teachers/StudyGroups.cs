@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using CourseProject.Models.Students;
 
-namespace CourseProject.Models
+namespace CourseProject.Models.Teachers
 {
     public class StudyGroups
     {

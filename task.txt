@@ -1,0 +1,27 @@
+clear pred test cluster
+division into semesters
+Группировка по группам в общем выводе студентов
+Группировка преподавателей по кафедрам в общем выводе преподавателей 
+
+for students output teachers +
+check search
+photo
+аverage score calculation +
+Навбар переделать (Сделать управление данными)+
+average score in the group info +
+home
+	news
+	info about scholarship 
+selectlist building BNTU
+cathedraname unique
+role isconfurmed +
+
+fixed modal-form or no ?
+specializationId register
+delete cathedra +
+unconfirm(delete register user)
+deletefromstudents(+role)
+confirmuser + users (2 tables) +
+create group yearofadmission
+null in group(info) send to all
+delete user with all info about him

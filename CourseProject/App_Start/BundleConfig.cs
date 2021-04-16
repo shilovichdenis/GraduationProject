@@ -30,6 +30,9 @@ namespace CourseProject
                 "~/Content/Student/View.css",
                 "~/Content/Student/InterfaceStyle.css"));
 
+            bundles.Add(new StyleBundle("~/Home/View").Include(
+               "~/Content/Home/View.css"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
@@ -48,7 +51,7 @@ namespace CourseProject
                       "~/Scripts/ScrptSection.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/bootstrap.min.css",
                       "~/Content/font-awesome.css",
                       "~/Content/Site.css"));
 

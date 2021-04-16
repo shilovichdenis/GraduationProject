@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using CourseProject.Models.Students;
 
-namespace CourseProject.Models
+namespace CourseProject.Models.NeuralNetworks
 {
     public class NeuralNetwork
     {

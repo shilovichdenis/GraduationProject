@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using CourseProject.Models.Students;
+using CourseProject.Models.Teachers;
 
-namespace CourseProject.Models
+namespace CourseProject.Models.General
 {
     public class Discipline
     {

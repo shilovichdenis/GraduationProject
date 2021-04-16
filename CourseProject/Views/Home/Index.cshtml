@@ -4,45 +4,80 @@
     ViewBag.Title = "Home Page";
 }
 @Styles.Render("~/Content/Home")
+<style>
+    .panel {
+        min-height: unset;
+        max-height: unset;
+    }
+
+    .right-div, .left-div {
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .panel-body {
+        display: flex;
+        justify-content: space-between;
+    }
+    #infoFromTeachers .panel-heading{
+        font-size: 16px;
+        line-height: 1em;
+    }
+    .left-div{
+        margin-left: 0;
+        margin-right: auto;
+    }
+    .right-div {
+        margin-right: 0;
+        margin-left: auto;
+    }
+</style>
 <div class="panel">
     <div class="panel-heading">
         Главная страница
     </div>
     <div class="panel-body">
-        <div class="jumbotron">
+        <div class="left-div col-md-6">
             <h1>ASP.NET</h1>
             <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
             <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
         </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Getting started</h2>
-                <p>
-                    ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                    enables a clean separation of concerns and gives you full control over markup
-                    for enjoyable, agile development.
-                </p>
-                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Get more libraries</h2>
-                <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-            </div>
-            <div class="col-md-4">
-                <h2>Web Hosting</h2>
-                <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-                <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <div class="right-div">
+            <div id="infoFromTeachers" class="">
+                <div class="panel-heading">Информация</div>
+                @{
+                    var information = ViewBag.Information as List<Information>;
+                }
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Информация</th>
+                            <th>Отправитель</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (information.Count() != 0)
+                        {
+                            foreach (var (index, info) in information.Select((v, i) => (i, v)))
+                            {
+                                <tr>
+                                    <td>@(index + 1)</td>
+                                    <td>@info.Info</td>
+                                    <td>@(info.Sender != null ? info.Sender.User.DisplayName : "Администрация")</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>Нет информации</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
-        @*<div class="information">
-            <div class="information-heading">
-                Информация
-            </div>
-            <div class="information-body">
-
-            </div>
-        </div>*@
     </div>
 </div>

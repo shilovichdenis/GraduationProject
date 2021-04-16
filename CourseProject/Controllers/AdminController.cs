@@ -10,6 +10,10 @@ using System.Web;
 using System.Web.Mvc;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using CourseProject.Models.General;
+using CourseProject.Models.Teachers;
+using CourseProject.Models.Students;
+using CourseProject.Models.NeuralNetworks;
 
 namespace CourseProject.Controllers
 {
@@ -33,9 +37,9 @@ namespace CourseProject.Controllers
             }
         }
         [HttpGet]
-        public ActionResult ConfirmUser()
+        public ActionResult ViewUsers()
         {
-            return View(dbT.Users.Where(a => !a.IsConfirmed).OrderBy(a => a.Surname).ToList());
+            return View(dbT.Users.OrderBy(a => a.Surname).ToList());
         }
         [HttpPost]
         public ActionResult ConfirmUser(string id)
@@ -464,7 +468,14 @@ namespace CourseProject.Controllers
             foreach (var teacher in teachers)
             {
                 teacher.User = dbT.Users.Find(teacher.UserId);
-                teacher.Cathedra = dbT.Cathedras.Find(teacher.CathedraId);
+                if(teacher.CathedraId != null)
+                {
+                    teacher.Cathedra = dbT.Cathedras.Find(teacher.CathedraId);
+                }
+                else
+                {
+                    teacher.Cathedra = new Cathedra();
+                }
             }
             return View(teachers.OrderBy(a => a.User.Surname));
         }
@@ -672,6 +683,27 @@ namespace CourseProject.Controllers
             {
                 return HttpNotFound();
             }
+        }
+        public ActionResult DeleteCathedra(int id)
+        {
+            var cathedra = dbT.Cathedras.Find(id);
+            var teachers = dbT.Teachers.Where(a => a.CathedraId == cathedra.Id).ToList();
+            foreach (var teacher in teachers)
+            {
+                teacher.CathedraId = null;
+            }
+            if (cathedra != null)
+            {
+                dbT.Cathedras.Remove(cathedra);
+                dbT.SaveChanges();
+                dbT.Dispose();
+                return RedirectToAction("ViewCathedras");
+            }
+            else
+            {
+                return HttpNotFound();
+            }
+
         }
 
         public ActionResult ViewGroups()

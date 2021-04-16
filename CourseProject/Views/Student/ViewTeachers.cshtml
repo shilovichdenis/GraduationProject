@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CourseProject.Models.Teacher>
+﻿@model IEnumerable<CourseProject.Models.Teachers.Teacher>
 @{
     Layout = "~/Views/Shared/_LayoutStudent.cshtml";
     ViewBag.Title = "Преподаватели";
@@ -24,10 +24,12 @@
                         <tr>
                             <td>@(index + 1)</td>
                             <td>
-                                @Html.ActionLink(teacher.User.DisplayName, "InfoAboutUser", "Account", new { id = teacher.User.Id }, new { @class = "teacher-link" })
+                                @Html.ActionLink(teacher.User.DisplayName, "InfoAboutTeacher", "Home", new { id = teacher.Id }, new { @class = "teacher-link" })
                             </td>
                             <td>@teacher.User.Email</td>
-                            <td>@teacher.Cathedra.Name</td>
+                            <td>
+                                @Html.ActionLink(teacher.Cathedra.Name, "InfoAboutCathedra", "Home", new { id = teacher.CathedraId }, new { @class = "teacher-link" })
+                            </td>
                         </tr>
                     }
                 }

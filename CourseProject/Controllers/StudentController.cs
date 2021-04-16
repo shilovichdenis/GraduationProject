@@ -1,4 +1,6 @@
-﻿using CourseProject.Models;
+﻿using CourseProject.Models.Students;
+using CourseProject.Models.Teachers;
+using CourseProject.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -55,7 +57,7 @@ namespace CourseProject.Controllers
                 exams.Add(new Exams(exam, statement.Rating));
             }
 
-            var corseprojects = dbT.CourseProjects.Where(a => a.StudentId == student.Id).ToList();
+            var corseprojects = dbT.Projects.Where(a => a.StudentId == student.Id).ToList();
             var recordBook = new RecordBook(exams, tests, corseprojects);
             student.RecordBook = recordBook;
             return View(student);

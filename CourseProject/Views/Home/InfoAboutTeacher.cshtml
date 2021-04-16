@@ -1,0 +1,111 @@
+﻿@model CourseProject.Models.Teachers.Teacher
+@{
+    ViewBag.Title = "Информация о кафедре";
+}
+@Styles.Render("~/Home/View")
+<div class="panel" id="info-form-teacher">
+    <div class="panel-heading">
+        Преподаватель - @Model.User.DisplayName
+    </div>
+    <div class="panel-body">
+        <div class="main-info">
+            <div class="panel-heading info-heading">
+                Информация
+            </div>
+            <div class="panel-body info-body">
+                <div class="col-md-3 block-column">
+                    <div class="photo">
+                    </div>
+                </div>
+                <div class="col-md-9 block-column">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Cathedra.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="">
+                            <span class="col-md-9">@Html.DisplayFor(model => model.Cathedra.Name)</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="">
+                            <span class="col-md-9">@Html.DisplayFor(model => model.User.PhoneNumber)</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="">
+                            <span class="col-md-9">@Html.DisplayFor(model => model.User.Email)</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AcademicDegree, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="">
+                            <span class="col-md-9">@Html.DisplayFor(model => model.AcademicDegree)</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AcademicTitle, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="">
+                            <span class="col-md-9">@Html.DisplayFor(model => model.AcademicTitle)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 block-column">
+
+                </div>
+            </div>
+        </div>
+        <div class="timetable-info">
+            <div class="panel-heading info-heading">
+                Расписание
+            </div>
+            <div class="panel-body info-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Время</th>
+                            <th>Понедельник</th>
+                            <th>Вторник</th>
+                            <th>Среда</th>
+                            <th>Четверг</th>
+                            <th>Пяница</th>
+                            <th>Суббота</th>
+                            <th>Время</th>
+                            <th>№</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="educationalmaterials-info">
+            <div class="panel-heading info-heading">
+                Учебные материалы
+            </div>
+            <div class="panel-body info-body">
+
+            </div>
+        </div>
+        <div class="scientificwork-info">
+            <div class="panel-heading info-heading">
+                Научные работы
+            </div>
+            <div class="panel-body info-body">
+
+            </div>
+        </div>
+    </div>
+</div>

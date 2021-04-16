@@ -1,4 +1,4 @@
-﻿@model CourseProject.Models.Group
+﻿@model CourseProject.Models.Students.Group
 @Styles.Render("~/Teacher/View")
 <div class="modal-content" id="info-form-group">
     <div class="panel-heading header-icon-box">
@@ -24,7 +24,7 @@
                 {
                     foreach (var (index, student) in Model.Students.Select((v, i) => (i, v)))
                     {
-                        <tr style="cursor: pointer" onclick="window.location.href='/Account/InfoAboutUser/@student.Id'; return false">
+                        <tr style="cursor: pointer" onclick="window.location.href='/Home/InfoAboutStudent/@student.Id'; return false">
                             <td>@(index + 1)</td>
                             <td>@student.User.Surname</td>
                             <td>@student.User.Name</td>

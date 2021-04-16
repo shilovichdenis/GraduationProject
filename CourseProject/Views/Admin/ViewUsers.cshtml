@@ -1,0 +1,118 @@
+﻿@model IEnumerable<CourseProject.Models.ApplicationUser>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Пользователи";
+}
+<style>
+    #view-form-confirmuser .last-th, #view-form-user .last-th {
+        width: 70px;
+    }
+    #view-form-confirmuser{
+        min-height: unset !important;
+    }
+    table th:first-child{
+        width: 40px;
+    }
+</style>
+@Styles.Render("~/Admin/View")
+<div class="panel">
+    <div class="panel-heading">
+       Неподтвержденные пользователи
+    </div>
+    <div class="panel-body" id="view-form-confirmuser">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Роль</th>
+                    <th>Email</th>
+                    <th>Телефон</th>
+                    <th class="last-th"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Where(a => a.IsConfirmed == false).Count() != 0)
+                {
+                    foreach (var (index, user) in Model.Where(a => a.IsConfirmed == false).Select((v, i) => (i, v)))
+                    {
+                        <tr>
+                            <td>@(index + 1)</td>
+                            <td>@user.Surname</td>
+                            <td>@user.Name</td>
+                            <td>@user.Role</td>
+                            <td>@user.Email</td>
+                            <td>@user.PhoneNumber</td>
+                            <td class="last-td">
+                                @Html.ActionLink(" ", "InfoAboutUser", "Account", new { id = user.Id }, new { @class = "btn icon-info btn-icon info-item" })
+                                @using (Html.BeginForm("ConfirmUser", "Admin", new { id = user.Id }))
+                                {
+                                    <button class="btn icon-plus btn-icon" type="submit"></button>
+                                }
+                                @using (Html.BeginForm("DeleteUser", "Admin", new { id = user.Id }))
+                                {
+                                    <button class="btn icon-remove btn-icon" type="submit"></button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">Нет неподтвержденных пользователей</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="panel-heading">
+        Пользователи
+    </div>
+    <div class="panel-body" id="view-form-user">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Фамилия</th>
+                    <th>Имя</th>
+                    <th>Роль</th>
+                    <th>Email</th>
+                    <th>Телефон</th>
+                    <th class="last-th"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Where(a => a.IsConfirmed == true).Count() != 0)
+                {
+                    foreach (var (index, user) in Model.Where(a => a.IsConfirmed == true).Select((v, i) => (i, v)))
+                    {
+                        <tr>
+                            <td>@(index + 1)</td>
+                            <td>@user.Surname</td>
+                            <td>@user.Name</td>
+                            <td>@user.Role</td>
+                            <td>@user.Email</td>
+                            <td>@user.PhoneNumber</td>
+                            <td class="last-td">
+                                @Html.ActionLink(" ", "InfoAboutUser", "Account", new { id = user.Id }, new { @class = "btn icon-info btn-icon info-item" })
+                                @using (Html.BeginForm("DeleteUser", "Admin", new { id = user.Id }))
+                                {
+                                    <button class="btn icon-remove btn-icon" type="submit"></button>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="7">Нет пользователей</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

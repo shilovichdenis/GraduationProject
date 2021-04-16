@@ -1,0 +1,87 @@
+﻿@model CourseProject.Models.Teachers.Cathedra
+@{
+    ViewBag.Title = "Информация о кафедре";
+}
+<style>
+    .main-info {
+        width: 100%;
+    }
+</style>
+@Styles.Render("~/Home/View")
+<div class="panel" id="info-form-cathedra">
+    <div class="panel-heading">
+        Кафедра - @Model.Name
+    </div>
+    <div class="panel-body">
+        <div class="main-info">
+            <div class="panel-heading info-heading">
+                Информация
+            </div>
+            <div class="main-info-block">
+                <div class="col-md-12 block-column">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.About, htmlAttributes: new { @class = "control-label col-md-1" })
+                        <div class="">
+                            <span class="col-md-11">@Html.DisplayFor(model => model.About)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 block-column">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.DepartmentOffice, htmlAttributes: new { @class = "control-label col-md-1" })
+                        <div class="">
+                            <span class="col-md-11">@Html.DisplayFor(model => model.DepartmentOffice)</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Building, htmlAttributes: new { @class = "control-label col-md-1" })
+                        <div class="">
+                            <span class="col-md-11">@Html.DisplayFor(model => model.Building)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="table-teachers">
+            <div class="panel-heading info-heading">
+                Преподавательский состав
+            </div>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Фамилия</th>
+                        <th>Номер телефона</th>
+                        <th>Почта</th>
+                        <th>Ученое звание</th>
+                        <th>Ученая степень</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Teachers.Count() != 0)
+                    {
+                        foreach (var (index, teacher) in Model.Teachers.Select((v, i) => (i, v)))
+                        {
+                            <tr>
+                                <td>@(index + 1)</td>
+                                <td>
+                                    @Html.ActionLink(teacher.User.DisplayName, "InfoAboutTeacher", "Home", new { id = teacher.Id }, new { @class = "link" })
+                                </td>
+                                <td>@(teacher.User.PhoneNumber == @String.Empty ? "-Не указано-" : teacher.User.PhoneNumber)</td>
+                                <td>@teacher.User.Email</td>
+                                <td>@teacher.AcademicTitle</td>
+                                <td>@(teacher.AcademicDegree != null ? teacher.AcademicDegree : "Отсутствует")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5">Нет ни одного преподавателя</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

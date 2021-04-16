@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using CourseProject.Models.Students;
+using CourseProject.Models.Teachers;
 
-namespace CourseProject.Models
+namespace CourseProject.Models.Students
 {
-    public class CourseProject
+    public class Project
     {
         public int Id { get; set; }
         public Student Student { get; set; }

@@ -37,23 +37,25 @@
 .left-div {
     display: flex;
     flex-direction: column;
-    height: 100%;
     width: 33%;
     padding: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 .right-div {
-    height: 100%;
     width: 67%;
     padding: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 .photo {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
     width: 100%;
-    height: 100%;
+    height: 400px;
 }
 
 .sections {
@@ -118,6 +120,19 @@
     padding: 0 !important;
 }
 
+.block-column {
+    display: flex;
+    flex-direction: column;
+}
+
+    .block-column .form-group {
+        width: 100%;
+    }
+
+        .block-column .form-group:last-child {
+            margin-bottom: 0;
+        }
+
 .block {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     display: flex;
@@ -160,4 +175,12 @@
 .personaldata {
     display: flex;
     flex-direction: column;
+}
+
+.main-info {
+    display: flex;
+    height: auto;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 15px;
 }

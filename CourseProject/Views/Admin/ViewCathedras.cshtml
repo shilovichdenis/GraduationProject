@@ -47,7 +47,7 @@
                             <td>@cathedra.Building</td>
                             <td>@cathedra.Teachers.Count()</td>
                             <td class="last-td">
-                                @Html.ActionLink(" ", "InfoAboutCathedra", "Admin", new { id = cathedra.Id }, new { @class = "btn icon-info btn-icon info-item" })
+                                @Html.ActionLink(" ", "InfoAboutCathedra", "Home", new { id = cathedra.Id }, new { @class = "btn icon-info btn-icon info-item" })
                                 @Html.ActionLink(" ", "EditCathedra", "Admin", new { id = cathedra.Id }, new { @class = "btn icon-pencil btn-icon edit-item" })
                                 @using (Html.BeginForm("DeleteCathedra", "Admin", new { id = cathedra.Id }))
                                 {
