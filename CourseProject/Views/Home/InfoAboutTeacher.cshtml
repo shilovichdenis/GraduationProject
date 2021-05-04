@@ -3,9 +3,10 @@
     ViewBag.Title = "Информация о кафедре";
 }
 @Styles.Render("~/Home/View")
-<div class="panel" id="info-form-teacher">
-    <div class="panel-heading">
+<div class="modal-content" id="info-form-teacher">
+    <div class="panel-heading header-icon-box">
         Преподаватель - @Model.User.DisplayName
+        <a href="#" data-dismiss="modal">&times;</a>
     </div>
     <div class="panel-body">
         <div class="main-info">
@@ -15,6 +16,10 @@
             <div class="panel-body info-body">
                 <div class="col-md-3 block-column">
                     <div class="photo">
+                        @{
+                            var img = Model.User.Gender == "Мужской" ? "male.jpg" : "female.jpg";
+                        }
+                        <img src="~/Image/@img" alt="" class="image" />
                     </div>
                 </div>
                 <div class="col-md-9 block-column">

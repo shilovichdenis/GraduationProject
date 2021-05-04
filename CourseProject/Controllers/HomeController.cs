@@ -155,7 +155,8 @@ namespace CourseProject.Controllers
                 {
                     teacher.User = dbT.Users.Find(teacher.UserId);
                 }
-                return View(cathedra);
+                ViewBag.Layout = SetLayout(User);
+                return PartialView(cathedra);
 
             }
             return HttpNotFound();
@@ -168,10 +169,22 @@ namespace CourseProject.Controllers
             {
                 teacher.Cathedra = dbT.Cathedras.Find(teacher.CathedraId);
                 teacher.User = dbT.Users.Find(teacher.UserId);
-                return View(teacher);
-
+                ViewBag.Layout = SetLayout(User);
+                return PartialView(teacher);
             }
             return HttpNotFound();
+        }
+        [Authorize]
+        public ActionResult InfoAboutGroup(int id)
+        {
+            var group = dbT.Groups.Find(id);
+            var students = dbT.Students.Where(a => a.GroupId == group.Id).ToList();
+            foreach (var student in students)
+            {
+                student.User = dbT.Users.Find(student.UserId);
+            }
+            group.Students = students.OrderBy(a => a.User.Surname).ToList();
+            return PartialView(group);
         }
     }
 }

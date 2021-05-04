@@ -50,6 +50,7 @@ namespace CourseProject.Controllers
                 user.IsConfirmed = true;
                 dbT.Entry(user).State = EntityState.Modified;
                 dbT.SaveChanges();
+                dbT.Dispose();
                 return RedirectToAction("ConfirmUser");
             }
             else
@@ -70,7 +71,7 @@ namespace CourseProject.Controllers
                 discipline.Teacher = teacher;
                 discipline.Group = dbT.Groups.Find(discipline.GroupId);
             }
-            return View(disciplines);
+            return View(disciplines.OrderByDescending(a => a.IsExam).ThenByDescending(a => a.DateTime).GroupBy(a => a.Teacher.User.DisplayName).OrderBy(a => a.Key));
         }
 
         [HttpGet]
@@ -88,11 +89,11 @@ namespace CourseProject.Controllers
                     statement.Discipline = discipline;
                 }
                 ViewBag.Discipline = discipline;
-                return PartialView(statements);
+                return PartialView(statements.OrderBy(a => a.Student.User.Surname).ToList());
             }
             return HttpNotFound();
         }
-
+        //?
         public ActionResult SetRatings(string[] rating, int[] id)
         {
             var stat = dbT.Statements.Find(id.ElementAt(0));
@@ -129,6 +130,7 @@ namespace CourseProject.Controllers
                     }
                 }
                 dbT.SaveChanges();
+                dbT.Dispose();
                 return RedirectToAction("ViewDisciplines");
             }
             else
@@ -136,17 +138,33 @@ namespace CourseProject.Controllers
                 return View("Error");
             }
         }
+        public ActionResult GetGroups(int id)
+        {
+            var studygroups = dbT.StudyGroups.Where(a => a.TeacherId == id).ToList();
+            foreach (var sg in studygroups)
+            {
+                sg.Group = dbT.Groups.Find(sg.GroupId);
+            }
+            return PartialView(studygroups.Where(c => c.TeacherId == id).OrderBy(a => a.Group.Name).ToList());
+        }
+
         [HttpGet]
         public ActionResult CreateDiscipline()
         {
-            ViewBag.Groups = new SelectList(dbT.Groups.OrderBy(a => a.Name), "Id", "Name");
             var teachers = dbT.Teachers.ToList();
             foreach (var teacher in teachers)
             {
                 teacher.User = dbT.Users.Find(teacher.UserId);
             }
-            ViewBag.Teachers = new SelectList(teachers.OrderBy(a => a.User.Surname), "Id", "User.DisplayName");
-            return PartialView();
+            int selectedIndex = 1;
+            ViewBag.Teachers = new SelectList(teachers.OrderBy(a => a.User.Surname), "Id", "User.DisplayName", selectedIndex);
+            var studygroups = dbT.StudyGroups.Where(a => a.TeacherId == selectedIndex).ToList();
+            foreach (var sg in studygroups)
+            {
+                sg.Group = dbT.Groups.Find(sg.GroupId);
+            }
+            ViewBag.Groups = new SelectList(studygroups.OrderBy(a => a.Group.Name), "GroupId", "Group.Name");
+            return View();
         }
         [HttpPost]
         public ActionResult CreateDiscipline(Discipline discipline)
@@ -184,14 +202,20 @@ namespace CourseProject.Controllers
                 var group = dbT.Groups.Find(discipline.GroupId);
                 discipline.Group = group;
                 discipline.Teacher = oldTeacher;
-                ViewBag.Groups = new SelectList(dbT.Groups.OrderBy(a => a.Name), "Id", "Name");
                 var teachers = dbT.Teachers.ToList();
                 foreach (var teacher in teachers)
                 {
                     teacher.User = dbT.Users.Find(teacher.UserId);
                 }
-                ViewBag.Teachers = new SelectList(teachers.OrderBy(a => a.User.Surname), "Id", "User.DisplayName");
-                return PartialView(discipline);
+                int selectedIndex = discipline.TeacherId;
+                ViewBag.Teachers = new SelectList(teachers.OrderBy(a => a.User.Surname), "Id", "User.DisplayName", selectedIndex);
+                var studygroups = dbT.StudyGroups.Where(a => a.TeacherId == selectedIndex).ToList();
+                foreach (var sg in studygroups)
+                {
+                    sg.Group = dbT.Groups.Find(sg.GroupId);
+                }
+                ViewBag.Groups = new SelectList(studygroups.OrderBy(a => a.Group.Name), "GroupId", "Group.Name", studygroups.Where(a=>a.GroupId == discipline.GroupId).FirstOrDefault());
+                return View(discipline);
             }
             else
             {
@@ -365,7 +389,7 @@ namespace CourseProject.Controllers
             {
                 IdentityResult result = await RoleManager.DeleteAsync(role);
             }
-            return RedirectToAction("IndexRole");
+            return RedirectToAction("ViewRoles");
         }
 
 
@@ -468,7 +492,7 @@ namespace CourseProject.Controllers
             foreach (var teacher in teachers)
             {
                 teacher.User = dbT.Users.Find(teacher.UserId);
-                if(teacher.CathedraId != null)
+                if (teacher.CathedraId != null)
                 {
                     teacher.Cathedra = dbT.Cathedras.Find(teacher.CathedraId);
                 }
@@ -480,67 +504,7 @@ namespace CourseProject.Controllers
             return View(teachers.OrderBy(a => a.User.Surname));
         }
 
-        public async Task<ActionResult> InfoAboutUser(string id)
-        {
-            if (id != null)
-            {
-                var user = await UserManager.FindByIdAsync(id);
-                if (user.Role.Equals("Студент"))
-                {
-                    //info.User = user;
-                    //var tests = dbT.Disciplines.Where(a => a.GroupId == user.SpecializationId).Where(b => b.Type.Contains("Зачет")).ToList();
-                    //var testsWithRating = new List<Tests>();
-                    //foreach (var test in tests)
-                    //{
-                    //    var teacher = dbT.Users.Find(test.TeacherId);
-                    //    test.Teacher = teacher;
-                    //    var statement = dbT.Statements.Where(a => a.DisciplineId == test.Id).Where(b => b.StudentId == user.Id).FirstOrDefault();
-                    //    string result;
-                    //    if (statement.Rating == 1)
-                    //    {
-                    //        result = "Зачет";
-                    //    }
-                    //    else if (statement.Rating == 0)
-                    //    {
-                    //        result = "Не зачет";
-                    //    }
-                    //    else if (test.Status.Equals("Сдана"))
-                    //    {
-                    //        result = "Не явился";
-                    //    }
-                    //    else
-                    //    {
-                    //        result = "";
-                    //    }
-                    //    testsWithRating.Add(new Tests(test, result));
-                    //}
-                    //var exams = dbT.Disciplines.Where(a => a.GroupId == user.SpecializationId).Where(b => b.Type.Contains("Экзамен")).ToList();
-                    //var examsWithRating = new List<Exams> { };
-                    //foreach (var exam in exams)
-                    //{
-                    //    var teacher = dbT.Users.Find(exam.TeacherId);
-                    //    exam.Teacher = teacher;
-                    //    var statement = dbT.Statements.Where(a => a.DisciplineId == exam.Id).Where(b => b.StudentId == user.Id).FirstOrDefault();
-                    //    examsWithRating.Add(new Exams(exam, statement.Rating));
-                    //}
-                    //var recordBook = new RecordBook(user, examsWithRating, testsWithRating);
-                    //info.RecordBook = recordBook;
-                    //ViewBag.Specialization = dbT.Groups.Find(user.SpecializationId) as Group;
-                    return View();
-                }
-                else
-                {
-                    //info.User = user;
-                    //ViewBag.Specialization = dbT.Cathedras.Find(user.SpecializationId) as Cathedra;
-                    return View();
-                }
-            }
-            else
-            {
-                return View("Error");
-            }
-        }
-
+        //full delete
         [HttpPost]
         public async Task<ActionResult> DeleteUser(string id)
         {
@@ -636,11 +600,14 @@ namespace CourseProject.Controllers
             }
             return View(cathedras);
         }
+
         [HttpGet]
         public ActionResult CreateCathedra()
         {
             return PartialView();
         }
+
+
         [HttpPost]
         public ActionResult CreateCathedra(Cathedra cathedra)
         {
@@ -713,7 +680,7 @@ namespace CourseProject.Controllers
             {
                 group.Students = dbT.Students.Where(a => a.GroupId == group.Id).ToList();
             }
-            return View(groups.OrderBy(a => a.Name));
+            return View(groups.OrderBy(a => a.YearOfAdmission).ThenBy(a => a.Name));
         }
 
         public ActionResult InfoAboutGroup(int id)
@@ -733,10 +700,10 @@ namespace CourseProject.Controllers
             Group group = new Group();
             var faculties = group.Faculties.OrderBy(a => a.Name);
             var specialties = group.Specialties.OrderBy(a => a.Name);
-            int selectedIndex = 7;
+            int selectedIndex = 1;
             ViewBag.Faculties = new SelectList(faculties, "Id", "Name", selectedIndex);
             ViewBag.Specialties = new SelectList(specialties.Where(c => c.FacultyId == selectedIndex), "Id", "Name");
-            return PartialView();
+            return View();
         }
 
         public ActionResult GetSpecialties(int id)
@@ -751,16 +718,19 @@ namespace CourseProject.Controllers
         {
             if (group != null)
             {
-                if (ModelState.IsValid)
-                {
-                    dbT.Groups.Add(group);
-                    dbT.SaveChanges();
-                    return RedirectToAction("ViewGroups");
-                }
-                else
-                {
-                    return View("Error");
-                }
+                var faculty = group.Faculties.Where(a => a.Id == group.FacultyId).FirstOrDefault();
+                var specialty = group.Specialties.Where(a => a.Id == group.SpecialtyId).FirstOrDefault();
+                var groups = dbT.Groups.Where(a => a.FacultyId == group.FacultyId).Where(a => a.YearOfAdmission == group.YearOfAdmission).ToList();
+                var count = groups.Where(a => a.Name[4].ToString() == specialty.CodeNumber.ToString()).Count() + 1;
+                var form = group.FormOfEducation == "Очная" ? "0" : "1";
+                var year = group.YearOfAdmission - 2000;
+                var name = faculty.Number.ToString() + form + specialty.CodeNumber + count.ToString() + year.ToString();
+                group.Name = name;
+                group.Faculty = faculty.Name;
+                group.Specialty = specialty.Name;
+                dbT.Groups.Add(group);
+                dbT.SaveChanges();
+                return RedirectToAction("ViewGroups");
             }
             else
             {

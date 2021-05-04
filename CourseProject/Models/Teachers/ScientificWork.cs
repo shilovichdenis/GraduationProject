@@ -8,7 +8,7 @@ namespace CourseProject.Models.Teachers
 {
     public class ScientificWork
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
         [Display(Name = "Название")]
         public string Name { get; set; }
         [Display(Name = "Годы ")]

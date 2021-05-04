@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CourseProject.Models.Group>
+﻿@model IEnumerable<CourseProject.Models.Students.Group>
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     ViewBag.Title = "Группы";
@@ -7,15 +7,13 @@
 <div class="panel" id="view-form-group">
     <div class="panel-heading header-icon-box">
         Группы
-        @Html.ActionLink(" ", "CreateGroup", "Admin", null, new { @class = "btn icon-plus btn-icon create-item" })
+        @Html.ActionLink(" ", "CreateGroup", "Admin", null, new { @class = "btn icon-plus btn-icon" })
     </div>
     <div class="panel-body">
         <div id="info-form" class="modal fade">
             <div id="info-dialog" class="modal-dialog"></div>
         </div>
-        <div id="create-form" class="modal fade">
-            <div id="create-dialog" class="modal-dialog"></div>
-        </div>
+
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -41,7 +39,7 @@
                             <td>@group.FormOfEducation</td>
                             <td>@group.Students.Count()</td>
                             <td class="last-td">
-                                @Html.ActionLink(" ", "InfoAboutGroup", "Admin", new { id = group.Id }, new { @class = "btn icon-info btn-icon info-item" })
+                                @Html.ActionLink(" ", "InfoAboutGroup", "Home", new { id = group.Id }, new { @class = "btn icon-info btn-icon info-item" })
                                 @using (Html.BeginForm("DeleteGroup", "Admin", new { id = group.Id }))
                                 {
                                     <button class="btn icon-remove btn-icon" type="submit"></button>

@@ -32,7 +32,7 @@
                             <td>@(index + 1)</td>
                             <td>@discipline.Name</td>
                             <td>
-                                @Html.ActionLink(discipline.Teacher.User.DisplayName, "InfoAboutUser", "Account", new { id = discipline.Teacher.User.Id }, new { @class = "teacher-link" })
+                                @Html.ActionLink(discipline.Teacher.User.DisplayName, "InfoAboutTeacher", "Home", new { id = discipline.Teacher.Id }, new { @class = "teacher-link" })
                             </td>
                             <td>@discipline.Group.Name</td>
                             <td>к. @discipline.Building, ауд. @discipline.Audience</td>

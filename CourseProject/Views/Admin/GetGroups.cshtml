@@ -1,0 +1,5 @@
+﻿@model IEnumerable<CourseProject.Models.Teachers.StudyGroups>
+@{
+    var result = new SelectList(Model, "GroupId", "Group.Name");
+}
+@Html.DropDownList("GroupId", result as SelectList, new { @class = "form-control", id = "groups" })

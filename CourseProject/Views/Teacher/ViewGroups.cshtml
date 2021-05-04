@@ -38,7 +38,7 @@
                             <td>@tg.Group.Faculty</td>
                             <td>@tg.Group.FormOfEducation</td>
                             <td class="last-td">
-                                @Html.ActionLink(" ", "InfoAboutGroup", "Teacher", new { id = tg.Group.Id }, new { @class = "btn icon-info btn-icon info-item" })
+                                @Html.ActionLink(" ", "InfoAboutGroup", "Home", new { id = tg.Group.Id }, new { @class = "btn icon-info btn-icon info-item" })
                                 @using (Html.BeginForm("RemoveGroup", "Teacher", new { id = tg.Group.Id }))
                                 {
                                     <button class="btn icon-remove btn-icon" type="submit"></button>

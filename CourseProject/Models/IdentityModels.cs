@@ -39,7 +39,6 @@ namespace CourseProject.Models
         public override string Email { get; set; }
         [Display(Name = "Телефон")]
         public override string PhoneNumber { get; set; }
-
         public string DisplayName
         {
             get
@@ -81,7 +80,7 @@ namespace CourseProject.Models
         public DbSet<Project> Projects { get; set; }
         public DbSet<Discipline> Disciplines { get; set; }
 
-        public DbSet<Publications> Publications { get; set; }
+        public DbSet<Publication> Publications { get; set; }
         public DbSet<ScientificWork> ScientificWorks { get; set; }
     }
 }

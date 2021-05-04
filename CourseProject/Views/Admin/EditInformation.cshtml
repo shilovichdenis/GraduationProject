@@ -1,4 +1,4 @@
-﻿@model CourseProject.Models.Information
+﻿@model CourseProject.Models.General.Information
 @Styles.Render("~/Admin/Manage")
 <div class="modal-content">
     @using (Html.BeginForm())
@@ -10,12 +10,11 @@
         </div>
         <div class="panel-body">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.Id)
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Info, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Info, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Info, new { htmlAttributes = new { @class = "form-control", autocomplete = "off" } })
                     @Html.ValidationMessageFor(model => model.Info, "", new { @class = "text-danger" })
                 </div>
             </div>

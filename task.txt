@@ -1,11 +1,11 @@
 clear pred test cluster
-division into semesters
+division into semesters (поле семестр и проверка in enum)
 Группировка по группам в общем выводе студентов
 Группировка преподавателей по кафедрам в общем выводе преподавателей 
 
 for students output teachers +
 check search
-photo
+photo +
 аverage score calculation +
 Навбар переделать (Сделать управление данными)+
 average score in the group info +
@@ -25,3 +25,11 @@ confirmuser + users (2 tables) +
 create group yearofadmission
 null in group(info) send to all
 delete user with all info about him
+infoaboutstudent for all
+scientific work & publications (add, edit, delete) (view)
+passed to all
+сортировка дисциплин по названию - типу - дате
+редактирование профиля 
+редактирование группы 
+
+id_photo_00-00-0000_00-00.format

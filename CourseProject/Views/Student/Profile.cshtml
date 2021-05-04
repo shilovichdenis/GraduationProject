@@ -10,7 +10,12 @@
     </div>
     <div class="panel-body panel-info">
         <div class="left-div">
-            <div class="photo"></div>
+            <div class="photo">
+                @{ 
+                    var img = Model.User.Gender == "Мужской" ? "male.jpg" : "female.jpg";
+                }
+                <img src="~/Image/@img" alt="" class="image"/>
+            </div>
             <div class="sections">
                 <span>
                     <input checked class="radio-in-section" type="radio" name="sections" id="radio-personaldata" />
@@ -199,9 +204,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if (Model.RecordBook.CourseProjects.Count != 0)
+                        @if (Model.RecordBook.Projects.Count != 0)
                         {
-                            foreach (var (index, cp) in Model.RecordBook.CourseProjects.Select((v, i) => (i, v)))
+                            foreach (var (index, cp) in Model.RecordBook.Projects.Select((v, i) => (i, v)))
                             {
                                 <tr>
                                     <td>@(index + 1)</td>

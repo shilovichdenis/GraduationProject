@@ -56,7 +56,6 @@
                 <div class="col-md-10">
                     <input type="text" disabled value="@ViewBag.Teacher.User.DisplayName" class="form-control" />
                     <input type="text" name="TeacherId" value="@ViewBag.Teacher.Id" class="hidden" />
-                    @Html.ValidationMessageFor(model => model.Teacher.User.Surname, "", new { @class = "text-danger" })
                 </div>
             </div>
 

@@ -34,7 +34,9 @@ namespace CourseProject.Controllers
             if (teacher != null)
             {
                 teacher.User = user;
-                teacher.Cathedra = dbT.Cathedras.Where(a=>a.Id == teacher.CathedraId).FirstOrDefault();
+                teacher.Cathedra = dbT.Cathedras.Where(a => a.Id == teacher.CathedraId).FirstOrDefault();
+                teacher.ScientificWorks = dbT.ScientificWorks.Where(a => a.TeacherId == teacher.Id).ToList();
+                teacher.Publications = dbT.Publications.Where(a => a.TeacherId == teacher.Id).ToList();
                 return View(teacher);
             }
             return HttpNotFound();
@@ -323,6 +325,7 @@ namespace CourseProject.Controllers
                         dbT.Entry(statement).State = EntityState.Modified;
                     }
                 }
+                //пересчет (функция вызов)
                 dbT.SaveChanges();
                 dbT.Dispose();
                 return RedirectToAction("ViewDisciplines");
@@ -351,7 +354,7 @@ namespace CourseProject.Controllers
                 info.Reciever = dbT.Groups.Find(info.RecieverId);
             }
             ViewBag.Teacher = teacher;
-            return View(information.OrderBy(a=>a.DateTime));
+            return View(information.OrderBy(a => a.DateTime));
         }
 
         [HttpGet]
@@ -443,6 +446,112 @@ namespace CourseProject.Controllers
                 return RedirectToAction("ViewInformation");
             }
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult AddScientificWork()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var teacher = dbT.Teachers.Where(a => a.UserId == user.Id).FirstOrDefault();
+            teacher.User = user;
+            ViewBag.Teacher = teacher;
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult AddScientificWork(ScientificWork scientificWork)
+        {
+            if (scientificWork != null)
+            {
+                dbT.ScientificWorks.Add(scientificWork);
+                dbT.SaveChanges();
+                dbT.Dispose();
+                return RedirectToAction("InfoAboutYourself");
+            }
+            return HttpNotFound();
+        }
+        [HttpGet]
+        public ActionResult EditScientificWork(int id)
+        {
+            var work = dbT.ScientificWorks.Find(id);
+            work.Teacher = dbT.Teachers.Find(work.TeacherId);
+            work.Teacher.User = dbT.Users.Find(work.Teacher.UserId);
+            return PartialView(work);
+        }
+        [HttpPost]
+        public ActionResult EditScientificWork(ScientificWork work)
+        {
+            if(work != null)
+            {
+                dbT.Entry(work).State = EntityState.Modified;
+                dbT.SaveChanges();
+                dbT.Dispose();
+            }
+            return HttpNotFound();
+        }
+        public ActionResult DeleteScientificWork(int id)
+        {
+            var work = dbT.ScientificWorks.Find(id);
+            if(work != null)
+            {
+                dbT.ScientificWorks.Remove(work);
+                dbT.SaveChanges();
+                dbT.Dispose();
+                return RedirectToAction("InfoAboutYourself");
+            }
+            return HttpNotFound();
+        }
+
+        [HttpGet]
+        public ActionResult AddPublication()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            var teacher = dbT.Teachers.Where(a => a.UserId == user.Id).FirstOrDefault();
+            teacher.User = user;
+            ViewBag.Teacher = teacher;
+            return PartialView();
+        }
+        [HttpPost]
+        public ActionResult AddPublication(Publication publication)
+        {
+            if (publication != null)
+            {
+                dbT.Publications.Add(publication);
+                dbT.SaveChanges();
+                dbT.Dispose();
+                return RedirectToAction("InfoAboutYourself");
+            }
+            return HttpNotFound();
+        }
+        [HttpGet]
+        public ActionResult EditPublication(string id)
+        {
+            var publication = dbT.Publications.Find(id);
+            publication.Teacher = dbT.Teachers.Find(publication.TeacherId);
+            publication.Teacher.User = dbT.Users.Find(publication.Teacher.UserId);
+            return PartialView(publication);
+        }
+        [HttpPost]
+        public ActionResult EditPublication(Publication publication)
+        {
+            if (publication != null)
+            {
+                dbT.Entry(publication).State = EntityState.Modified;
+                dbT.SaveChanges();
+                dbT.Dispose();
+            }
+            return HttpNotFound();
+        }
+        public ActionResult DeletePublication(string id)
+        {
+            var publication = dbT.Publications.Find(id);
+            if (publication != null)
+            {
+                dbT.Publications.Remove(publication);
+                dbT.SaveChanges();
+                dbT.Dispose();
+                return RedirectToAction("InfoAboutYourself");
+            }
+            return HttpNotFound();
         }
     }
 }

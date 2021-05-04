@@ -19,8 +19,12 @@ namespace CourseProject.Models.Students
         [Required]
         public string Faculty { get; set; }
 
+        public int FacultyId { get; set; }
+
         [Display(Name = "Специальность")]
         public string Specialty { get; set; }
+
+        public int SpecialtyId { get; set; }
 
         [Display(Name = "Форма получения образования")]
         public string FormOfEducation { get; set; }
@@ -69,26 +73,21 @@ namespace CourseProject.Models.Students
         };
 
         public List<Specialty> Specialties = new List<Specialty>() {
-                new Specialty(1, 7, "Программное обеспечение информационных технологий"),
-                new Specialty(2, 7, "Программное обеспечение информационных технологий"),
-                new Specialty(3, 7, "Информационные системы и технологии в обработке и представлении информации"),
-                new Specialty(4, 7, "Информационные системы и технологии в обработке и представлении информации"),
-                new Specialty(5, 7, "Информационные системы и технологии в проектировании и производстве"),
-                new Specialty(6, 7, "Информационные системы и технологии в проектировании и производстве"),
-                new Specialty(7, 7, "Автоматизация технологических процессов и производств"),
-                new Specialty(8, 7, "Автоматизация технологических процессов и производств"),
-                new Specialty(9, 7, "Автоматизированные электроприводы"),
-                new Specialty(10, 7, "Автоматизированные электроприводы"),
-                new Specialty(11, 7, "Промышленные роботы и робототехнические комплексы"),
-                new Specialty(12, 1, "Автомобилестроение (механика)"),
-                new Specialty(13, 1, "Автомобилестроение (электроника)"),
-                new Specialty(14, 1, "Двигатели внутреннего сгорания"),
-                new Specialty(15, 1, "Техническая эксплуатация автомобилей"),
-                new Specialty(16, 1, "Автосервис"),
-                new Specialty(17, 1, "Тракторостроение"),
-                new Specialty(18, 1, "Многоцелевые гусеничные и колесные машины"),
-                new Specialty(19, 1, "Дизайн гусеничных и колесных машин"),
-                new Specialty(20, 1, "Электрический и автономный транспорт")
+                new Specialty(1, 7, 1, "Программное обеспечение информационных технологий"),
+                new Specialty(2, 7, 2, "Информационные системы и технологии в обработке и представлении информации"),
+                new Specialty(3, 7, 2, "Информационные системы и технологии в проектировании и производстве"),
+                new Specialty(4, 7, 3, "Автоматизация технологических процессов и производств"),
+                new Specialty(5, 7, 5, "Автоматизированные электроприводы"),
+                new Specialty(6, 7, 6, "Промышленные роботы и робототехнические комплексы"),
+                new Specialty(7, 1, "Автомобилестроение (механика)"),
+                new Specialty(8, 1, "Автомобилестроение (электроника)"),
+                new Specialty(9, 1, "Двигатели внутреннего сгорания"),
+                new Specialty(10, 1, "Техническая эксплуатация автомобилей"),
+                new Specialty(11, 1, "Автосервис"),
+                new Specialty(12, 1, "Тракторостроение"),
+                new Specialty(13, 1, "Многоцелевые гусеничные и колесные машины"),
+                new Specialty(14, 1, "Дизайн гусеничных и колесных машин"),
+                new Specialty(15, 1, "Электрический и автономный транспорт")
         };
     }
     public class Faculty
@@ -140,6 +139,14 @@ namespace CourseProject.Models.Students
         {
             Id = id;
             FacultyId = facultyId;
+            Name = name;
+        }
+
+        public Specialty(int id, int facultyId, int codeNumber, string name)
+        {
+            Id = id;
+            FacultyId = facultyId;
+            CodeNumber = codeNumber;
             Name = name;
         }
     }

@@ -27,13 +27,13 @@ namespace CourseProject.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> InfoAboutYourself()
+        public new async Task<ActionResult> Profile()
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             var student = dbT.Students.Where(a => a.UserId == user.Id).FirstOrDefault();
             student.User = user;
             student.Group = dbT.Groups.Where(a => a.Id == student.GroupId).FirstOrDefault();
-            var dTests = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(a => !a.IsExam).Where(a => a.DateTime > DateTime.Today).Where(a => a.IsPassed == true).ToList();
+            var dTests = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(a => !a.IsExam).Where(a => a.DateTime < DateTime.Today).Where(a => a.IsPassed == true).ToList();
             var tests = new List<Tests>();
             foreach (var test in dTests)
             {
@@ -42,10 +42,10 @@ namespace CourseProject.Controllers
                 test.Teacher = teacher;
 
                 var statement = dbT.Statements.Where(a => a.DisciplineId == test.Id).Where(b => b.StudentId == student.Id).FirstOrDefault();
-                tests.Add(new Tests(test, statement.Rating.ToString()));
+                tests.Add(new Tests(test, statement.Rating == 1 ? "Зачтено" : "Не зачтено"));
             }
 
-            var dExams = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(b => b.IsExam).Where(a => a.DateTime > DateTime.Today).Where(a => a.IsPassed == true).ToList();
+            var dExams = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(b => b.IsExam).Where(a => a.DateTime < DateTime.Today).Where(a => a.IsPassed == true).ToList();
             var exams = new List<Exams> { };
             foreach (var exam in dExams)
             {
@@ -62,6 +62,15 @@ namespace CourseProject.Controllers
             student.RecordBook = recordBook;
             return View(student);
         }
+
+        //public async Task<ActionResult> EditProfile()
+        //{
+        //    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+        //    var student = dbT.Students.Where(a => a.UserId == user.Id).FirstOrDefault();
+        //    student.User = user;
+        //    student.Group = dbT.Groups.Where(a => a.Id == student.GroupId).FirstOrDefault();
+        //    return View(student);
+        //}
 
         public async Task<ActionResult> InfoAboutGroup()
         {

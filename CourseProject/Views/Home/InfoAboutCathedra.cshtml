@@ -8,9 +8,10 @@
     }
 </style>
 @Styles.Render("~/Home/View")
-<div class="panel" id="info-form-cathedra">
-    <div class="panel-heading">
+<div class="modal-content" id="info-form-cathedra">
+    <div class="panel-heading header-icon-box">
         Кафедра - @Model.Name
+        <a href="#" data-dismiss="modal">&times;</a>
     </div>
     <div class="panel-body">
         <div class="main-info">
@@ -77,7 +78,7 @@
                     else
                     {
                         <tr>
-                            <td colspan="5">Нет ни одного преподавателя</td>
+                            <td colspan="6">Нет ни одного преподавателя</td>
                         </tr>
                     }
                 </tbody>

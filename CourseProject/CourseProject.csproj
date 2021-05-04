@@ -233,6 +233,18 @@
     <Compile Include="Migrations\202104151744032_SampleMigrations11.Designer.cs">
       <DependentUpon>202104151744032_SampleMigrations11.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104161506041_SampleMigrations12.cs" />
+    <Compile Include="Migrations\202104161506041_SampleMigrations12.Designer.cs">
+      <DependentUpon>202104161506041_SampleMigrations12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104281642257_SampleMigrations13.cs" />
+    <Compile Include="Migrations\202104281642257_SampleMigrations13.Designer.cs">
+      <DependentUpon>202104281642257_SampleMigrations13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104291756304_SampleMigrations14.cs" />
+    <Compile Include="Migrations\202104291756304_SampleMigrations14.Designer.cs">
+      <DependentUpon>202104291756304_SampleMigrations14.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
@@ -241,7 +253,7 @@
     <Compile Include="Models\General\Discipline.cs" />
     <Compile Include="Models\Students\Group.cs" />
     <Compile Include="Models\General\Information.cs" />
-    <Compile Include="Models\Teachers\Publications.cs" />
+    <Compile Include="Models\Teachers\Publication.cs" />
     <Compile Include="Models\Teachers\ScientificWork.cs" />
     <Compile Include="Models\Teachers\StudyGroups.cs" />
     <Compile Include="Models\NeuralNetworks\NeuralNetwork.cs" />
@@ -274,6 +286,8 @@
     <Content Include="Content\font\fontawesome-webfont.svg" />
     <Content Include="Content\HomePage.css" />
     <Content Include="Content\Home\View.css" />
+    <Content Include="Image\male.jpg" />
+    <Content Include="Image\female.jpg" />
     <Content Include="Content\Slick\ajax-loader.gif" />
     <Content Include="Content\Slick\fonts\slick.svg" />
     <Content Include="Content\Slick\slick-theme.css" />
@@ -360,9 +374,8 @@
     <Content Include="Views\Admin\CreateRole.cshtml" />
     <Content Include="Views\Admin\ViewRoles.cshtml" />
     <Content Include="Views\Admin\EditRole.cshtml" />
-    <Content Include="Views\Admin\InfoAboutUser.cshtml" />
     <Content Include="Views\Admin\ViewGroups.cshtml" />
-    <Content Include="Views\Admin\InfoAboutGroup.cshtml" />
+    <Content Include="Views\Home\InfoAboutGroup.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Admin\ViewDisciplines.cshtml" />
     <Content Include="Views\Admin\EditDiscipline.cshtml" />
@@ -384,7 +397,7 @@
     <Content Include="Views\Student\InfoAboutGroup.cshtml" />
     <Content Include="Views\Student\ViewTeachers.cshtml" />
     <Content Include="Views\Student\ViewDisciplines.cshtml" />
-    <Content Include="Views\Student\InfoAboutYourself.cshtml" />
+    <Content Include="Views\Student\Profile.cshtml" />
     <Content Include="Views\Admin\ViewUsers.cshtml" />
     <Content Include="Views\Teacher\EditInformation.cshtml" />
     <Content Include="Views\Teacher\CreateInformation.cshtml" />
@@ -399,6 +412,9 @@
     <Content Include="Views\Teacher\InfoAboutYourself.cshtml" />
     <Content Include="Views\Home\InfoAboutCathedra.cshtml" />
     <Content Include="Views\Home\InfoAboutTeacher.cshtml" />
+    <Content Include="Views\Teacher\AddScientificWork.cshtml" />
+    <Content Include="Views\Teacher\AddPublication.cshtml" />
+    <Content Include="Views\Admin\GetGroups.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -444,6 +460,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104151744032_SampleMigrations11.resx">
       <DependentUpon>202104151744032_SampleMigrations11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104161506041_SampleMigrations12.resx">
+      <DependentUpon>202104161506041_SampleMigrations12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104281642257_SampleMigrations13.resx">
+      <DependentUpon>202104281642257_SampleMigrations13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104291756304_SampleMigrations14.resx">
+      <DependentUpon>202104291756304_SampleMigrations14.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

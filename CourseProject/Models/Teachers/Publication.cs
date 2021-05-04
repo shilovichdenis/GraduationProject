@@ -6,7 +6,7 @@ using System.Web;
 
 namespace CourseProject.Models.Teachers
 {
-    public class Publications
+    public class Publication
     {
         public string Id { get; set; }
         [Display(Name = "Название")]

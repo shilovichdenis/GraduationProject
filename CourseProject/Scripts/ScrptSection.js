@@ -98,3 +98,57 @@ $(function () {
         });
     });
 })
+
+$(document).ready(function () {
+    $("#radio-personaldata").click(function () {
+        $("#personaldata").show();
+        $("#exams").hide();
+        $("#tests").hide();
+        $("#courseprojects").hide();
+    });
+    $("#radio-exams").click(function () {
+        $("#personaldata").hide();
+        $("#exams").show();
+        $("#tests").hide();
+        $("#courseprojects").hide();
+    });
+    $("#radio-tests").click(function () {
+        $("#personaldata").hide();
+        $("#exams").hide();
+        $("#tests").show();
+        $("#courseprojects").hide();
+    });
+    $("#radio-courseprojects").click(function () {
+        $("#personaldata").hide();
+        $("#exams").hide();
+        $("#tests").hide();
+        $("#courseprojects").show();
+    });
+});
+
+$(document).ready(function () {
+    $("#radio-personaldata").click(function () {
+        $("#personaldata").show();
+        $("#educationalmaterials").hide();
+        $("#scientificwork").hide();
+        $("#publications").hide();
+    });
+    $("#radio-educationalmaterials").click(function () {
+        $("#personaldata").hide();
+        $("#educationalmaterials").show();
+        $("#scientificwork").hide();
+        $("#publications").hide();
+    });
+    $("#radio-scientificwork").click(function () {
+        $("#personaldata").hide();
+        $("#educationalmaterials").hide();
+        $("#scientificwork").show();
+        $("#publications").hide();
+    });
+    $("#radio-publications").click(function () {
+        $("#personaldata").hide();
+        $("#educationalmaterials").hide();
+        $("#scientificwork").hide();
+        $("#publications").show();
+    });
+});

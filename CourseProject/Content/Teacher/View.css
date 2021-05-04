@@ -41,23 +41,32 @@
 .left-div {
     display: flex;
     flex-direction: column;
-    height: 100%;
     width: 33%;
     padding: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 .right-div {
-    height: 100%;
     width: 67%;
     padding: 10px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0;
+    margin-top: 0;
 }
 
 .photo {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
     width: 100%;
-    height: 100%;
+    height: auto;
+    margin-bottom: auto;
+    margin-top: 0;
+}
+
+.image {
+    width: 100%;
+    height: auto;
 }
 
 .sections {
@@ -90,7 +99,7 @@
         border-color: #222222;
     }
 
-.personaldata, .exams {
+.personaldata, .scientificwork, .publications, .educationalmaterials {
     display: none;
     height: 100%;
     width: 100%;
@@ -164,4 +173,8 @@
 .personaldata {
     display: flex;
     flex-direction: column;
+}
+#publications-body{
+    padding: 15px;
+    text-align: left;
 }

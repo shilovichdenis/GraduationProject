@@ -9,8 +9,16 @@
         Имя пользователя - @Model.User.UserName
     </div>
     <div class="panel-body panel-info">
+        <div id="create-form" class="modal fade">
+            <div id="create-dialog" class="modal-dialog"></div>
+        </div>
         <div class="left-div">
-            <div class="photo"></div>
+            <div class="photo">
+                @{
+                    var img = Model.User.Gender == "Мужской" ? "male.jpg" : "female.jpg";
+                }
+                <img src="~/Image/@img" alt="" class="image" />
+            </div>
             <div class="sections">
                 <span>
                     <input checked class="radio-in-section" type="radio" name="sections" id="radio-personaldata" />
@@ -18,11 +26,15 @@
                 </span>
                 <span>
                     <input class="radio-in-section" type="radio" name="sections" id="radio-educationalmaterials" />
-                    <label class="btn btn-default label-in-section" for="radio-exams">Учебные материалы</label>
+                    <label class="btn btn-default label-in-section" for="radio-educationalmaterials">Учебные материалы</label>
                 </span>
                 <span>
                     <input class="radio-in-section" type="radio" name="sections" id="radio-scientificwork" />
-                    <label class="btn btn-default label-in-section" for="radio-tests">Научные работы</label>
+                    <label class="btn btn-default label-in-section" for="radio-scientificwork">Научные работы</label>
+                </span>
+                <span>
+                    <input class="radio-in-section" type="radio" name="sections" id="radio-publications" />
+                    <label class="btn btn-default label-in-section" for="radio-publications">Публикации</label>
                 </span>
             </div>
         </div>
@@ -109,9 +121,76 @@
                     </div>
                 </div>
             </div>
-            <div id="exams" class="exams">
-                <div class="panel-heading info-heading">Экзамены</div>
+            <div id="educationalmaterials" class="educationalmaterials">
+                <div class="panel-heading header-icon-box" id="educationalmaterials-heading">Учебные материалы</div>
+            </div>
+            <div id="scientificwork" class="scientificwork">
+                <div class="panel-heading header-icon-box" id="scientificwork-heading">
+                    Научные работы
+                    @Html.ActionLink(" ", "AddScientificWork", "Teacher", null, new { @class = "btn icon-plus btn-icon create-item" })
+                </div>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <td>№</td>
+                            <td>Название</td>
+                            <td>Годы</td>
+                            <td>О работе</td>
+                            <td class="last-th"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.ScientificWorks.Count() != 0)
+                        {
+                            foreach (var (index, work) in Model.ScientificWorks.Select((v, i) => (i, v)))
+                            {
+                                <tr>
+                                    <td>@(index + 1)</td>
+                                    <td>@work.Name</td>
+                                    <td>@work.Years</td>
+                                    <td>@work.About</td>
+                                    <td class="last-td">
+                                        @Html.ActionLink(" ", "EditScientificWork", "Teacher", new { id = work.Id }, new { @class = "btn icon-pencil btn-icon edit-item" })
+                                        @using (Html.BeginForm("DeleteScientificWork", "Teacher", new { id = work.Id }))
+                                        {
+                                            <button class="btn btn-icon icon-remove" type="submit"></button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5">
+                                    Нет научных работ
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="publications" id="publications">
+                <div class="panel-heading publications-heading header-icon-box">
+                    Публикации
+                    @Html.ActionLink(" ", "AddPublication", "Teacher", null, new { @class = "btn icon-plus btn-icon create-item" })
+                </div>
+                <div class="" id="publications-body">
+                    @if (Model.Publications.Count() != 0)
+                    {
+                        <ul>
+                            @foreach (var publication in Model.Publications)
+                            {
+                                <li>@publication.Name</li>
+                            }
+                        </ul>
 
+                    }
+                    else
+                    {
+                        <p class="text-center">Нет публикаций</p>
+                    }
+                </div>
             </div>
         </div>
     </div>

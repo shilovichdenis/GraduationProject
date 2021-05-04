@@ -1,4 +1,4 @@
-﻿@using CourseProject.Models
+﻿@using CourseProject.Models.NeuralNetworks
 @model NeuralNetwork
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -11,7 +11,7 @@
         <div class="panel-heading">
             Сеть
         </div>
-        <div class="panel-body form-neural-params">
+        <div class="form-neural-params">
 
             <span>
                 <label class="control-label">Количество классов</label>
@@ -29,7 +29,7 @@
     <div class="panel-heading">
         Результаты предыдущих значений кластеризации
     </div>
-    <div class="panel-body" style="margin-bottom: 20px; height: 150px; overflow-y: scroll;">
+    <div class="" style="margin-bottom: 20px; height: 150px; overflow-y: scroll;">
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -70,7 +70,7 @@
             @:Выберите группу
         }
     </div>
-    <div class="panel-body" style="padding: 20px;" id="displaygroups">
+    <div class="" style="padding: 20px;" id="displaygroups">
         @if (Model != null)
         {
             foreach (var (indexgroup, group) in Model.GroupOfStudents.Select((i, g) => (g, i)))
@@ -78,7 +78,7 @@
                 <div class="panel-heading" style="text-align: left;">
                     Группа @(indexgroup + 1)
                 </div>
-                <div class="panel-body" style="height: 200px;">
+                <div class="" style="height: 200px;">
                     <table class="table table-bordered">
                         <thead>
                             <tr>

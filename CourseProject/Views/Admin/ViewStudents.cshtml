@@ -1,10 +1,14 @@
-﻿@model IEnumerable<CourseProject.Models.Student>
+﻿@model IEnumerable<CourseProject.Models.Students.Student>
 @{
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
     ViewBag.Title = "Студенты";
 }
 @Styles.Render("~/Admin/View")
-@Styles.Render("~/Content/slick")
+<style>
+    .last-th{
+        width: 30px;
+    }
+</style>
 <div class="panel">
     <div id="info-form" class="modal fade">
         <div id="info-dialog" class="modal-dialog"></div>
@@ -32,7 +36,7 @@
                         <th>ФИО</th>
                         <th>Почта</th>
                         <th>Группа</th>
-                        <th style="border-bottom: none !important;"></th>
+                        <th class="last-th"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,11 +50,7 @@
                                 <td>@student.User.Email</td>
                                 <td>@student.Group.Name</td>
                                 <td class="last-td">
-                                    @Html.ActionLink(" ", "InfoAboutUser", "Account", new { id = student.User.Id }, new { @class = "btn icon-info btn-icon info-item" })
-                                    @using (Html.BeginForm("DeleteUser", "Admin", new { id = student.User.Id }))
-                                    {
-                                        <button class="btn icon-remove btn-icon" type="submit"></button>
-                                    }
+                                    @Html.ActionLink(" ", "InfoAboutStudent", "Home", new { id = student.User.Id }, new { @class = "btn icon-info btn-icon info-item" })
                                 </td>
                             </tr>
                         }

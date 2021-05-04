@@ -54,15 +54,22 @@
 .form-group span {
     text-align: left !important;
 }
-table th{
+
+table th {
     text-align: center;
 }
-.link, .link:hover, .link:target, .link:checked, .link:focus{
+
+.link, .link:hover, .link:target, .link:checked, .link:focus {
     text-decoration: none;
     color: black;
 }
+
 .photo {
     height: 250px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     width: 100%;
+}
+
+.main-info-block {
+    padding: 15px;
 }

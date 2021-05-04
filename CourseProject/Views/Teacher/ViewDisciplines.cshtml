@@ -50,7 +50,6 @@
                             <td class="last-td">
                                 @Html.ActionLink(" ", "SetRatings", "Teacher", new { id = discipline.Id }, new { @class = "btn icon-list-ol btn-icon rate-item" })
                                 @Html.ActionLink(" ", "EditDiscipline", "Teacher", new { id = discipline.Id }, new { @class = "btn icon-pencil btn-icon edit-item" })
-
                                 @using (Html.BeginForm("DeleteDiscipline", "Teacher", new { id = discipline.Id }))
                                 {
                                     <button class="btn btn-icon icon-remove" type="submit"></button>

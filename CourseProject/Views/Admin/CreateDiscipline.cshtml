@@ -1,15 +1,17 @@
-﻿@model CourseProject.Models.Discipline
+﻿@model CourseProject.Models.General.Discipline
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    ViewBag.Title = "Создание дисциплины";
+}
 @Styles.Render("~/Admin/Manage")
-@using (Html.BeginForm("CreateDiscipline", "Admin", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="modal-content" id="create-form-discipline">
-        <div class="panel-heading header-icon-box">
-            Создание дисциплины
-            <a href="#" data-dismiss="modal">&times;</a>
-        </div>
-        <div class="panel-body">
+<div class="panel" id="create-form-discipline">
+    <div class="panel-heading">
+        Создание дисциплины
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("CreateDiscipline", "Admin", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -54,15 +56,15 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Teacher, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.TeacherId, ViewBag.Teachers as SelectList, htmlAttributes: new { @class = "form-control", autocomplete = "off" })
-                    @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(model => model.TeacherId, ViewBag.Teachers as SelectList, htmlAttributes: new { @class = "form-control", id = "teacher" })
+                    @Html.ValidationMessageFor(model => model.Teacher, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.Group, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownListFor(model => model.GroupId, ViewBag.Groups as SelectList, htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownListFor(model => model.GroupId, ViewBag.Groups as SelectList, new { @class = "form-control", id = "groups" })
                     @Html.ValidationMessageFor(model => model.Group, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -83,13 +85,29 @@
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10 btn-box">
                     <input type="submit" value="Создать" class="btn btn-default" />
-                    <input type="button" data-dismiss="modal" class="btn btn-default" value="Отмена" />
+                    @Html.ActionLink("Отмена", "ViewDisciplines", "Admin", new { @class = "btn btn-default" })
                 </div>
             </div>
-        </div>
+        }
     </div>
-}
+</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@section scripts{
+    <script type="text/javascript">
+    $(function () {
+
+        $("#teacher").change(function()
+        {
+            var id = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("GetGroups")/' + id,
+                success: function (data) {
+                    $('#groups').replaceWith(data);
+                }
+            });
+        });
+
+    })
+    </script>
 }

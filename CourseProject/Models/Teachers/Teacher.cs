@@ -32,7 +32,7 @@ namespace CourseProject.Models.Teachers
         [Display(Name = "Ученая степень")]
         public string AcademicDegree { get; set; }
         public List<ScientificWork> ScientificWorks { get; set; }
-        public List<Publications> Publications { get; set; }
+        public List<Publication> Publications { get; set; }
     }
 
     public class EducationalMaterials
