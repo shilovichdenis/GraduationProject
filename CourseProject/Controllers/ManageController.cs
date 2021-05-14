@@ -7,6 +7,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CourseProject.Models;
+using System.IO;
+using System.Data.Entity;
 
 namespace CourseProject.Controllers
 {
@@ -16,6 +18,7 @@ namespace CourseProject.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        ApplicationDbContext dbT = new ApplicationDbContext();
 
         public ManageController()
         {
@@ -33,9 +36,9 @@ namespace CourseProject.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -74,6 +77,25 @@ namespace CourseProject.Controllers
                 BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult EditPhoto(HttpPostedFileBase ImageFile)
+        {
+            var user = dbT.Users.Find(User.Identity.GetUserId());
+            var path = user.ImagePath.Remove(0, 1);
+            FileInfo fi = new FileInfo("D:/Projects/CourseProject/CourseProject/" + path);
+            fi.Delete();
+            string fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName);
+            string extension = Path.GetExtension(ImageFile.FileName);
+            fileName = user.UserName + "_" + fileName + "_" + DateTime.Now.ToString("dd-MM-yy-fff") + extension;
+            user.ImagePath = "~/Images/" + fileName;
+            fileName = Path.Combine(Server.MapPath("~/Images/"), fileName);
+            ImageFile.SaveAs(fileName);
+            dbT.Entry(user).State = EntityState.Modified;
+            dbT.SaveChanges();
+            return RedirectToAction("Profile", "Student");
         }
 
         //
@@ -334,7 +356,7 @@ namespace CourseProject.Controllers
             base.Dispose(disposing);
         }
 
-#region Вспомогательные приложения
+        #region Вспомогательные приложения
         // Используется для защиты от XSRF-атак при добавлении внешних имен входа
         private const string XsrfKey = "XsrfId";
 
@@ -385,6 +407,6 @@ namespace CourseProject.Controllers
             Error
         }
 
-#endregion
+        #endregion
     }
 }

@@ -32,6 +32,5 @@ namespace CourseProject.Models.Teachers
         [Display(Name = "О кафедре")]
         public string About { get; set; }
         public List<Teacher> Teachers { get; set; }
-
     }
 }

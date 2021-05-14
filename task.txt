@@ -1,5 +1,5 @@
 clear pred test cluster
-division into semesters (поле семестр и проверка in enum)
+division into semesters (поле семестр и проверка in enum) +
 Группировка по группам в общем выводе студентов
 Группировка преподавателей по кафедрам в общем выводе преподавателей 
 
@@ -19,17 +19,32 @@ role isconfurmed +
 fixed modal-form or no ?
 specializationId register
 delete cathedra +
-unconfirm(delete register user)
+unconfirm(delete register user) +
 deletefromstudents(+role)
 confirmuser + users (2 tables) +
-create group yearofadmission
+create group yearofadmission +
 null in group(info) send to all
-delete user with all info about him
-infoaboutstudent for all
-scientific work & publications (add, edit, delete) (view)
-passed to all
+delete user with all info about him 
+infoaboutstudent for all +
+scientific work & publications (add, edit, delete) (view)+
+passed to all +
 сортировка дисциплин по названию - типу - дате
 редактирование профиля 
 редактирование группы 
 
 id_photo_00-00-0000_00-00.format
+
+                string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                string extension = Path.GetExtension(model.ImageFile.FileName);
+                fileName = model.UserName + "_" + fileName + "_" + DateTime.Now.ToString("dd-MM-yy-fff") + extension;
+                model.ImagePath = "~/Images/" + fileName;
+                fileName = Path.Combine(Server.MapPath("~/Images/"), fileName);
+                model.ImageFile.SaveAs(fileName);
+
+
+                string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
+                string extension = Path.GetExtension(model.ImageFile.FileName);
+                fileName = model.UserName + "_" + fileName + "_" + DateTime.Now.ToString("dd-MM-yy-fff") + extension;
+                model.ImagePath = "~/Images/" + fileName;
+                fileName = Path.Combine(Server.MapPath("~/Images/"), fileName);
+                model.ImageFile.SaveAs(fileName);

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
@@ -82,5 +83,11 @@ namespace CourseProject.Models
     {
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
+    }
+    public class ChangePhotoViewModel
+    {
+        public ApplicationUser User { get; set; }
+        public string ImagePath { get; set; }
+        public HttpPostedFileBase ImageFile { get; set; }
     }
 }

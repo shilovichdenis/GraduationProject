@@ -9,6 +9,8 @@ using CourseProject.Models.Teachers;
 using CourseProject.Models.NeuralNetworks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 
 namespace CourseProject.Models
 {
@@ -39,6 +41,11 @@ namespace CourseProject.Models
         public override string Email { get; set; }
         [Display(Name = "Телефон")]
         public override string PhoneNumber { get; set; }
+
+        [Display(Name = "Фото")]
+        public string ImagePath { get; set; }
+        [NotMapped]
+        public HttpPostedFileBase ImageFile { get; set; }
         public string DisplayName
         {
             get

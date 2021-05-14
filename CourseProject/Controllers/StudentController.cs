@@ -33,8 +33,8 @@ namespace CourseProject.Controllers
             var student = dbT.Students.Where(a => a.UserId == user.Id).FirstOrDefault();
             student.User = user;
             student.Group = dbT.Groups.Where(a => a.Id == student.GroupId).FirstOrDefault();
-            var dTests = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(a => !a.IsExam).Where(a => a.DateTime < DateTime.Today).Where(a => a.IsPassed == true).ToList();
-            var tests = new List<Tests>();
+            var dTests = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(a => !a.IsExam).Where(a => a.DateTime < DateTime.Today).Where(a => a.IsPassed == true).OrderBy(a => a.DateTime).ToList();
+            var tests = new List<Tests> { };
             foreach (var test in dTests)
             {
                 var teacher = dbT.Teachers.Where(a => a.Id == test.TeacherId).FirstOrDefault();
@@ -45,7 +45,8 @@ namespace CourseProject.Controllers
                 tests.Add(new Tests(test, statement.Rating == 1 ? "Зачтено" : "Не зачтено"));
             }
 
-            var dExams = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(b => b.IsExam).Where(a => a.DateTime < DateTime.Today).Where(a => a.IsPassed == true).ToList();
+
+            var dExams = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(b => b.IsExam).Where(a => a.DateTime < DateTime.Today).Where(a => a.IsPassed == true).OrderBy(a=>a.DateTime).ToList();
             var exams = new List<Exams> { };
             foreach (var exam in dExams)
             {
@@ -119,7 +120,7 @@ namespace CourseProject.Controllers
                 teacher.User = dbT.Users.Find(teacher.UserId);
                 discipline.Teacher = teacher;
             }
-            return View(disciplines);
+            return View(disciplines.OrderBy(a => a.DateTime));
         }
     }
 }

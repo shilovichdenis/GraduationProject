@@ -1,0 +1,229 @@
+﻿@model CourseProject.Models.Students.Student
+@Styles.Render("~/Home/View")
+<div class="modal-content" id="info-form-student">
+    <div class="panel-heading header-icon-box">
+        Студент - @Model.User.DisplayName
+        <a href="#" data-dismiss="modal">&times;</a>
+    </div>
+    <div class="panel-body">
+        <div class="main-info">
+            <div class="panel-heading info-heading">
+                Информация
+            </div>
+            <div class="panel-body info-body">
+                <div class="col-md-4 block-column">
+                    <div class="photo">
+                        @{
+                            var img = Model.User.Gender == "Мужской" ? "male.jpg" : "female.jpg";
+                        }
+                        <img src="~/Image/@img" alt="" class="image" />
+                    </div>
+                </div>
+                <div class="col-md-8 block-column">
+                    <div id="personaldata" class="personaldata">
+                        <div class="panel-heading info-heading" id="personaldata-heading">Личные данные</div>
+                        <div id="personaldata-main">
+                            <div class="block">
+                                <div class="block-name panel-heading">Основное</div>
+                                <div class="block-info">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.User.Surname, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            <span class="">@Html.DisplayFor(model => model.User.Surname)</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.User.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            <span class="">@Html.DisplayFor(model => model.User.Name)</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.User.Patronymic, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            <span class="">@Html.DisplayFor(model => model.User.Patronymic)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block">
+                                <div class="block-name panel-heading">Прочее</div>
+                                <div class="block-info">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.User.Gender, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            <span class="">@Html.DisplayFor(model => model.User.Gender)</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.User.Role, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            <span class="">@Html.DisplayFor(model => model.User.Role)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block">
+                                <div class="block-name panel-heading">Контакты</div>
+                                <div class="block-info">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.User.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            <span class="">@Html.DisplayFor(model => model.User.Email)</span>
+                                        </div>
+                                    </div>                    <div class="form-group">
+                                        @Html.LabelFor(model => model.User.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            <span class="">@Html.DisplayFor(model => model.User.PhoneNumber)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="block">
+                                <div class="block-name panel-heading">Обучение</div>
+                                <div class="block-info">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Group.Name, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            <span class="">@Html.DisplayFor(model => model.Group.Name)</span>
+                                        </div>
+                                    </div>                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Group.FormOfEducation, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            <span class="">@Html.DisplayFor(model => model.Group.FormOfEducation)</span>
+                                        </div>
+                                    </div>                    <div class="form-group">
+                                        @Html.LabelFor(model => model.AverageRating, htmlAttributes: new { @class = "control-label col-md-3" })
+                                        <div class="col-md-9">
+                                            <span class="">@Html.DisplayFor(model => model.AverageRating)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div id="exams" class="exams">
+            <div class="panel-heading info-heading">
+                Экзамены
+            </div>
+            <div class="panel-body info-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Название</th>
+                            <th>Количество <br />часов</th>
+                            <th>Оценка</th>
+                            <th>Дача сдачи</th>
+                            <th>Преподаватель</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RecordBook.Exams.Count != 0)
+                        {
+                            foreach (var (index, exam) in Model.RecordBook.Exams.Select((v, i) => (i, v)))
+                            {
+                                <tr>
+                                    <td>@(index + 1)</td>
+                                    <td>@exam.Discipline.Name</td>
+                                    <td>@exam.Discipline.СountHours</td>
+                                    <td>@exam.Rating</td>
+                                    <td>@exam.Discipline.DateTime.ToShortDateString()</td>
+                                    <td>@exam.Discipline.Teacher.User.DisplayName</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6">Нет экзаменов</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="tests" class="tests">
+            <div class="panel-heading info-heading">
+                Зачеты
+            </div>
+            <div class="panel-body info-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Название</th>
+                            <th>Количество <br />часов</th>
+                            <th>Оценка</th>
+                            <th>Дача сдачи</th>
+                            <th>Преподаватель</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RecordBook.Tests.Count != 0)
+                        {
+                            foreach (var (index, test) in Model.RecordBook.Tests.Select((v, i) => (i, v)))
+                            {
+                                <tr>
+                                    <td>@(index + 1)</td>
+                                    <td>@test.Discipline.Name</td>
+                                    <td>@test.Discipline.СountHours</td>
+                                    <td>@test.Rating</td>
+                                    <td>@test.Discipline.DateTime.ToShortDateString()</td>
+                                    <td>@test.Discipline.Teacher.User.DisplayName</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6">Нет зачетов</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="courseprojects" class="courseprojects">
+            <div class="panel-heading info-heading">
+                Курсовые работы
+            </div>
+            <div class="panel-body info-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Название</th>
+                            <th>Оценка</th>
+                            <th>Преподаватель</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.RecordBook.Projects.Count != 0)
+                        {
+                            foreach (var (index, cp) in Model.RecordBook.Projects.Select((v, i) => (i, v)))
+                            {
+                                <tr>
+                                    <td>@(index + 1)</td>
+                                    <td>@cp.Name</td>
+                                    <td>@cp.Rating</td>
+                                    <td>@cp.Teacher.User.DisplayName</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4">Нет курсовых работ</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

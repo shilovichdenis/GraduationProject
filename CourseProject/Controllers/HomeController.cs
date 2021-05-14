@@ -1,5 +1,6 @@
 ﻿using CourseProject.Models;
 using CourseProject.Models.General;
+using CourseProject.Models.Students;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using System;
@@ -174,7 +175,7 @@ namespace CourseProject.Controllers
             }
             return HttpNotFound();
         }
-        [Authorize]
+        [Authorize(Roles = "Admin, Teacher")]
         public ActionResult InfoAboutGroup(int id)
         {
             var group = dbT.Groups.Find(id);
@@ -185,6 +186,48 @@ namespace CourseProject.Controllers
             }
             group.Students = students.OrderBy(a => a.User.Surname).ToList();
             return PartialView(group);
+        }
+        [Authorize(Roles = "Admin, Teacher")]
+        public ActionResult InfoAboutStudent(int id)
+        {
+            var student = dbT.Students.Find(id);
+            
+            if (student != null)
+            {
+                student.User = dbT.Users.Find(student.UserId);
+                student.Group = dbT.Groups.Find(student.GroupId);
+                var dTests = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(a => !a.IsExam).Where(a => a.DateTime < DateTime.Today).Where(a => a.IsPassed == true).ToList();
+                var tests = new List<Tests> { };
+                foreach (var test in dTests)
+                {
+                    var teacher = dbT.Teachers.Where(a => a.Id == test.TeacherId).FirstOrDefault();
+                    teacher.User = dbT.Users.Where(a => a.Id == teacher.UserId).FirstOrDefault();
+                    test.Teacher = teacher;
+
+                    var statement = dbT.Statements.Where(a => a.DisciplineId == test.Id).Where(b => b.StudentId == student.Id).FirstOrDefault();
+                    tests.Add(new Tests(test, statement.Rating == 1 ? "Зачтено" : "Не зачтено"));
+                }
+
+
+                var dExams = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(b => b.IsExam).Where(a => a.DateTime < DateTime.Today).Where(a => a.IsPassed == true).ToList();
+                var exams = new List<Exams> { };
+                foreach (var exam in dExams)
+                {
+                    var teacher = dbT.Teachers.Where(a => a.Id == exam.TeacherId).FirstOrDefault();
+                    teacher.User = dbT.Users.Where(a => a.Id == teacher.UserId).FirstOrDefault();
+                    exam.Teacher = teacher;
+
+                    var statement = dbT.Statements.Where(a => a.DisciplineId == exam.Id).Where(b => b.StudentId == student.Id).FirstOrDefault();
+                    exams.Add(new Exams(exam, statement.Rating));
+                }
+
+                var corseprojects = dbT.Projects.Where(a => a.StudentId == student.Id).ToList();
+                var recordBook = new RecordBook(exams, tests, corseprojects);
+                student.RecordBook = recordBook;
+                ViewBag.Layout = SetLayout(User);
+                return PartialView(student);
+            }
+            return HttpNotFound();
         }
     }
 }

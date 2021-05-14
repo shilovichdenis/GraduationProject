@@ -184,6 +184,7 @@ namespace CourseProject.Controllers
                 discipline.IsPassed = false;
                 var group = dbT.Groups.Find(discipline.GroupId);
                 discipline.Group = group;
+                discipline.SetTerm();
                 var students = dbT.Students.Where(b => b.GroupId == group.Id).ToList();
                 foreach (var student in students)
                 {
@@ -275,7 +276,7 @@ namespace CourseProject.Controllers
                 var statements = dbT.Statements.Where(a => a.DisciplineId == id).ToList();
                 foreach (var statement in statements)
                 {
-                    var student = dbT.Students.Where(a => a.Id == statement.StudentId).FirstOrDefault();
+                    var student = dbT.Students.Find(statement.StudentId);
                     var user = dbT.Users.Find(student.UserId);
                     student.User = user;
                     statement.Student = student;

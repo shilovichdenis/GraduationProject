@@ -14,10 +14,7 @@
         </div>
         <div class="left-div">
             <div class="photo">
-                @{
-                    var img = Model.User.Gender == "Мужской" ? "male.jpg" : "female.jpg";
-                }
-                <img src="~/Image/@img" alt="" class="image" />
+                <img src="@Url.Content(Model.User.ImagePath)" alt="" class="image" />
             </div>
             <div class="sections">
                 <span>

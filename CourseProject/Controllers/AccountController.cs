@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using CourseProject.Models;
 using System.Data.Entity;
+using System.IO;
 
 namespace CourseProject.Controllers
 {
@@ -55,9 +56,9 @@ namespace CourseProject.Controllers
             }
         }
 
-        //
-        // GET: /Account/Login
-        [AllowAnonymous]
+       //
+       // GET: /Account/Login
+       [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
@@ -142,7 +143,7 @@ namespace CourseProject.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            ViewBag.Groups = new SelectList(dbT.Groups.OrderBy(a=>a.Name), "Id", "Name");
+            ViewBag.Groups = new SelectList(dbT.Groups.OrderBy(a => a.Name), "Id", "Name");
             ViewBag.Cathedras = new SelectList(dbT.Cathedras.OrderBy(a => a.Name), "Id", "Name");
             return View();
         }
@@ -157,6 +158,7 @@ namespace CourseProject.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser();
+
                 if (model.Role.Equals("Студент"))
                 {
                     user = new ApplicationUser
@@ -170,8 +172,8 @@ namespace CourseProject.Controllers
                         Email = model.Email,
                         Role = model.Role,
                         SpecializationId = model.SpecializationId,
-                        OtherInfo = model.FormOfEduaction
-
+                        OtherInfo = model.FormOfEduaction,
+                        ImagePath = model.Gender == "Мужской" ? "~/Images/male.jpg" : "~/Images/female.jpg"
                     };
                 }
                 else
@@ -186,7 +188,8 @@ namespace CourseProject.Controllers
                         PhoneNumber = model.PhoneNumber,
                         Email = model.Email,
                         Role = model.Role,
-                        SpecializationId = model.SpecializationId
+                        SpecializationId = model.SpecializationId,
+                        ImagePath = model.Gender == "Мужской" ? "~/Images/male.jpg" : "~/Images/female.jpg"
                     };
                 }
                 var result = await UserManager.CreateAsync(user, model.Password);

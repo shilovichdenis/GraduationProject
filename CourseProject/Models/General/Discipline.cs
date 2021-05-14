@@ -50,6 +50,8 @@ namespace CourseProject.Models.General
 
         [Display(Name = "Количество часов")]
         public string СountHours { get; set; }
+        [Display(Name = "Семестр")]
+        public int Term { get; set; }
 
         public string Type
         {
@@ -65,5 +67,45 @@ namespace CourseProject.Models.General
                 return IsPassed ? "Сдана" : "Не сдана";
             }
         }
+        public void SetTerm()
+        {
+            foreach (var dt in dateTerms)
+            {
+                var start = dt.Start.AddYears(Group.YearOfAdmission - 1);
+                var end = dt.End.AddYears(Group.YearOfAdmission - 1);
+                if (start <= DateTime && DateTime <= end)
+                {
+                    Term = dt.Number;
+                    return;
+                }
+            }
+        }
+
+        List<DateTerm> dateTerms = new List<DateTerm>()
+        {
+            new DateTerm(1, new DateTime(0001, 11, 01), new DateTime(0002, 02, 01)),
+            new DateTerm(2, new DateTime(0002, 05, 01), new DateTime(0002, 08, 01)),
+            new DateTerm(3, new DateTime(0002, 11, 01), new DateTime(0003, 02, 01)),
+            new DateTerm(4, new DateTime(0003, 05, 01), new DateTime(0003, 08, 01)),
+            new DateTerm(5, new DateTime(0003, 11, 01), new DateTime(0004, 02, 01)),
+            new DateTerm(6, new DateTime(0004, 05, 01), new DateTime(0004, 08, 01)),
+            new DateTerm(7, new DateTime(0004, 11, 01), new DateTime(0005, 02, 01)),
+            new DateTerm(8, new DateTime(0005, 05, 01), new DateTime(0005, 08, 01))
+        };
+
     }
+}
+public class DateTerm
+{
+    public DateTerm(int number, DateTime start, DateTime end)
+    {
+        Number = number;
+        Start = start;
+        End = end;
+    }
+
+    public int Number { get; set; }
+    public DateTime Start { get; set; }
+    public DateTime End { get; set; }
+
 }

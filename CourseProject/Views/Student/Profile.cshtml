@@ -10,11 +10,19 @@
     </div>
     <div class="panel-body panel-info">
         <div class="left-div">
-            <div class="photo">
-                @{ 
-                    var img = Model.User.Gender == "Мужской" ? "male.jpg" : "female.jpg";
+            <div class="photo-block">
+                <div class="photo">
+                    <img src="@Url.Content(Model.User.ImagePath)" alt="" class="image" />
+
+                </div>
+                @using (Html.BeginForm("EditPhoto", "Manage", FormMethod.Post, new { enctype = "multipart/form-data", id = "upload-photo-form" }))
+                {
+                    <div class="editphoto">
+                        <input type="file" name="ImageFile" required class="form-control custom-file-input" id="file" hidden />
+                        <label class="btn btn-default label-for-file" for="file">Загрузите фотографию</label>
+                        <input type="submit" hidden />
+                    </div>
                 }
-                <img src="~/Image/@img" alt="" class="image"/>
             </div>
             <div class="sections">
                 <span>
@@ -132,18 +140,24 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @{
+                            var exams = Model.RecordBook.Exams.GroupBy(a => a.Discipline.Term).ToList();
+                        }
                         @if (Model.RecordBook.Exams.Count != 0)
                         {
-                            foreach (var (index, exam) in Model.RecordBook.Exams.Select((v, i) => (i, v)))
+                            foreach (var group in exams)
                             {
-                                <tr>
-                                    <td>@(index + 1)</td>
-                                    <td>@exam.Discipline.Name</td>
-                                    <td>@exam.Discipline.СountHours</td>
-                                    <td>@exam.Rating</td>
-                                    <td>@exam.Discipline.DateTime.ToShortDateString()</td>
-                                    <td>@exam.Discipline.Teacher.User.DisplayName</td>
-                                </tr>
+                                foreach (var (index, exam) in group.Select((v, i) => (i, v)))
+                                {
+                                    <tr>
+                                        <td>@(index + 1)</td>
+                                        <td>@exam.Discipline.Name</td>
+                                        <td>@exam.Discipline.СountHours</td>
+                                        <td>@exam.Rating</td>
+                                        <td>@exam.Discipline.DateTime.ToShortDateString()</td>
+                                        <td>@exam.Discipline.Teacher.User.DisplayName</td>
+                                    </tr>
+                                }
                             }
                         }
                         else
@@ -157,40 +171,51 @@
             </div>
             <div id="tests" class="tests">
                 <div class="panel-heading info-heading">Зачеты</div>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>№</th>
-                            <th>Название</th>
-                            <th>Количество <br />часов</th>
-                            <th>Оценка</th>
-                            <th>Дача сдачи</th>
-                            <th>Преподаватель</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model.RecordBook.Tests.Count != 0)
-                        {
-                            foreach (var (index, test) in Model.RecordBook.Tests.Select((v, i) => (i, v)))
+                <div id="info-tests">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Название</th>
+                                <th>Количество <br />часов</th>
+                                <th>Оценка</th>
+                                <th>Дача сдачи</th>
+                                <th>Преподаватель</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                var tests = Model.RecordBook.Tests.GroupBy(a => a.Discipline.Term).ToList();
+                            }
+                            @if (Model.RecordBook.Tests.Count != 0)
+                            {
+                                foreach (var group in tests)
+                                {
+                                    <tr>
+                                        <td colspan="6">@group.Key семестр</td>
+                                    </tr>
+                                    foreach (var (index, test) in group.Select((v, i) => (i, v)))
+                                    {
+                                        <tr>
+                                            <td>@(index + 1)</td>
+                                            <td>@test.Discipline.Name</td>
+                                            <td>@test.Discipline.СountHours</td>
+                                            <td>@test.Rating</td>
+                                            <td>@test.Discipline.DateTime.ToShortDateString()</td>
+                                            <td>@test.Discipline.Teacher.User.DisplayName</td>
+                                        </tr>
+                                    }
+                                }
+                            }
+                            else
                             {
                                 <tr>
-                                    <td>@(index + 1)</td>
-                                    <td>@test.Discipline.Name</td>
-                                    <td>@test.Discipline.СountHours</td>
-                                    <td>@test.Rating</td>
-                                    <td>@test.Discipline.DateTime.ToShortDateString()</td>
-                                    <td>@test.Discipline.Teacher.User.DisplayName</td>
+                                    <td colspan="6">Нет зачетов</td>
                                 </tr>
                             }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="6">Нет зачетов</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div id="courseprojects" class="courseprojects">
                 <div class="panel-heading info-heading">Курсовые работы</div>
@@ -228,3 +253,10 @@
         </div>
     </div>
 </div>
+@section Scripts{
+    <script>
+        $("#file").change(function (e) {
+            $("#upload-photo-form").submit();
+        })
+    </script>
+}
