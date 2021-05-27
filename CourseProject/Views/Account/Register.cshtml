@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Регистрация";
 }
-@Styles.Render("~/Account/Registration")
+@Styles.Render("~/Account/Index")
 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
@@ -14,10 +14,10 @@
             <div class="form-group">
                 <div class="radio-box" style="justify-content: center;">
                     <span>
-                        <label id="label-student" class="control-label control-label-active">Студент @Html.RadioButtonFor(model => model.Role, "Студент", new { autocomplete = "off", id = "radio-student", @checked = true })</label>
+                        <label id="label-student" class="control-label control-label-active">Студент @Html.RadioButtonFor(model => model.Role, "Student", new { autocomplete = "off", id = "radio-student", @checked = true })</label>
                     </span>
                     <span>
-                        <label id="label-teacher" class="control-label control-label-nonactive">Преподаватель  @Html.RadioButtonFor(model => model.Role, "Преподаватель", new { autocomplete = "off", id = "radio-teacher" })</label>
+                        <label id="label-teacher" class="control-label control-label-nonactive">Преподаватель  @Html.RadioButtonFor(model => model.Role, "Teacher", new { autocomplete = "off", id = "radio-teacher" })</label>
                     </span>
                     @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
                 </div>

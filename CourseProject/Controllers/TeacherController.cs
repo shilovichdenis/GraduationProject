@@ -26,8 +26,8 @@ namespace CourseProject.Controllers
                 return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
             }
         }
-
-        public async Task<ActionResult> InfoAboutYourself()
+                     
+        public new async Task<ActionResult> Profile()
         {
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             var teacher = dbT.Teachers.Where(a => a.UserId == user.Id).FirstOrDefault();
@@ -235,6 +235,7 @@ namespace CourseProject.Controllers
             {
                 var group = dbT.Groups.Find(discipline.GroupId);
                 discipline.Group = group;
+                discipline.SetTerm();
                 dbT.Entry(discipline).State = EntityState.Modified;
                 dbT.SaveChanges();
                 dbT.Dispose();
@@ -466,7 +467,7 @@ namespace CourseProject.Controllers
                 dbT.ScientificWorks.Add(scientificWork);
                 dbT.SaveChanges();
                 dbT.Dispose();
-                return RedirectToAction("InfoAboutYourself");
+                return RedirectToAction("Profile");
             }
             return HttpNotFound();
         }
@@ -497,7 +498,7 @@ namespace CourseProject.Controllers
                 dbT.ScientificWorks.Remove(work);
                 dbT.SaveChanges();
                 dbT.Dispose();
-                return RedirectToAction("InfoAboutYourself");
+                return RedirectToAction("Profile");
             }
             return HttpNotFound();
         }
@@ -519,7 +520,7 @@ namespace CourseProject.Controllers
                 dbT.Publications.Add(publication);
                 dbT.SaveChanges();
                 dbT.Dispose();
-                return RedirectToAction("InfoAboutYourself");
+                return RedirectToAction("Profile");
             }
             return HttpNotFound();
         }
@@ -550,7 +551,7 @@ namespace CourseProject.Controllers
                 dbT.Publications.Remove(publication);
                 dbT.SaveChanges();
                 dbT.Dispose();
-                return RedirectToAction("InfoAboutYourself");
+                return RedirectToAction("Profile");
             }
             return HttpNotFound();
         }

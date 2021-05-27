@@ -6,6 +6,7 @@ division into semesters (поле семестр и проверка in enum) +
 for students output teachers +
 check search
 photo +
+id_photo_00-00-0000_00-00.format+
 аverage score calculation +
 Навбар переделать (Сделать управление данными)+
 average score in the group info +
@@ -31,20 +32,4 @@ passed to all +
 сортировка дисциплин по названию - типу - дате
 редактирование профиля 
 редактирование группы 
-
-id_photo_00-00-0000_00-00.format
-
-                string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
-                string extension = Path.GetExtension(model.ImageFile.FileName);
-                fileName = model.UserName + "_" + fileName + "_" + DateTime.Now.ToString("dd-MM-yy-fff") + extension;
-                model.ImagePath = "~/Images/" + fileName;
-                fileName = Path.Combine(Server.MapPath("~/Images/"), fileName);
-                model.ImageFile.SaveAs(fileName);
-
-
-                string fileName = Path.GetFileNameWithoutExtension(model.ImageFile.FileName);
-                string extension = Path.GetExtension(model.ImageFile.FileName);
-                fileName = model.UserName + "_" + fileName + "_" + DateTime.Now.ToString("dd-MM-yy-fff") + extension;
-                model.ImagePath = "~/Images/" + fileName;
-                fileName = Path.Combine(Server.MapPath("~/Images/"), fileName);
-                model.ImageFile.SaveAs(fileName);
+button hidden discipline

@@ -33,6 +33,12 @@ namespace CourseProject.Models.Students
         public RecordBook()
         {
         }
+
+        public RecordBook(List<Exams> exams)
+        {
+            Exams = exams;
+        }
+
         public RecordBook(List<Exams> exams, List<Tests> tests)
         {
             Exams = exams;

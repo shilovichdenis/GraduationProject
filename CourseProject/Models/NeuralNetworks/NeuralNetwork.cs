@@ -81,12 +81,12 @@ namespace CourseProject.Models.NeuralNetworks
 
             for (int i = 0; i < CountNumericX; i++)
             {
-                MinInColumn[i] = 100;
+                MinInColumn[i] = 10;
             }
 
-            foreach (var student in Students)
+            foreach (var model in Students)
             {
-                foreach (var (i, discipline) in student.RecordBook.Exams.Select((i, d) => (d, i)))
+                foreach (var (i, discipline) in model.Student.RecordBook.Exams.Select((i, d) => (d, i)))
                 {
                     if (MaxInColumn[i] < discipline.Rating)
                     {
@@ -103,7 +103,7 @@ namespace CourseProject.Models.NeuralNetworks
         {
             for (int i = 0; i < Students.Count; i++)
             {
-                if (Students[i].Student.Gender == "Мужской")
+                if (Students[i].Student.User.Gender == "Мужской")
                 {
                     NoramalizeCoeff[i, 0] = 1;
                 }
@@ -120,7 +120,7 @@ namespace CourseProject.Models.NeuralNetworks
                 {
                     NoramalizeCoeff[i, 1] = 0;
                 }
-                if (Students[i].Student.OtherInfo == "Бюджетная")
+                if (Students[i].Student.FormOfPayment == "Бюджетная")
                 {
                     NoramalizeCoeff[i, 2] = 1;
                 }
@@ -131,7 +131,7 @@ namespace CourseProject.Models.NeuralNetworks
 
                 for (int j = 0; j < M - 3; j++)
                 {
-                    NoramalizeCoeff[i, j + 3] = Math.Round((double)(Students[i].RecordBook.Exams[j].Rating - MinInColumn[j]) / (double)(MaxInColumn[j] - MinInColumn[j]), 2);
+                    NoramalizeCoeff[i, j + 3] = Math.Round((double)(Students[i].Student.RecordBook.Exams[j].Rating - MinInColumn[j]) / (double)(MaxInColumn[j] - MinInColumn[j]), 2);
                 }
             }
         }
@@ -154,7 +154,7 @@ namespace CourseProject.Models.NeuralNetworks
         {
             bool check;
             double[] R = new double[K];
-            double coeffSpeed = 0.01;
+            double coeffSpeed = 0.003;
             do
             {
                 List<StudentsForNeuralNetwork> studentsForRemove = new List<StudentsForNeuralNetwork>();

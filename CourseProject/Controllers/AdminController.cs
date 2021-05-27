@@ -71,7 +71,21 @@ namespace CourseProject.Controllers
                 discipline.Teacher = teacher;
                 discipline.Group = dbT.Groups.Find(discipline.GroupId);
             }
-            return View(disciplines.OrderByDescending(a => a.IsExam).ThenByDescending(a => a.DateTime).GroupBy(a => a.Teacher.User.DisplayName).OrderBy(a => a.Key));
+            return View(disciplines.OrderByDescending(a => a.IsExam).ThenByDescending(b => b.DateTime).GroupBy(a => a.Teacher.User.DisplayName).OrderBy(a => a.Key));
+        }
+
+        public void CalculateAverageRating(int studentId)
+        {
+            var student = dbT.Students.Find(studentId);
+            var averageRating = 0f;
+            var statements = dbT.Statements.Where(a => a.StudentId == student.Id).Where(a => a.Rating > 3).ToList();
+            foreach (var statement in statements)
+            {
+                averageRating += statement.Rating;
+            }
+            student.AverageRating = Math.Round(averageRating / statements.Count(), 2);
+            dbT.Entry(student).State = EntityState.Modified;
+            dbT.SaveChanges();
         }
 
         [HttpGet]
@@ -107,6 +121,8 @@ namespace CourseProject.Controllers
                         var statement = dbT.Statements.Find(item);
                         statement.Rating = Int32.Parse(rating.ElementAt(index));
                         dbT.Entry(statement).State = EntityState.Modified;
+                        dbT.SaveChanges();
+                        CalculateAverageRating(statement.StudentId);
                     }
                 }
                 else
@@ -127,9 +143,9 @@ namespace CourseProject.Controllers
                             statement.Rating = -1;
                         }
                         dbT.Entry(statement).State = EntityState.Modified;
+                        dbT.SaveChanges();
                     }
                 }
-                dbT.SaveChanges();
                 dbT.Dispose();
                 return RedirectToAction("ViewDisciplines");
             }
@@ -177,6 +193,7 @@ namespace CourseProject.Controllers
                 var group = dbT.Groups.Find(discipline.GroupId);
                 discipline.Teacher = teacher;
                 discipline.Group = group;
+                discipline.SetTerm();
                 var students = dbT.Students.Where(a => a.GroupId == group.Id).ToList();
                 foreach (var student in students)
                 {
@@ -214,7 +231,7 @@ namespace CourseProject.Controllers
                 {
                     sg.Group = dbT.Groups.Find(sg.GroupId);
                 }
-                ViewBag.Groups = new SelectList(studygroups.OrderBy(a => a.Group.Name), "GroupId", "Group.Name", studygroups.Where(a=>a.GroupId == discipline.GroupId).FirstOrDefault());
+                ViewBag.Groups = new SelectList(studygroups.OrderBy(a => a.Group.Name), "GroupId", "Group.Name", studygroups.Where(a => a.GroupId == discipline.GroupId).FirstOrDefault());
                 return View(discipline);
             }
             else
@@ -231,6 +248,7 @@ namespace CourseProject.Controllers
                 var group = dbT.Groups.Find(discipline.GroupId);
                 discipline.Group = group;
                 discipline.Teacher = teacher;
+                discipline.SetTerm();
                 dbT.Entry(discipline).State = EntityState.Modified;
                 dbT.SaveChanges();
                 return RedirectToAction("ViewDisciplines");
@@ -526,6 +544,15 @@ namespace CourseProject.Controllers
                 return View("Error");
             }
         }
+        public ActionResult GetStudents(int id)
+        {
+            var students = dbT.Students.Where(a => a.GroupId == id).ToList();
+            foreach (var student in students)
+            {
+                student.User = dbT.Users.Find(student.UserId);
+            }
+            return PartialView(students.OrderBy(a => a.User.Surname).ToList());
+        }
 
         [HttpGet]
         public ActionResult ViewNeuralGroups()
@@ -535,60 +562,72 @@ namespace CourseProject.Controllers
             return View();
         }
 
-        //public ActionResult ViewNeuralGroups(int groupId, int? k)
-        //{
-        //    ViewBag.Groups = new SelectList(dbT.Groups.OrderBy(a => a.Name), "Id", "Name");
-        //    if (k == null)
-        //    {
-        //        k = 1;
-        //    }
-
-        //    List<StudentsForNeuralNetwork> studentsForNeuralNetwork = new List<StudentsForNeuralNetwork>();
-        //    var students = dbT.Users.Where(a => a.Role.Equals("Студент")).Where(b => b.SpecializationId == groupId).OrderBy(c => c.Surname).ToList();
-        //    var group = dbT.Groups.Find(groupId);
-        //    if (students.Count != 0)
-        //    {
-        //        var countexams = new int();
-        //        foreach (var (index, student) in students.Select((i, s) => (s, i)))
-        //        {
-        //            StudentsForNeuralNetwork studentForNeuralNetwork = new StudentsForNeuralNetwork();
-        //            var tests = dbT.Disciplines.Where(a => a.GroupId == student.SpecializationId).Where(b => b.Type.Contains("Зачет")).ToList();
-        //            var testsWithRating = new List<Tests>();
-        //            foreach (var test in tests)
-        //            {
-        //                var statement = dbT.Statements.Where(a => a.DisciplineId == test.Id).Where(b => b.StudentId == student.Id).FirstOrDefault();
-        //                testsWithRating.Add(new Tests(test, statement.Rating.ToString()));
-        //            }
-        //            var exams = dbT.Disciplines.Where(a => a.GroupId == student.SpecializationId).Where(b => b.Type.Contains("Экзамен")).ToList();
-        //            var examsWithRating = new List<Exams> { };
-        //            foreach (var exam in exams)
-        //            {
-        //                var statement = dbT.Statements.Where(a => a.DisciplineId == exam.Id).Where(b => b.StudentId == student.Id).FirstOrDefault();
-        //                examsWithRating.Add(new Exams(exam, statement.Rating));
-        //            }
-        //            var recordBook = new RecordBook(student, examsWithRating, testsWithRating);
-        //            studentsForNeuralNetwork.Add(new StudentsForNeuralNetwork(index + 1, student, recordBook));
-        //        }
-        //        countexams = studentsForNeuralNetwork.ElementAt(0).RecordBook.Exams.Count;
-        //        ViewBag.Disciplines = studentsForNeuralNetwork.ElementAt(0).RecordBook.Exams as List<Exams>;
-        //        NeuralNetwork network = new NeuralNetwork(countexams + 3, (int)k, studentsForNeuralNetwork, group);
-        //        NeuralNetworkResult result = new NeuralNetworkResult(network.F1, network.F2, network.K, network.M, groupId);
-        //        var results = dbT.Results.Where(a => a.GroupId == group.Id).ToList();
-        //        foreach (var res in results)
-        //        {
-        //            res.Group = group;
-        //        }
-        //        ViewBag.Results = results as List<NeuralNetworkResult>;
-        //        dbT.Results.Add(result);
-        //        dbT.SaveChanges();
-        //        return View(network);
-        //    }
-        //    else
-        //    {
-        //        return View();
-        //    }
-
-        //}
+        public ActionResult ViewNeuralGroups(int groupId, int? k, int term)
+        {
+            ViewBag.Groups = new SelectList(dbT.Groups.OrderBy(a => a.Name), "Id", "Name");
+            if (k == null)
+            {
+                k = 1;
+            }
+            var group = dbT.Groups.Find(groupId);
+            if (group != null)
+            {
+                List<StudentsForNeuralNetwork> studentsForNeuralNetwork = new List<StudentsForNeuralNetwork>();
+                var students = dbT.Students.Where(a => a.GroupId == group.Id).ToList();
+                if (students.Count != 0)
+                {
+                    var countexams = new int();
+                    foreach (var (index, student) in students.Select((i, s) => (s, i)))
+                    {
+                        student.User = dbT.Users.Find(student.UserId);
+                        student.Group = group;
+                        StudentsForNeuralNetwork studentForNeuralNetwork = new StudentsForNeuralNetwork();
+                        var tests = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(b => !b.IsExam).Where(a => a.Term == term).ToList();
+                        var testsWithRating = new List<Tests>();
+                        foreach (var test in tests)
+                        {
+                            var statement = dbT.Statements.Where(a => a.DisciplineId == test.Id).Where(b => b.StudentId == student.Id).FirstOrDefault();
+                            testsWithRating.Add(new Tests(test, statement.Rating.ToString()));
+                        }
+                        var exams = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(b => b.IsExam).Where(a => a.Term == term).ToList();
+                        var examsWithRating = new List<Exams> { };
+                        foreach (var exam in exams)
+                        {
+                            var statement = dbT.Statements.Where(a => a.DisciplineId == exam.Id).Where(b => b.StudentId == student.Id).FirstOrDefault();
+                            examsWithRating.Add(new Exams(exam, statement.Rating));
+                        }
+                        var recordBook = new RecordBook(examsWithRating, testsWithRating);
+                        student.RecordBook = recordBook;
+                        studentsForNeuralNetwork.Add(new StudentsForNeuralNetwork(index + 1, student));
+                    }
+                    countexams = studentsForNeuralNetwork.ElementAt(0).Student.RecordBook.Exams.Count;
+                    ViewBag.Disciplines = studentsForNeuralNetwork.ElementAt(0).Student.RecordBook.Exams as List<Exams>;
+                    NeuralNetwork network = new NeuralNetwork(countexams + 3, (int)k, studentsForNeuralNetwork, group);
+                    NeuralNetworkResult result = new NeuralNetworkResult(network.F1, network.F2, network.K, network.M, groupId);
+                    var results = dbT.Results.Where(a => a.GroupId == group.Id).ToList();
+                    foreach (var res in results)
+                    {
+                        res.Group = group;
+                    }
+                    ViewBag.Results = results as List<NeuralNetworkResult>;
+                    dbT.Results.Add(result);
+                    dbT.SaveChanges();
+                    return View(network);
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            return HttpNotFound();
+        }
+        public ActionResult DeleteAllResults()
+        {
+            dbT.Results.RemoveRange(dbT.Results);
+            dbT.SaveChanges();
+            dbT.Dispose();
+            return RedirectToAction("ViewNeuralGroups", "Admin");
+        }
 
         public ActionResult ViewCathedras()
         {

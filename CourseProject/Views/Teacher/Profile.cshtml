@@ -6,15 +6,26 @@
 @Styles.Render("~/Teacher/View")
 <div class="panel" id="info-form-teacher">
     <div class="panel-heading">
-        Имя пользователя - @Model.User.UserName
+       Профиль
     </div>
     <div class="panel-body panel-info">
         <div id="create-form" class="modal fade">
             <div id="create-dialog" class="modal-dialog"></div>
         </div>
         <div class="left-div">
-            <div class="photo">
-                <img src="@Url.Content(Model.User.ImagePath)" alt="" class="image" />
+            <div class="photo-block">
+                <div class="photo">
+                    <img src="@Url.Content(Model.User.ImagePath)" alt="" class="image" />
+
+                </div>
+                @using (Html.BeginForm("EditPhoto", "Manage", FormMethod.Post, new { enctype = "multipart/form-data", id = "upload-photo-form" }))
+                {
+                    <div class="editphoto">
+                        <input type="file" name="ImageFile" required class="form-control custom-file-input" id="file" hidden />
+                        <label class="btn btn-default label-for-file" for="file">Загрузите фотографию</label>
+                        <input type="submit" hidden />
+                    </div>
+                }
             </div>
             <div class="sections">
                 <span>
@@ -74,7 +85,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.User.Role, htmlAttributes: new { @class = "control-label col-md-3" })
                                 <div class="col-md-9">
-                                    <span class="">@Html.DisplayFor(model => model.User.Role)</span>
+                                    <span class="">Преподаватель</span>
                                 </div>
                             </div>
                         </div>
@@ -192,3 +203,10 @@
         </div>
     </div>
 </div>
+@section Scripts{
+    <script>
+        $("#file").change(function (e) {
+            $("#upload-photo-form").submit();
+        })
+    </script>
+}

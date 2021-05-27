@@ -22,12 +22,26 @@
                 @Html.DropDownList("groupId", ViewBag.Groups as SelectList, "", htmlAttributes: new { @class = "form-control", id = "inputGroup" })
             </span>
             <span>
+                <label class="control-label">Семестр</label>
+                <select class="form-control" id="term" name="term">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+            </span>
+            <span>
                 <input type="submit" class="btn btn-default" />
             </span>
         </div>
     }
-    <div class="panel-heading">
+    <div class="panel-heading header-icon-box">
         Результаты предыдущих значений кластеризации
+        @Html.ActionLink(" ", "DeleteAllResults", "Admin", null, new { @class = "btn btn-icon icon-remove" })
     </div>
     <div class="" style="margin-bottom: 20px; height: 150px; overflow-y: scroll;">
         <table class="table table-bordered table-striped">
@@ -78,7 +92,7 @@
                 <div class="panel-heading" style="text-align: left;">
                     Группа @(indexgroup + 1)
                 </div>
-                <div class="" style="height: 200px;">
+                <div class="">
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -90,20 +104,27 @@
                                 {
                                     <th>@exam.Discipline.Name</th>
                                 }
+                                <th>Средний балл</th>
                             </tr>
                         </thead>
                         @foreach (var (indexstudent, student) in group.Select((i, s) => (s, i)))
                         {
                             <tbody>
+                                @{
+                                    var average = 0f;
+                                }
                                 <tr>
-                                    <td>@student.Student.Surname</td>
-                                    <td>@student.Student.Gender</td>
+                                    <td>@student.Student.User.Surname</td>
+
+                                    <td>@student.Student.User.Gender</td>
                                     <td>@(student.GetAllTests? "Сданы" : "Не сданы")</td>
-                                    <td>@student.Student.OtherInfo</td>
-                                    @foreach (var exam in student.RecordBook.Exams)
+                                    <td>@student.Student.FormOfPayment</td>
+                                    @foreach (var exam in student.Student.RecordBook.Exams)
                                     {
                                         <td>@exam.Rating</td>
+                                        average += exam.Rating;
                                     }
+                                    <td>@(average / student.Student.RecordBook.Exams.Count())</td>
                                 </tr>
                             </tbody>
                         }

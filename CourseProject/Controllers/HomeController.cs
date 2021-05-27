@@ -145,6 +145,40 @@ namespace CourseProject.Controllers
 
             return View();
         }
+        public ActionResult InfoAboutRatings(int id)
+        {
+            ViewBag.Layout = SetLayout(User);
+            var group = dbT.Groups.Find(id);
+            if (group != null)
+            {
+                ViewBag.Group = group;
+                var disciplines = dbT.Disciplines.Where(a => a.GroupId == group.Id).Where(a => a.IsExam).Where(a => a.IsPassed).ToList();
+                var displayDisciplineModel = new List<DisplayDisciplineModel>();
+                foreach (var discipline in disciplines)
+                {
+                    var statements = dbT.Statements.Where(a => a.DisciplineId == discipline.Id).ToList();
+                    foreach (var statement in statements)
+                    {
+                        var student = dbT.Students.Find(statement.StudentId);
+                        student.User = dbT.Users.Find(student.UserId);
+                        student.Group = group;
+                        statement.Student = student;
+                    }
+                    displayDisciplineModel.Add(new DisplayDisciplineModel(discipline, statements));
+                }
+                var students = dbT.Students.Where(a => a.GroupId == group.Id).ToList();
+                foreach (var student in students)
+                {
+                    student.User = dbT.Users.Find(student.UserId);
+                    student.Group = group;
+                }
+                var result = new DisplayRatings(students, displayDisciplineModel);
+                return View(result);
+            }
+            return HttpNotFound();
+        }
+
+
         [Authorize]
         public ActionResult InfoAboutCathedra(int id)
         {
@@ -191,12 +225,12 @@ namespace CourseProject.Controllers
         public ActionResult InfoAboutStudent(int id)
         {
             var student = dbT.Students.Find(id);
-            
+
             if (student != null)
             {
                 student.User = dbT.Users.Find(student.UserId);
                 student.Group = dbT.Groups.Find(student.GroupId);
-                var dTests = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(a => !a.IsExam).Where(a => a.DateTime < DateTime.Today).Where(a => a.IsPassed == true).ToList();
+                var dTests = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(a => !a.IsExam).Where(a => a.DateTime < DateTime.Today).Where(a => a.IsPassed == true).OrderByDescending(a => a.DateTime).ToList();
                 var tests = new List<Tests> { };
                 foreach (var test in dTests)
                 {
@@ -209,7 +243,7 @@ namespace CourseProject.Controllers
                 }
 
 
-                var dExams = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(b => b.IsExam).Where(a => a.DateTime < DateTime.Today).Where(a => a.IsPassed == true).ToList();
+                var dExams = dbT.Disciplines.Where(a => a.GroupId == student.GroupId).Where(b => b.IsExam).Where(a => a.DateTime < DateTime.Today).Where(a => a.IsPassed == true).OrderByDescending(a => a.DateTime).ToList();
                 var exams = new List<Exams> { };
                 foreach (var exam in dExams)
                 {

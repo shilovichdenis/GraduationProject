@@ -1,0 +1,27 @@
+﻿@using CourseProject.Models.Students
+@model IEnumerable<CourseProject.Models.Students.Student>
+<table class="table table-bordered" id="table-students">
+    <thead>
+        <tr>
+            <th>ФИО</th>
+            <th></th>
+            <th></th>
+            <th>Средний балл</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() != 0)
+        {
+            foreach (var student in Model)
+            {
+                <tr>
+                    <td>@student.User.DisplayName</td>
+                    <td></td>
+                    <td></td>
+                    <td>@student.AverageRating</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

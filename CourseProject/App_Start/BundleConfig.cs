@@ -62,12 +62,8 @@ namespace CourseProject
             bundles.Add(new StyleBundle("~/Content/Home").Include(
                       "~/Content/HomePage.css"));
 
-
-            bundles.Add(new StyleBundle("~/Account/Registration").Include(
-                "~/Content/Account/Registration.css"));
-
-            bundles.Add(new StyleBundle("~/Account/Log").Include(
-                "~/Content/Account/Login.css"));
+            bundles.Add(new StyleBundle("~/Account/Index").Include(
+                "~/Content/Account/Index.css"));
 
 
 

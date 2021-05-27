@@ -19,7 +19,7 @@ namespace CourseProject.Controllers
         ApplicationDbContext dbT = new ApplicationDbContext();
 
         private ApplicationUserManager UserManager
-        {
+        { 
             get
             {
                 return HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -104,7 +104,7 @@ namespace CourseProject.Controllers
                 teacher.User = dbT.Users.Find(teacher.UserId);
                 teacher.Cathedra = dbT.Cathedras.Find(teacher.CathedraId);
             }
-            return View(teachers);
+            return View(teachers.OrderBy(a=>a.User.Surname));
         }
 
         public async Task<ActionResult> ViewDisciplines()

@@ -1,0 +1,51 @@
+﻿@model CourseProject.Models.General.DisplayRatings
+@Styles.Render("~/Home/View")
+@{
+    Layout = ViewBag.Layout;
+    ViewBag.Title = "Таблица успеваемости студентов";
+}
+<style>
+    table th {
+        justify-content: center;
+        text-align: center;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+    }
+</style>
+<div class="panel" id="info-form-ratings">
+    <div class="panel-heading">
+        Группа - @ViewBag.Group.Name
+    </div>
+    <div class="panel-body">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    @foreach (var student in Model.Students.OrderBy(a => a.User.Surname))
+                    {
+                        <th>@student.User.Surname</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var discipline in Model.Disciplines.OrderBy(a=>a.Discipline.DateTime))
+                {
+                    <tr>
+                        <td>@discipline.Discipline.Name</td>
+                        @foreach (var statement in discipline.Statements.OrderBy(a=>a.Student.User.Surname))
+                        {
+                            <td>@statement.Rating</td>
+                        }
+                    </tr>
+                }
+                <tr>
+                    <td>Средний рейтинг</td>
+                    @foreach (var student in Model.Students.OrderBy(a=>a.User.Surname))
+                    {
+                        <td>@student.AverageRating</td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,5 +1,13 @@
 ﻿@model CourseProject.Models.Students.Group
 @Styles.Render("~/Home/View")
+<style>
+    .header-icon-box{
+        align-items: center;    
+    }
+    .header-icon-box a{
+       font-size: 15px !important;
+    }
+</style>
 <div class="modal-content" id="info-form-group">
     <div class="panel-heading header-icon-box">
         Группа - @Model.Name
@@ -7,8 +15,9 @@
     </div>
     <div class="panel-body">
         <div class="main-info">
-            <div class="panel-heading info-heading">
+            <div class="panel-heading header-icon-box">
                 Информация
+                @Html.ActionLink(" ", "InfoAboutRatings", "Home", new { id = Model.Id }, new { @class = "btn icon-list-ol btn-icon" })
             </div>
             <div class="main-info-block">
                 <div class="col-md-6 block-column">
@@ -42,7 +51,7 @@
             </div>
         </div>
         <div id="table-students">
-            <div class="panel-heading info-heading">
+            <div class="panel-heading header-icon-box">
                 Студенты
             </div>
             <table class="table table-bordered table-striped">

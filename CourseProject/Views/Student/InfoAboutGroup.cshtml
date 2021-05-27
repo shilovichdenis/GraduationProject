@@ -15,8 +15,9 @@
     </div>
     <div class="panel-body">
         <div class="main-info">
-            <div class="panel-heading info-heading">
+            <div class="panel-heading header-icon-box">
                 Информация
+                @Html.ActionLink(" ", "InfoAboutRatings", "Home", new { id = Model.Id }, new { @class = "btn icon-list-ol btn-icon" })
             </div>
             <div class="main-info-block">
                 <div class="col-md-6 block-column">
@@ -50,7 +51,7 @@
             </div>
         </div>
         <div id="table-students">
-            <div class="panel-heading info-heading">
+            <div class="panel-heading header-icon-box">
                 Студенты
             </div>
             <table class="table table-bordered table-striped">

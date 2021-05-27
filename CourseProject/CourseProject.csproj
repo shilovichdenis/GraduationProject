@@ -256,6 +256,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationRole.cs" />
+    <Compile Include="Models\General\DisplayRatings.cs" />
     <Compile Include="Models\Teachers\Cathedra.cs" />
     <Compile Include="Models\Students\CourseProject.cs" />
     <Compile Include="Models\General\Discipline.cs" />
@@ -278,7 +279,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Account\Login.css" />
-    <Content Include="Content\Account\Registration.css" />
+    <Content Include="Content\Account\Index.css" />
     <Content Include="Content\Admin\Information.css" />
     <Content Include="Content\Admin\InterfaceStyle.css" />
     <Content Include="Content\Admin\ManageStyle.css" />
@@ -417,13 +418,15 @@
     <Content Include="Views\Admin\ViewCathedras.cshtml" />
     <Content Include="Views\Admin\CreateCathedra.cshtml" />
     <Content Include="Views\Admin\EditCathedra.cshtml" />
-    <Content Include="Views\Teacher\InfoAboutYourself.cshtml" />
+    <Content Include="Views\Teacher\Profile.cshtml" />
     <Content Include="Views\Home\InfoAboutCathedra.cshtml" />
     <Content Include="Views\Home\InfoAboutTeacher.cshtml" />
     <Content Include="Views\Teacher\AddScientificWork.cshtml" />
     <Content Include="Views\Teacher\AddPublication.cshtml" />
     <Content Include="Views\Admin\GetGroups.cshtml" />
     <Content Include="Views\Home\InfoAboutStudent.cshtml" />
+    <Content Include="Views\Admin\GetStudents.cshtml" />
+    <Content Include="Views\Home\InfoAboutRatings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

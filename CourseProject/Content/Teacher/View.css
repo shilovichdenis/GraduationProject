@@ -56,18 +56,49 @@
     margin-top: 0;
 }
 
-.photo {
+.photo-block {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
     width: 100%;
-    height: auto;
-    margin-bottom: auto;
-    margin-top: 0;
+}
+
+.photo {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center
 }
 
 .image {
     width: 100%;
-    height: auto;
+    max-height: 350px;
+    object-fit: cover;
 }
+.custom-file-input {
+    visibility: hidden;
+    position: absolute;
+    height: 0;
+}
+
+    .custom-file-input::-webkit-file-upload-button {
+        visibility: hidden;
+        position: absolute;
+        height: 0;
+    }
+
+.label-for-file {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+    width: 100% !important;
+    border-radius: unset;
+    background-color: #222222;
+    color: #9D9D9D;
+    border-color: #222222;
+}
+
+    .label-for-file:hover {
+        background-color: #222222;
+        color: white;
+        border-color: #222222;
+    }
 
 .sections {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);

@@ -85,8 +85,11 @@ namespace CourseProject.Controllers
         {
             var user = dbT.Users.Find(User.Identity.GetUserId());
             var path = user.ImagePath.Remove(0, 1);
-            FileInfo fi = new FileInfo("D:/Projects/CourseProject/CourseProject/" + path);
-            fi.Delete();
+            if(path.Contains(user.UserName))
+            {
+                FileInfo fi = new FileInfo("D:/Projects/CourseProject/CourseProject/" + path);
+                fi.Delete();
+            }
             string fileName = Path.GetFileNameWithoutExtension(ImageFile.FileName);
             string extension = Path.GetExtension(ImageFile.FileName);
             fileName = user.UserName + "_" + fileName + "_" + DateTime.Now.ToString("dd-MM-yy-fff") + extension;
@@ -95,7 +98,7 @@ namespace CourseProject.Controllers
             ImageFile.SaveAs(fileName);
             dbT.Entry(user).State = EntityState.Modified;
             dbT.SaveChanges();
-            return RedirectToAction("Profile", "Student");
+            return RedirectToAction("Profile", user.Role);
         }
 
         //

@@ -6,7 +6,7 @@
 @Styles.Render("~/Student/View")
 <div class="panel" id="info-form-student">
     <div class="panel-heading">
-        Имя пользователя - @Model.User.UserName
+       Профиль
     </div>
     <div class="panel-body panel-info">
         <div class="left-div">
@@ -82,7 +82,7 @@
                             <div class="form-group">
                                 @Html.LabelFor(model => model.User.Role, htmlAttributes: new { @class = "control-label col-md-3" })
                                 <div class="col-md-9">
-                                    <span class="">@Html.DisplayFor(model => model.User.Role)</span>
+                                    <span class="">Студент</span>
                                 </div>
                             </div>
                         </div>
@@ -147,6 +147,9 @@
                         {
                             foreach (var group in exams)
                             {
+                                <tr>
+                                    <td colspan="6">@group.Key семестр</td>
+                                </tr>
                                 foreach (var (index, exam) in group.Select((v, i) => (i, v)))
                                 {
                                     <tr>
